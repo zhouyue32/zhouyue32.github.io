@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Python2 |  zhouyue&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Python2"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Python2
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/21/Python2/" class="article-date">
+  <time datetime="2024-12-21T10:04:23.000Z" itemprop="datePublished">2024-12-21</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">11 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一-面向对象"><a href="#一-面向对象" class="headerlink" title="一.面向对象"></a>一.面向对象</h1><h2 id="1-类和对象"><a href="#1-类和对象" class="headerlink" title="1.类和对象"></a>1.类和对象</h2><p>​	类(class)是面向对象编程的一个概念，它类似模板或者蓝图，拥有某一类事物共性的特征，比如cat类，那么一定有尾巴，眼睛，四肢等等，至于某一个属性的状态，比如存在或者不存在则是特性的东西。</p>
+<p>​	事物可以从两方面来进行描述，属性和行为。相似地，类(class)中也有属性和行为，分别通过定义成员变量和成员方法来描述。</p>
+<p>​	既然类是模板或者蓝图，那么想要依据共性的模板创建一个特性的实例就需要创建对象，这个根据类创建对象的过程叫做实例化。</p>
+<p>​	面向对象三大特性：封装，继承，多态。</p>
+<p>​	面向对象编程就是：设计类，基于类创建对象，让对象干活做具体的工作。</p>
+<p>以下是python中面向对象编程的一个具体过程：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设计类，以Dog类为例</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="comment">#定义基本属性</span></span><br><span class="line">    name = <span class="literal">None</span></span><br><span class="line">    age = <span class="literal">None</span></span><br><span class="line">    <span class="comment">#定义基本行为</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> winsound</span><br><span class="line">        winsound.Beep(<span class="number">2000</span>,<span class="number">3000</span>)</span><br><span class="line">    <span class="comment">#self是必须的形参，事实上，self只是一个特征，表明这是一个类中的方法，在实际调用方法是并不需要我们真的进行self的传参，IDE会自动传递实参self。</span></span><br><span class="line"><span class="comment">#创建对象</span></span><br><span class="line">xiaohua = Dog()</span><br><span class="line">xiaohua.name = <span class="string">&quot;xiaohua&quot;</span></span><br><span class="line">xiaohua.age = <span class="number">6</span></span><br><span class="line"><span class="comment">#让对象工作</span></span><br><span class="line">xiaohua.bark()</span><br></pre></td></tr></table></figure>
+
+<p>​	这是一种创建类的手段，基于这种类创建对象时需要对属性一个个赋值，无法一次性赋值。</p>
+<ul>
+<li>__init__构造方法：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设计类，以Dog类为例</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="comment">#定义基本属性</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="comment">#__init__是python中的内置方法，用于初始化类的实例</span></span><br><span class="line">    <span class="comment">#定义基本行为</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> winsound</span><br><span class="line">        winsound.Beep(<span class="number">2000</span>,<span class="number">3000</span>)</span><br><span class="line"><span class="comment">#创建对象</span></span><br><span class="line">xiaohua = Dog(<span class="string">&quot;xiaohua&quot;</span>,<span class="number">6</span>)</span><br><span class="line"><span class="comment">#让对象工作</span></span><br><span class="line">xiaohua.bark()</span><br><span class="line"><span class="built_in">print</span>(xiaohua.age)</span><br></pre></td></tr></table></figure>
+
+<p>​	__init__本身的作用是，在构建类时传入的参数会自动提供给__init__方法，并且__init__方法会自动执行</p>
+<h2 id="2-python内置方法"><a href="#2-python内置方法" class="headerlink" title="2.python内置方法"></a>2.python内置方法</h2><p>​	类似上文中的__init__方法，python中有许多内置方法，称为魔术方法。</p>
+<p>常见的内置方法：</p>
+<h3 id="1-str-字符串方法"><a href="#1-str-字符串方法" class="headerlink" title="1.__str__字符串方法"></a>1.__str__字符串方法</h3><p>​	<code>__str__</code> 方法是 Python 中一个特殊的方法，它用于定义一个对象的“字符串表示”。当你使用 <code>print()</code> 函数或 <code>str()</code> 函数来输出一个对象时，Python 会调用该对象的 <code>__str__</code> 方法。</p>
+<p>​	通过实现 <code>__str__</code> 方法，你可以提供一个更友好的、可读性更强的输出格式，方便调试和日志记录。</p>
+<p>​	当没有对<code>__str__</code>进行人为定义时，默认会返回类的地址，比如：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> winsound</span><br><span class="line">        winsound.Beep(<span class="number">2000</span>,<span class="number">3000</span>)</span><br><span class="line">xiaohua = Dog(<span class="string">&quot;xiaohua&quot;</span>,<span class="number">6</span>)</span><br><span class="line"><span class="built_in">print</span>(xiaohua)</span><br><span class="line"><span class="comment">#&lt;__main__.Dog object at 0x000001BD22E85DF0&gt;</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> winsound</span><br><span class="line">        winsound.Beep(<span class="number">2000</span>,<span class="number">3000</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;self.name&#125;</span>&quot;</span></span><br><span class="line">xiaohua = Dog(<span class="string">&quot;xiaohua&quot;</span>,<span class="number">6</span>)</span><br><span class="line"><span class="built_in">print</span>(xiaohua)</span><br><span class="line"><span class="comment">#&quot;xiaohua&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-lt-方法"><a href="#2-lt-方法" class="headerlink" title="2.__lt__方法"></a>2.<code>__lt__</code>方法</h3><p>​	<code>__it__</code>方法用于比较两个类特定属性进行“&lt;”比较，返回bool值，比如：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> winsound</span><br><span class="line">        winsound.Beep(<span class="number">2000</span>,<span class="number">3000</span>)</span><br><span class="line">xiaohua = Dog(<span class="string">&quot;xiaohua&quot;</span>,<span class="number">6</span>)</span><br><span class="line">dahuang = Dog(<span class="string">&quot;dahuang&quot;</span>,<span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(xiaohua&lt;dahuang)</span><br><span class="line"><span class="comment">#报错，因为在定义类时并没有赋予它可以比较这个属性</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> winsound</span><br><span class="line">        winsound.Beep(<span class="number">2000</span>,<span class="number">3000</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self,another_class</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.age&lt;another_class.age</span><br><span class="line">xiaohua = Dog(<span class="string">&quot;xiaohua&quot;</span>,<span class="number">6</span>)</span><br><span class="line">sangbiao = Dog(<span class="string">&quot;sangbiao&quot;</span>,<span class="number">7</span>)</span><br><span class="line">dahuang = Dog(<span class="string">&quot;dahuang&quot;</span>,<span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(xiaohua&lt;dahuang)</span><br><span class="line"><span class="comment">#False</span></span><br><span class="line"><span class="built_in">print</span>(xiaohua&lt;sangbiao)</span><br><span class="line"><span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：这里的<code>__lt__</code>方法仅限于“&lt;”的比较，也就是说print(xiaohua&gt;sangbiao)会报错。</p>
+<ul>
+<li><p>其他比较魔术方法：</p>
+</li>
+<li><p><code>__eq__(self, other)</code>: 实现相等运算符 <code>==</code>。</p>
+</li>
+<li><p><code>__ne__(self, other)</code>: 实现不等运算符 <code>!=</code>。</p>
+</li>
+<li><p><code>__lt__(self, other)</code>: 实现小于运算符 <code>&lt;</code>。</p>
+</li>
+<li><p><code>__le__(self, other)</code>: 实现小于等于运算符 <code>&lt;=</code>。</p>
+</li>
+<li><p><code>__gt__(self, other)</code>: 实现大于运算符 <code>&gt;</code>。</p>
+</li>
+<li><p><code>__ge__(self, other)</code>: 实现大于等于运算符 <code>&gt;=</code>。</p>
+</li>
+</ul>
+<h2 id="3-封装"><a href="#3-封装" class="headerlink" title="3.封装"></a>3.封装</h2><p>​	封装是面向对象编程的一种思想，它指的是将数据（属性）和操作数据的方法（行为）结合在一起，将数据的实现细节隐藏起来，只暴露出必要的接口给外部使用。这样可以提高代码的安全性和可维护性。</p>
+<p>​	<img src="/./../imgs/image-20241120203845991.png" alt="image-20241120203845991"></p>
+<p>封装的主要优点包括：</p>
+<ol>
+<li><strong>数据隐藏</strong>：通过将数据私有化，只允许通过公共方法访问，减少了数据被随意修改的风险。</li>
+<li><strong>提高代码的可维护性</strong>：如果需要修改内部实现，只需在类内部进行修改，而不影响使用该类的外部代码。</li>
+<li><strong>降低复杂性</strong>：外部代码只需要了解接口，而不需要关心内部实现，简化了使用过程。</li>
+</ol>
+<ul>
+<li>私有成员</li>
+</ul>
+<p>​	现实生活中的一些事物的部分属性和行为并不对所有人开放，类也是如此。类中提供了私有成员的形式来支持该特性。</p>
+<p>​	定义私有成员只需要在私有成员名字前加“__”即可。</p>
+<p>​	虽然私有成员无法被通过类访问，但是可以在类中被其他成员访问</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Phone</span>:</span><br><span class="line">    __current_voltage = <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__keep_single_core</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;5g通话已开启&quot;</span>)</span><br><span class="line">xiaomi = Phone()</span><br><span class="line"><span class="built_in">print</span>(xiaomi.__current_voltage)</span><br><span class="line"><span class="built_in">print</span>(xiaomi.__keep_single_core)</span><br><span class="line"><span class="comment">#报错</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Phone</span>:</span><br><span class="line">    __current_voltage = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__keep_single_core</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;CPU以单核模式运行&quot;</span>)</span><br><span class="line">    </span><br><span class="line">   	<span class="keyword">def</span> <span class="title function_">call_by_5g</span>(<span class="params">self</span>):</span><br><span class="line">    	<span class="keyword">if</span> <span class="variable language_">self</span>.__current_voltage&gt;=<span class="number">1</span>:</span><br><span class="line">        	<span class="built_in">print</span>(<span class="string">&quot;5g通话已开启&quot;</span>)</span><br><span class="line">    	<span class="keyword">else</span>:</span><br><span class="line">        	<span class="variable language_">self</span>.__keep_single_core()</span><br><span class="line">        	<span class="built_in">print</span>(<span class="string">&quot;电量不足，无法开启5g通信，已设置单核模式省电&quot;</span>)</span><br><span class="line">xiaomi = Phone()</span><br><span class="line">call_by_5g()</span><br><span class="line"><span class="comment">#5g通话已开启</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-继承"><a href="#4-继承" class="headerlink" title="4.继承"></a>4.继承</h2><p>​	定义一个新的类，新的类的属性与方法继承自一个老的类，并且新的类有独属于自己的属性与方法。</p>
+<p>语法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">sub_class</span>(<span class="title class_ inherited__">super_class</span>):</span><br><span class="line">    class_stuct</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单继承：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">phone</span>:</span><br><span class="line">    IMET = <span class="literal">None</span></span><br><span class="line">    producer = <span class="string">&quot;Apple&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call_by_4g</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;4g&quot;</span>)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">phone_new</span>(<span class="title class_ inherited__">phone</span>):</span><br><span class="line">    face_id = <span class="string">&quot;10001&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call_by_5g</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;5g&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多继承：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NFC</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">    <span class="comment">#pass,占位符，无实际意义，用于定义空类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">xiaomi</span>(phone_new,NFC):</span><br><span class="line">    class_struct</span><br></pre></td></tr></table></figure>
+
+<p>​	多个父类中,如果有同名的成员,那么默认以继承顺序(从左到右)为优先级。</p>
+<p>即:先继承的保留,后继承的被覆盖</p>
+<ul>
+<li>复写父类成员</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">phone</span>:</span><br><span class="line">    IMET = <span class="literal">None</span></span><br><span class="line">    producer = <span class="string">&quot;Apple&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call_by_4g</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;4g&quot;</span>)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">phone_new</span>(<span class="title class_ inherited__">phone</span>):</span><br><span class="line">    face_id = <span class="string">&quot;10001&quot;</span></span><br><span class="line">    producer = <span class="string">&quot;microsoft&quot;</span> <span class="comment">#复写父类成员变量</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call_by_4g</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;5g&quot;</span>)	<span class="comment">#复写父类成员方法</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用父类同名成员</li>
+</ul>
+<p>​	如果在子类中对父类进行复写，那么在子类中调尝试用父类同名成员时会调用复写后的成员，如果想真正能访问到父类中同名成员，需要用特殊的调用方式：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#mode1:</span></span><br><span class="line">superclass_name.menber_variable</span><br><span class="line">superclass_name.menber_method(<span class="variable language_">self</span>)</span><br><span class="line"><span class="comment">#mode2:</span></span><br><span class="line"><span class="built_in">super</span>().menber_variable</span><br><span class="line"><span class="built_in">super</span>().menber_method()</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-类型注解"><a href="#5-类型注解" class="headerlink" title="5.类型注解"></a>5.类型注解</h2><p><img src="/./../imgs/image-20241120214610619.png" alt="image-20241120214610619"></p>
+<p><strong>为容器作注解</strong></p>
+<p><img src="/./../imgs/image-20241120214643703.png" alt="image-20241120214643703"></p>
+<p><strong>在注释中作注解</strong></p>
+<p><img src="/./../imgs/image-20241120214734372.png" alt="image-20241120214734372"></p>
+<p><strong>对函数参数进行注解</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">param1:<span class="built_in">type</span>,param2:<span class="built_in">type</span>,……</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>对函数返回值进行注解</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">param1:<span class="built_in">type</span>,param2:<span class="built_in">type</span>,……</span>) -&gt; ret_type:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Union注解</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用 Union 来表示值可以是多种类型之一。</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Union</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parse_value</span>(<span class="params">value: <span class="type">Union</span>[<span class="built_in">int</span>, <span class="built_in">str</span>]</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(value)</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是，注解并<strong>不会</strong>因为注解而改变变量，参数，或者返回值的类型，也就是说，<em><strong>注解仅仅是用于给编写者或者第三方IDE作提示信息</strong></em>。</p>
+<h2 id="6-多态"><a href="#6-多态" class="headerlink" title="6.多态"></a>6.多态</h2><p>​	多态，指的是同一个行为，传入不同的对象，得到不同状态</p>
+<p><img src="/./../imgs/image-20241120220404547.png" alt="image-20241120220404547"></p>
+<p> <strong>抽象类(接口)</strong></p>
+<p><img src="/./../imgs/image-20241120221426109.png" alt="image-20241120221426109"></p>
+<hr>
+<h1 id="二-SQL入门与实战"><a href="#二-SQL入门与实战" class="headerlink" title="二.SQL入门与实战"></a>二.SQL入门与实战</h1><h2 id="1-数据库"><a href="#1-数据库" class="headerlink" title="1.数据库"></a>1.数据库</h2><p>​	数据可以分为储存和计算两部分，编程语言可以归纳为数据计算一类，数据库就是用于数据存储一类。</p>
+<ul>
+<li>数据库如何组织数据</li>
+</ul>
+<p>​	<img src="/./../imgs/image-20241121124539489.png" alt="image-20241121124539489"></p>
+<ul>
+<li>数据库管理系统(数据库软件)</li>
+</ul>
+<p>​	MySQL,SQLSever等</p>
+<ul>
+<li>数据库和SQL语言的关系</li>
+</ul>
+<p>​	数据库用于储存数据，那么在这个过程中无法避免地涉及到数据地增删查改和数据库，数据表的管理。SQL语言就是对数据库进行操作，管理，查询的工具。</p>
+<p>​	数据库软件可以获得库-&gt;表-&gt;数据，这种数据组织，储存的能力，并借助SQL语言完成对数据的操作，管理，查询。</p>
+<h2 id="2-SQL基础与DDL"><a href="#2-SQL基础与DDL" class="headerlink" title="2.SQL基础与DDL"></a>2.SQL基础与DDL</h2><p>​	SQL全称Structured Query Language,结构化查询语言，用于访问和处理数据库的<strong>标准</strong>的计算机语言。</p>
+<ul>
+<li><p>SQL的基础语法特征：</p>
+<ul>
+<li><p>大小写不敏感</p>
+</li>
+<li><p>单行或多行书写，以;结束</p>
+</li>
+<li><p>支持注释：</p>
+<ol>
+<li><p>单行注释：– 注释内容</p>
+</li>
+<li><p>单行注释：# 注释内容</p>
+</li>
+<li><p>多行注释：<code>/*注释内容*/</code></p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>​	DDL是“数据定义语言”（Data Definition Language）的缩写。它用于定义和管理数据库中的<strong>结构和对象</strong>。</p>
+<ul>
+<li><p>DDL-库管理</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> databases;	<span class="comment">-- 查看数据库</span></span><br><span class="line">use database_name;	<span class="comment">-- 使用数据库</span></span><br><span class="line"><span class="keyword">create</span> database database_name [charset utf8];	<span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">drop</span> database database_name;	<span class="comment">-- 删除库</span></span><br><span class="line"><span class="keyword">select</span> database();	<span class="comment">-- 查看当前数据库</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<ul>
+<li><p>DLL-表管理</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> tables;	<span class="comment">-- 查看表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> table_name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> table_name;	<span class="comment">-- 删除表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">create table</span> table_name(</span><br><span class="line">	column_name1 column_type1,</span><br><span class="line">    column_name2 column_type2,</span><br><span class="line">	column_name3 column_type3,</span><br><span class="line">    ……</span><br><span class="line">  );			<span class="comment">-- 创建表</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-SQL-DML"><a href="#3-SQL-DML" class="headerlink" title="3.SQL-DML"></a>3.SQL-DML</h2><p>​	DML是“数据操纵语言”（Data Manipulation Language）的缩写，它是数据库管理系统（DBMS）中用于<strong>管理数据</strong>的子语言。</p>
+<ul>
+<li>数据插入insert</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert into</span> <span class="keyword">table</span>[(column1,column2,……,<span class="keyword">column</span> n)] <span class="keyword">values</span>(data1,data2,……,data n)[,(data1,data2,……,data n),……,(data1,data2,……,data n)]</span><br><span class="line">#示例：</span><br><span class="line"><span class="keyword">create table</span> student(</span><br><span class="line">	id <span class="type">int</span>,</span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    age <span class="type">int</span></span><br><span class="line">);</span><br><span class="line">#仅插入一列</span><br><span class="line"><span class="keyword">insert into</span> student(id) <span class="keyword">values</span>(<span class="number">10001</span>),(<span class="number">10002</span>),(<span class="number">10003</span>);</span><br><span class="line">#插入全部列表</span><br><span class="line"><span class="keyword">insert into</span> student(id,name,age) <span class="keyword">values</span>(<span class="number">10001</span>,<span class="string">&#x27;xiaohua&#x27;</span>,<span class="number">18</span>),(<span class="number">10002</span>,<span class="string">&#x27;xiaohua&#x27;</span>,<span class="number">18</span>);</span><br><span class="line">#快速插入全部列表</span><br><span class="line"><span class="keyword">insert into</span> student <span class="keyword">values</span>(<span class="number">10001</span>,<span class="string">&#x27;xiaohua&#x27;</span>,<span class="number">18</span>),(<span class="number">10002</span>,<span class="string">&#x27;xiaohua&#x27;</span>,<span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>数据删除delete</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> table_name [while <span class="keyword">condition</span>];</span><br><span class="line">#注意删除数据是删除所匹配数据所在的一整个结构或对象</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>数据更新update</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> table_name <span class="keyword">set</span> <span class="keyword">column</span> <span class="operator">=</span> value1 [<span class="keyword">where</span> <span class="keyword">condition</span>];</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-SQL-DQL"><a href="#3-SQL-DQL" class="headerlink" title="3.SQL-DQL"></a>3.SQL-DQL</h2><p>​	DQL（Data Query Language）是用于查询数据库中数据的语言，主要用于从数据库中<strong>检索数据</strong>。</p>
+<ul>
+<li>查询数据select</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> column1,column2,……,<span class="keyword">column</span> n <span class="keyword">from</span> table_name [<span class="keyword">where</span> <span class="keyword">condition</span>];</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> table_name </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分组聚合</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> column1,column2,……,<span class="keyword">column</span> n<span class="operator">|</span>聚合函数 <span class="keyword">from</span> table_name [<span class="keyword">where</span> <span class="keyword">condition</span>] <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">column</span> x;</span><br><span class="line">#聚合函数：</span><br><span class="line"><span class="operator">-</span> <span class="built_in">sum</span>(<span class="keyword">column</span>)	求和</span><br><span class="line"><span class="operator">-</span> <span class="built_in">avg</span>(<span class="keyword">column</span>)	求平均值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">min</span>(<span class="keyword">column</span>)	求最小值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">max</span>(<span class="keyword">column</span>)	求最大值</span><br><span class="line"><span class="operator">-</span> <span class="built_in">count</span>(<span class="keyword">column</span><span class="operator">|</span><span class="operator">*</span>)	求数量</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>排序分页</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">column</span><span class="operator">|</span>聚合函数<span class="operator">|</span><span class="operator">*</span> <span class="keyword">from</span> table_name [<span class="keyword">where</span> <span class="keyword">condition</span>] <span class="keyword">group</span> <span class="keyword">by</span> …… <span class="keyword">order</span> <span class="keyword">by</span> [<span class="keyword">asc</span>(升序)<span class="operator">|</span><span class="keyword">desc</span>(降序)];	#排序</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">column</span><span class="operator">|</span>聚合函数<span class="operator">|</span><span class="operator">*</span> <span class="keyword">from</span> table_name [<span class="keyword">where</span> <span class="keyword">condition</span>] <span class="keyword">group</span> <span class="keyword">by</span> …… <span class="keyword">order</span> <span class="keyword">by</span> [<span class="keyword">asc</span>(升序)<span class="operator">|</span><span class="keyword">desc</span>(降序)] limit n[,m]; #分页</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-python操作MySQL"><a href="#4-python操作MySQL" class="headerlink" title="4.python操作MySQL"></a>4.python操作MySQL</h2><h3 id="1-python执行SQL语句"><a href="#1-python执行SQL语句" class="headerlink" title="1.python执行SQL语句"></a>1.python执行SQL语句</h3><p>​	除了使用图形化工具来执行SQL语句外，还可以使用编程语言来执行SQL从而进行数据操作。  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql1</span><br><span class="line"><span class="keyword">from</span> pymysql1.cursors <span class="keyword">import</span> Cursor</span><br><span class="line"></span><br><span class="line"><span class="comment">#构建MySQL数据库的链接</span></span><br><span class="line">conn = pymysql1.Connection(</span><br><span class="line">    password=<span class="string">&#x27;xxxxxxxxxxxx&#x27;</span>,</span><br><span class="line">    user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">    port=<span class="number">3306</span>,</span><br><span class="line">    host=<span class="string">&#x27;localhost&#x27;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># print(conn.get_server_info())</span></span><br><span class="line"><span class="comment">#执行非查询性SQL语句</span></span><br><span class="line">cursor = conn.cursor()      <span class="comment">#获取到游标对象</span></span><br><span class="line">conn.select_db(<span class="string">&quot;try&quot;</span>)       <span class="comment">#选择数据库</span></span><br><span class="line">cursor.execute(<span class="string">&quot;create table test_pymysql(id int);&quot;</span>)    <span class="comment">#将SQL语句以字符串的形式作为参数传到execute方法即可</span></span><br><span class="line"><span class="comment">#执行查询性质的SQL语句</span></span><br><span class="line">cursor = conn.cursor()      <span class="comment">#获取到游标对象</span></span><br><span class="line">conn.select_db(<span class="string">&quot;try&quot;</span>)       <span class="comment">#选择数据库</span></span><br><span class="line">cursor.execute(<span class="string">&quot;select * from student;&quot;</span>)</span><br><span class="line"><span class="comment">#查询结果</span></span><br><span class="line">result: <span class="built_in">tuple</span> = cursor.fetchall()      <span class="comment">#获得查询结果并封装进元组</span></span><br><span class="line"><span class="keyword">for</span> r <span class="keyword">in</span> result:</span><br><span class="line">    <span class="built_in">print</span>(r)</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-python数据插入MySQL"><a href="#2-python数据插入MySQL" class="headerlink" title="2.python数据插入MySQL"></a>2.python数据插入MySQL</h3><p>​	当我们在使用pymysql库执行数据插入或者其他可能产生数据更改的语句时，需要<strong>“提交”</strong>，通过链接对象.commit()即可确认此行为</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/21/Python2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/12/21/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            前端学习笔记
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/12/21/Python1/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Python1</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2024
+        <i class="ri-heart-fill heart_icon"></i> John Doe
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="zhouyue&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

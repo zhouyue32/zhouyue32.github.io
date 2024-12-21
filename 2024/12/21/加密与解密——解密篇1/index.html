@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>加密与解密——解密篇1 |  zhouyue&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-加密与解密——解密篇1"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  加密与解密——解密篇1
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/21/%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%E2%80%94%E2%80%94%E8%A7%A3%E5%AF%86%E7%AF%871/" class="article-date">
+  <time datetime="2024-12-21T10:09:14.000Z" itemprop="datePublished">2024-12-21</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">5.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">20 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="32位逆向技术"><a href="#32位逆向技术" class="headerlink" title="32位逆向技术"></a>32位逆向技术</h1><h2 id="1-启动函数"><a href="#1-启动函数" class="headerlink" title="1.启动函数"></a>1.启动函数</h2><ul>
+<li>编写win32程序时必须在源码里实现WinMain函数。但Windows程序的执行并不从WinMain函数开始。</li>
+<li>在WinMain函数启动之前，首先被执行的是启动函数的相关代码，这项工作由编译器完成。</li>
+<li>启动源码可以被修改</li>
+<li><em><strong><u>在分析程序的过程中，可以略过启动代码，将重心放在WinMain函数体上</u></strong></em></li>
+</ul>
+<h2 id="2-函数"><a href="#2-函数" class="headerlink" title="2.函数"></a>2.函数</h2><p>​	程序都过程中，是由具有不同功能的函数组成的，因此，在逆向的分析中，应将目光更多放在函数的识别及参数的传递上，让注意力集中在某一块代码上。</p>
+<p>​	函数作为一个程序模块，用于实现特定的功能。一个函数包括函数名，入口参数，返回值，函数功能等部分。</p>
+<hr>
+<h3 id="1-函数的识别"><a href="#1-函数的识别" class="headerlink" title="1.函数的识别"></a>1.函数的识别</h3><p>​	程序调用函数，调用完毕后又返回程序，这就要求函数能够“知道”返回的程序的地址。这也是函数与其他跳转指令的区别。</p>
+<p>​	事实上，调用函数的代码中保存了一个返回地址，该地址会<strong>与参数一起传递</strong>给被调用的函数。</p>
+<p>​	有多种方法实现该功能，在绝大多数情况下，编译器使用call和ret指令调用函数以及返回调用位置，这也意味这在分析时可以对关键指令进行查找进而确定函数体。</p>
+<hr>
+<h3 id="2-函数的参数"><a href="#2-函数的参数" class="headerlink" title="2.函数的参数"></a>2.函数的参数</h3><p>​	函数的传递有三种方式：栈方式，寄存器方式以及通过全局变量进行隐含参数传递的方式。</p>
+<h4 id="1-利用栈传递参数"><a href="#1-利用栈传递参数" class="headerlink" title="1.利用栈传递参数"></a>1.利用栈传递参数</h4><p>​	栈作为“后进先出”的储存区，ESP指向栈顶，也就是栈中第一个可用的数据项。在函数调用过程中，调用者将函数依次压入栈，然后调用函数。调用结束以后，由调用者或函数本身修改栈，使栈恢复原样（即平衡栈数据）。</p>
+<p>​	那么，显然地，在栈传参时有两个问题：</p>
+<p>​	当参数多于一个的时候，按什么顺序压入栈？</p>
+<p>​	函数调用结束后，谁来平衡栈？</p>
+<p>这些需要有一个都认可的约定，这种在程序设计语言中为了实现函数调用而建立的协议称为调用约定（Calling Convention），这种协议规定了函数中的参数传送方式，参数是否可变和由谁处理栈的问题。</p>
+<hr>
+<h5 id="常用的调用约定"><a href="#常用的调用约定" class="headerlink" title="常用的调用约定"></a><a href="C:\Users\zhouyue\逆向学习\《加密与解密—解密篇》">常用的调用约定</a></h5><ul>
+<li>__cdecl:参数按照从右至左的顺序入栈，由调用者负责平衡栈。</li>
+</ul>
+<p>__cdecl(C Declaration)是C&#x2F;C++和MFC程序默认的调用约定，也可以在函数声明时加上__cdecl关键字来手动指定</p>
+<ul>
+<li>__pascall：参数从左至右入栈，要求被调用函数负责平衡栈。</li>
+<li>__stdcall：__stdcall（Standard Call）是Win32API采用的约定方式，意为“标准调用”，采用C规范的参数入栈顺序和pascall调用约定的调整栈指针方式。</li>
+</ul>
+<p>​	<a href="C:\Users\zhouyue\逆向学习\《加密与解密—解密篇》">图形说明</a></p>
+<h5 id="函数调用过程"><a href="#函数调用过程" class="headerlink" title="函数调用过程"></a>函数调用过程</h5><ol>
+<li>非优化方式：使用EBP间接寻址</li>
+<li>优化方式：直接使用ESP寻址</li>
+</ol>
+<p>（忘了就再回去看《加密与解密》p105~107）</p>
+<h4 id="2-利用寄存器传参"><a href="#2-利用寄存器传参" class="headerlink" title="2.利用寄存器传参"></a>2.利用寄存器传参</h4><p>​	寄存器传参的方式没有特定标准，取决于编译器开发人员，但都在不对兼容性进行声明的情况下遵循相应的规范，即Fastcall。顾名思义，快速。</p>
+<p>​	<a href="C:\Users\zhouyue\逆向学习\《加密与解密—解密篇》">不同编译器实现的Fastcall有所不同</a></p>
+<ul>
+<li>值得注意的是，另一个调用规范也用到了寄存器—thiscall</li>
+<li>在采用thiscall调用约定时，参数从右至左入栈，函数负责平衡栈，仅通过一个寄存器ECX传送一个额外的参数—this指针。</li>
+</ul>
+<h4 id="3-名称修饰约定"><a href="#3-名称修饰约定" class="headerlink" title="3.名称修饰约定"></a>3.<a href="C:\Users\zhouyue\逆向学习\《加密与解密—解密篇》">名称修饰约定</a></h4><hr>
+<h3 id="3-函数的返回值"><a href="#3-函数的返回值" class="headerlink" title="3.函数的返回值"></a>3.函数的返回值</h3><p>​	函数被调用后返回一个或多个<strong>执行结果</strong>（不单指数值），称为函数返回值。返回值最常见的是return操作符，还有通过参数按传引用方式，通过全局变量返回等。</p>
+<h4 id="1-用return操作符返回值"><a href="#1-用return操作符返回值" class="headerlink" title="1.用return操作符返回值"></a>1.用return操作符返回值</h4><p>​	一般情况下，函数的返回值放在EAX寄存器中返回，若处理结果的大小超出EAX寄存器的容量，那么其高32位存放在EDX中。</p>
+<h4 id="2-通过参数按传引用方式返回值"><a href="#2-通过参数按传引用方式返回值" class="headerlink" title="2.通过参数按传引用方式返回值"></a>2.通过参数按传引用方式返回值</h4><p>​	给函数传递参数的方式有两种，传值和传引用。</p>
+<p>​	进行传值调用时，会建立参数的一份复本，将其传入函数，在调用函数中修改参数值的复本不会影响原始的变量值。（传值）</p>
+<p>​	进行传引用调用时，允许调用函数修改原始变量的值。（传指针）</p>
+<p>（不懂再看《加密与解密》p110~111）</p>
+<hr>
+<h2 id="3-数据结构"><a href="#3-数据结构" class="headerlink" title="3.数据结构"></a>3.数据结构</h2><p>​	数据结构是计算机储存，组织数据的方式。在进行逆向分析时，确定数据结构以后，算法就很容易得到了。当然，有时也会根据特定的算法来判断数据结构，以下是一些常见的数据结构以及汇编语言的实现方式。</p>
+<h3 id="1-局部变量"><a href="#1-局部变量" class="headerlink" title="1. 局部变量"></a>1. 局部变量</h3><p>​	局部变量是函数内定义的一个变量，其作用域和生命周期局限于所在函数。使用局部变量使得程序模块化封装成为可能。从汇编的角度来看，局部变量分配空间时，通常会使用栈和寄存器。</p>
+<h4 id="1-利用栈存放局部变量"><a href="#1-利用栈存放局部变量" class="headerlink" title="1.利用栈存放局部变量"></a>1.利用栈存放局部变量</h4><p>​	详见《加密与解密》p112</p>
+<h4 id="2-利用寄存器存放局部变量"><a href="#2-利用寄存器存放局部变量" class="headerlink" title="2.利用寄存器存放局部变量"></a>2.利用寄存器存放局部变量</h4><p>​	除去栈占用的ESP,EBP两个寄存器，编译器会尽可能多地使用剩下的6个通用寄存器，这样可以提高程序效率，减少内存消耗。如果寄存器不够用，才考虑栈储存参数。在分析时注意，局部变量的生存周期短，必须及时确定当前寄存器存放的是哪个变量。</p>
+<hr>
+<h3 id="2-全局变量"><a href="#2-全局变量" class="headerlink" title="2.全局变量"></a>2.全局变量</h3><p>​	全局变量作用于整个程序，放在全局变量的内存区中。局部变量存在于函数的栈区，函数调用结束后就消失。大多数程序中，常数一般放在全局变量中，例如一些注册版标记，测试版标记等。</p>
+<p>​	全局变量通常位于数据区块（.idata）的一个固定地址处，也就是说，当程序需要访问全局变量时，一般会用一个固定的硬编码地址<strong>直接</strong>对内存寻址，这也意味着，全局变量更容易被识别。</p>
+<p>​	全局变量可以被同一文件中的所有函数修改，如果某一个函数改变了全局变量的值，就可以影响其他函数。因此，全局变量可以实现传参和函数返回值。</p>
+<p>​	它<strong>永远</strong>占据有内存的“一席之地”，而不像局部变量每次需要时都需要“申请”。</p>
+<h3 id="3-数组"><a href="#3-数组" class="headerlink" title="3.数组"></a>3.数组</h3><p>​	数组是相同数据类型的集合，它们在内存中按顺序连续存放在一起。在汇编状态下访问输在一般是通过基址加变址寻址实现的。</p>
+<p>​	在内存中，数组可以存在于栈，数据段及动态内存中。</p>
+<p>​	一般来说，间接寻址出现在给一些数组或结构赋值的情况下，寻址形式一般为[基址+n]。基址可以为常量，也可以是寄存器，总之为定值。</p>
+<hr>
+<h2 id="4-虚函数"><a href="#4-虚函数" class="headerlink" title="4.虚函数"></a>4.虚函数</h2><p>​	虚函数是在程序运行时定义的函数。虚函数的地址不能在编译时确定，只能在调用<strong>即将进行</strong>时确定。</p>
+<p>​	所有对虚函数的引用通常放在一个专用数组——虚函数表（Virtual Table，VTBL）中，数组的每个元素存放的就是“类”中虚函数的地址。</p>
+<p>​	调用虚函数时，先取出虚函数表指针，得到虚函数表的地址，再根据这个地址到虚函数表中取出该函数的地址，最后调用该函数。</p>
+<h2 id="5-控制语句"><a href="#5-控制语句" class="headerlink" title="5.控制语句"></a>5.控制语句</h2><h3 id="IF-THEN-ELSE语句"><a href="#IF-THEN-ELSE语句" class="headerlink" title="IF-THEN-ELSE语句"></a>IF-THEN-ELSE语句</h3><p>​	通常使用cmp+条件跳转实现，但许多情况下会优化使用test指令</p>
+<h3 id="SWITCH-CASE语句"><a href="#SWITCH-CASE语句" class="headerlink" title="SWITCH-CASE语句"></a>SWITCH-CASE语句</h3><p>​	switch-case语句是多分支选择语句。编译之后的SWICTH语句本质是多个IF-THEN语句的嵌套。</p>
+<h3 id="转移指令机器码的计算"><a href="#转移指令机器码的计算" class="headerlink" title="转移指令机器码的计算"></a>转移指令机器码的计算</h3><ol>
+<li>**短转移 (Short Jump)**：无条件转移和条件转移的机器码通常为2字节，转移范围在-128到127字节内。</li>
+<li>**长转移 (Long Jump)**：无条件转移的机器码为5字节，条件转移的机器码为6字节。条件转移的情况包括两类，2字节表示某转移偏移量，4字节表示目标位置。为了代码优化，CPU提供了无符号1字节偏移。</li>
+<li>**子程序调用指令 (call)**：call指令用于调用子程序，一类是call label，类似于长转移，另一类常用于涉及寄存器和栈的操作，例如“call dword ptr [eax+2]”。</li>
+</ol>
+<p>条件转移指令由于16位CPU的遗留问题，通常只能进行255字节的转移。</p>
+<p>转移指令机器码由转移类型和转移的位移量共同决定。</p>
+<h3 id="纯算法实现逻辑判断"><a href="#纯算法实现逻辑判断" class="headerlink" title="纯算法实现逻辑判断"></a>纯算法实现逻辑判断</h3><p>​	在优化时，往往在不改变逻辑的情况下，用数学技巧将代码中的逻辑分支语句转换为算术操作，减少条件转移指令的出现，提高CPU性能。</p>
+<hr>
+<h2 id="6-循环语句"><a href="#6-循环语句" class="headerlink" title="6.循环语句"></a>6.循环语句</h2><p>​	高级语言中可以进行反向引用的一种语言形式，可以通过这种特性将其识别出来。</p>
+<p>​	一般使用ECX作为计数器。或者“test eax，eax”等其他指令。</p>
+<h2 id="7-数学运算符"><a href="#7-数学运算符" class="headerlink" title="7.数学运算符"></a>7.数学运算符</h2><p>​	此处仅涉及整数的四则运算的优化方式</p>
+<h3 id="1-整数的加减"><a href="#1-整数的加减" class="headerlink" title="1.整数的加减"></a>1.整数的加减</h3><p>​	一般使用add，sub指令，但在一些优化方案中，常常使用lea指令来代替。</p>
+<p>​	lea指令允许用户在一个时钟内完成对c&#x3D;a+b+idata的计算。其中c，a，b都是寄存器。“lea c，[a+b+idata]”</p>
+<p>​	注意，lea是直接取的地址加到c中，而不是取的值。</p>
+<h3 id="2-整数的乘法"><a href="#2-整数的乘法" class="headerlink" title="2.整数的乘法"></a>2.整数的乘法</h3><p>​	一般使用mul，imul指令，但运行速度慢。在优化方案中，编译器倾向于使用其他可以完成相同功能的指令来代替。</p>
+<p>​	比如：若要进行2的幂运算，将使用shl指令进行左移操作。</p>
+<p>​	再比如：5*eax可以写成lea eax，[eax+4*eax]。lea指令可以实现寄存器乘以2，4或8的操作。</p>
+<h3 id="3-整数的除法"><a href="#3-整数的除法" class="headerlink" title="3.整数的除法"></a>3.整数的除法</h3><p>​	一般使用div，idiv指令，但除法运算的代价相当高，几乎消耗比乘法多十倍的CPU时钟。</p>
+<p>​	当被除数是未知数时，那么编译器直接使用div指令。</p>
+<p>​	若除数与被除数是常量的情况下则会使用一些技巧来替换div，idiv指令。</p>
+<p>比如：当除数是2的幂时，会直接使用shr指令进行右移操作。而位移指令只消耗一个时钟。</p>
+<hr>
+<h2 id="8-文本字符串"><a href="#8-文本字符串" class="headerlink" title="8.文本字符串"></a>8.文本字符串</h2><p>​	字符串的识别与分析时软件逆向的重要步骤，特别是在对序列号的分析中。</p>
+<h3 id="1-字符串储存格式"><a href="#1-字符串储存格式" class="headerlink" title="1.字符串储存格式"></a>1.字符串储存格式</h3><h4 id="（1）C字符串"><a href="#（1）C字符串" class="headerlink" title="（1）C字符串"></a>（1）C字符串</h4><p>​	也称“ASCCIIZ字符串”，广泛运用于Windows和UNIX操作系统，“Z”表示以’\0’为结束标志</p>
+<h4 id="（2）DOS字符串"><a href="#（2）DOS字符串" class="headerlink" title="（2）DOS字符串"></a>（2）DOS字符串</h4><p>​	以“$”为结束标志，少见。</p>
+<h4 id="（3）PASCAL字符串"><a href="#（3）PASCAL字符串" class="headerlink" title="（3）PASCAL字符串"></a>（3）PASCAL字符串</h4><p>​	无终止符，但在字符串开头使用一字节来定义字符串长度，因此最长不超过255字节，少见。</p>
+<h4 id="（4）Delphi字符串"><a href="#（4）Delphi字符串" class="headerlink" title="（4）Delphi字符串"></a>（4）Delphi字符串</h4><p>​	本质是PASCAL字符串的变体，区别在于在字符串头部用2或4个字节定义长度。（双字节Delphi和四字节Delphi）。</p>
+<h3 id="2-字符寻址指令"><a href="#2-字符寻址指令" class="headerlink" title="2.字符寻址指令"></a>2.字符寻址指令</h3><p>​	略</p>
+<h3 id="3-大小写切换"><a href="#3-大小写切换" class="headerlink" title="3.大小写切换"></a>3.大小写切换</h3><p>​	遵循ASCII码表</p>
+<h3 id="4-计算字符串长度"><a href="#4-计算字符串长度" class="headerlink" title="4.计算字符串长度"></a>4.计算字符串长度</h3><hr>
+<h2 id="9-指令修改技巧"><a href="#9-指令修改技巧" class="headerlink" title="9.指令修改技巧"></a>9.指令修改技巧</h2><h1 id="64位逆向技术"><a href="#64位逆向技术" class="headerlink" title="64位逆向技术"></a>64位逆向技术</h1><h2 id="1-寄存器"><a href="#1-寄存器" class="headerlink" title="1.寄存器"></a>1.寄存器</h2><p>​	本节所说的x64是AMD64与Intel64的合称，是指与现有x86兼容的64位CPU。在64位系统中，内存地址为64位。x64位环境下的寄存器相较于32位有一些变化。</p>
+<p>​	x64通用寄存器的名字由Exx改为Rxx，大小扩展至64位，数量增加了8个（R8~R15），扩充了8个128位的XMM寄存器（在64位程序中，XMM寄存器常用于优化代码）。</p>
+<p>​	64位寄存器与32位兼容，例如RAX（64位），EAX（低32位），AX（低16位），AH，AL。新扩展的寄存器高低位访问使用D,W,B后缀，如R8（64位），R8D（低32位），R8W（低16位），R8B（低8位）。</p>
+<p>​	<strong>64位系统寄存器</strong><img src="C:\Users\zhouyue\逆向学习\《加密与解密—解密篇》\64位系统寄存器.png" alt="64位系统寄存器"></p>
+<h2 id="2-函数-1"><a href="#2-函数-1" class="headerlink" title="2.函数"></a>2.函数</h2><h3 id="1-栈平衡"><a href="#1-栈平衡" class="headerlink" title="1.栈平衡"></a>1.栈平衡</h3><p>​	略</p>
+<h3 id="2-启动函数"><a href="#2-启动函数" class="headerlink" title="2.启动函数"></a>2.启动函数</h3><p>​	程序在运行时，先初始化函数代码，再调用main函数执行用户自己写的代码，也就是说，在程序运行时，其主函数并不放在开头，而是需要自己寻找主程序的入口。那么，如何找到主程序入口就是逆向分析的重点。</p>
+<p>​	通常来说，可以直接在IDA Pro中查找main来找到main函数。如果找不到，也可以找到exit标签进行反向查找。</p>
+<h3 id="3-调用约定"><a href="#3-调用约定" class="headerlink" title="3.调用约定"></a>3.调用约定</h3><p>​	x86应用程序函数调用有stdcall，__cdecl，Fstcall等方式，但x64应用程序只有一种寄存器快速调用约定。</p>
+<p>​	前四个参数使用寄存器传递，如果参数超过四个，剩下的放在栈里，入栈顺序为从右至左，由函数负责平衡栈。</p>
+<p>​	前四个放在固定的寄存器中，RCX（1）,RDX（2）,R8（3）,R9（4）。</p>
+<p>​	任何大于8字节或者不是1，2，4，8字节的参数必须通过传引用的方式间接传参。所有浮点数的传递都是由XMM寄存器完成的。（前六个浮点型参数用XMM0~XMM5传送，超出部分用栈传送）。</p>
+<p>​	<strong>前四个参数的调用约定</strong></p>
+<p>​	虽然前四个参数并不使用栈空间，但栈还是为它们预留了空间（32字节），称之为预留栈空间。预留栈空间的作用是，当程序比较复杂，造成寄存器不够用的时候，可以将参数存放到预留栈空间，以此释放四个寄存器。</p>
+<p>​	预留栈空间由函数的调用者提前申请，由函数调用者负责平衡栈。</p>
+<h3 id="4-参数传递"><a href="#4-参数传递" class="headerlink" title="4.参数传递"></a>4.参数传递</h3><p>​	详见《加密与解密》p135~142</p>
+<h3 id="5-函数返回值"><a href="#5-函数返回值" class="headerlink" title="5.函数返回值"></a>5.函数返回值</h3><p>​	64位环境下，使用RAX保存返回值。浮点类型使用MMX0寄存器返回。RAX寄存器可以保存8字节的数据，大于8字节时传引用解决。</p>
+<hr>
+<h2 id="3-数据结构-1"><a href="#3-数据结构-1" class="headerlink" title="3.数据结构"></a>3.数据结构</h2><p>​	与x86相似，主要是对局部变量，全局变量，数组等的访问。</p>
+<h3 id="1-局部变量-1"><a href="#1-局部变量-1" class="headerlink" title="1.局部变量"></a>1.局部变量</h3><p>​	局部变量是<strong>函数</strong>内部定义的变量，存放在栈区，生命周期与函数相同。</p>
+<p>函数申请的预留栈空间在低地址，声明的局部变量在高地址。</p>
+<h3 id="2-全局变量-1"><a href="#2-全局变量-1" class="headerlink" title="2.全局变量"></a>2.全局变量</h3><p>​	全局变量在编译时就会确定并且固定下来，所以一般使用固定的地址去访问全局变量。</p>
+<p>​	全局变量的地址先定义的在低地址，后定义的在高地址。</p>
+<h3 id="3-数组-1"><a href="#3-数组-1" class="headerlink" title="3.数组"></a>3.数组</h3><p>​	数组是相同数据类型的集合，以线性方式连续储存在内存中。数组中的数据是由低到高排列的。</p>
+<h4 id="（1）数组寻址公式"><a href="#（1）数组寻址公式" class="headerlink" title="（1）数组寻址公式"></a>（1）数组寻址公式</h4><p>​	一维数组：数组元素地址&#x3D;数组首地址+sizeof（数组类型）*下标</p>
+<p>​	二维数组：数组元素地址&#x3D;数组首地址+sizeof（一维数组类型）*下标1+sizeof（数组类型）*下标2</p>
+<h4 id="（2）一维数组和二维数组"><a href="#（2）一维数组和二维数组" class="headerlink" title="（2）一维数组和二维数组"></a>（2）一维数组和二维数组</h4><p>​	编译器访问数组的代码就是利用数组寻址公式访问的。当访问的数组下标为常量时，编译器会根据一维数组寻址公式直接计算出数组元素相对于数组首地址的偏移，比如：[ary+4*3]会被优化为[ary+12]。</p>
+<p>​	但是，若下标为变量且未知，就无法进行计算进而优化，仍然是寻址公式的原始形式。二维数组同理。</p>
+<p>数组特征总结如下：</p>
+<ul>
+<li>[数组首地址+n]</li>
+<li>[数组首地址+寄存器*n]</li>
+</ul>
+<p>在进行逆向分析时，如果有以上特征，可以怀疑为一个数组访问。需要注意的是，在Release版本中，数组初始化时，可能会使用XMM寄存器进行优化。</p>
+<h2 id="4-控制语句"><a href="#4-控制语句" class="headerlink" title="4.控制语句"></a>4.控制语句</h2><p>​	因为应用程序中存在大量的流程控制语句，所以识别流程控制语句是逆向分析的基础。这里主要介绍两种快速识别控制语句的方法，特征识别法和图形识别法。</p>
+<h3 id="1-if语句"><a href="#1-if语句" class="headerlink" title="1.if语句"></a>1.if语句</h3><p>​	if语句是分支结构的重要组成部分，功能是，判断，非0则真，跳转，执行。因为汇编语言的逻辑问题，编译器生成的汇编代码会对表达式结果取反。</p>
+<ul>
+<li>特征识别：</li>
+</ul>
+<p>​	首先有一个jxx指令用于向下跳转，且跳转的目的地if_end中没有jmp指令。根据以上特征，把jxx指令取反后，即可还原if语句的代码。</p>
+<p><img src="/./../imgs/image-20241102214222867.png" alt="image-20241102214222867"></p>
+<ul>
+<li>图形识别：</li>
+</ul>
+<p>​	在逆向分析工具中，为了方便的表示跳转的位置，使用虚线箭头表示条件跳转jxx，使用实线箭头表示无条件jmp。</p>
+<h3 id="2-if……else语句"><a href="#2-if……else语句" class="headerlink" title="2.if……else语句"></a>2.if……else语句</h3><ul>
+<li>特征识别：</li>
+</ul>
+<p>​	jxx指令用于向下跳转，且跳转的目的else中可以有jmp指令，但是else的结尾没有jmp指令，else的代码也会执行if_else_end的代码。</p>
+<p><img src="/./../imgs/image-20241102220711805.png" alt="image-20241102220711805"></p>
+<ul>
+<li>图形识别：</li>
+</ul>
+<p>​	如上图。</p>
+<h3 id="3-if……else-if……else语句"><a href="#3-if……else-if……else语句" class="headerlink" title="3.if……else if……else语句"></a>3.if……else if……else语句</h3><p>​	多分支结构。</p>
+<ul>
+<li>特征识别：</li>
+</ul>
+<p>​	首先有一个jxx指令用于向下跳转，且跳转的目的else if中有jmp指令。else if跳转的目的else中可以有jmp指令，且else代码的结尾没有无条件跳转jmp。所有jmp的目标地址一致。</p>
+<p><img src="/./../imgs/image-20241102222940769.png" alt="image-20241102222940769"></p>
+<ul>
+<li>图形识别：</li>
+</ul>
+<p>​	见上图。</p>
+<h3 id="4-switch—case语句"><a href="#4-switch—case语句" class="headerlink" title="4.switch—case语句"></a>4.switch—case语句</h3><p>​	switch是常用的多分支结构。通常比if语句有更高的效率。编译器有多种优化方案，当swicth分支数小于6时会直接使用if……else语句来实现，大于等于6时则会进行优化。比如：case表</p>
+<p>​	当case&gt;&#x3D;6，且case值的间隔小时，将所有要跳转的case位置偏移放在一个一维数组的表中（case表），然后把case的值当作下标进行跳转，就可以避免使用if，从而使程序不那么冗长。</p>
+<p>​	例如，switch（argc）只需要将argc-idata当作case表的下标，得出偏移，直接跳转过去。但是，为什么不直接将argc当作下标？</p>
+<p><img src="/./../imgs/image-20241102230359416.png" alt="image-20241102230359416"></p>
+<p>如果出现一个代码如下，并且直接将argc的值当作下标，那么建立起一个case表将需要101项，但事实上，能起作用的只有两项，其他都是swicth结束地址偏移，对空间的浪费不可估量。因此，将argc-idata再建表就只需要两项。</p>
+<p><img src="/./../imgs/image-20241102230820870.png" alt="image-20241102230820870"></p>
+<p>再比如：判定树</p>
+<p>​	当实现swicth的if语句很多时，采用另一种优化方案——判定树。将每个case作为一个节点，从这些节点中找到中间值作为根节点，形成二叉平衡树。从根节点开始判定，这样就可以大大减少跳转的次数。</p>
+<p><img src="/./../imgs/image-20241102231510971.png" alt="image-20241102231510971"></p>
+<h3 id="5-转移指令的机器码"><a href="#5-转移指令的机器码" class="headerlink" title="5.*转移指令的机器码"></a>5.*转移指令的机器码</h3><p><img src="/./../imgs/image-20241102231631517.png" alt="image-20241102231631517"></p>
+<h2 id="5-循环语句"><a href="#5-循环语句" class="headerlink" title="5.循环语句"></a>5.循环语句</h2><p>​	对于C&#x2F;C++来说，循环语法有三种，do，while，for。虽然三者功能相同，但是不同的语法有不同的执行流程。</p>
+<h3 id="1-do循环"><a href="#1-do循环" class="headerlink" title="1.do循环"></a>1.do循环</h3><ul>
+<li>特征识别：</li>
+</ul>
+<p>​	首先会有jxx指令用于<strong>向上</strong>跳转，且跳转的do_while_start语句中没有jxx指令。根据以上特征，jxx指令在反推高级语言时不取反。</p>
+<p><img src="/./../imgs/image-20241103125645809.png" alt="image-20241103125645809"></p>
+<ul>
+<li>图形识别：</li>
+</ul>
+<p>​	如上图。</p>
+<h3 id="2-while循环"><a href="#2-while循环" class="headerlink" title="2.while循环"></a>2.while循环</h3><p>​	循环的特征是会向低地址跳转。在while循环中向低地址跳转的情况与do不一样，while使用的是无条件跳转jmp指令，while循环的jxx指令要取反。</p>
+<p>​	值得注意的是，同样的循环次数下while循环会会比do多一次条件判断，性能上不如do。在Release版本中，编译器会把while优化为等价的do循环。</p>
+<ul>
+<li>特征识别：</li>
+</ul>
+<p>​	首先会有一个jmp向上跳转指令，且跳转的目的while_start下面有jxx跳转指令。while代码也会执行while_end的代码。根据以上特征，在反推高级语言代码时，需要对jxx取反。</p>
+<p><img src="/./../imgs/image-20241103130715258.png" alt="image-20241103130715258"></p>
+<ul>
+<li>图形识别：</li>
+</ul>
+<p>​	如上图。</p>
+<h3 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3.for循环"></a>3.for循环</h3><ul>
+<li>特征识别：</li>
+</ul>
+<p>​	for循环也出现向上跳转，但是与while循环不同的是，这里前面多了一个jmp指令。for循环的返回汇编需要取反。</p>
+<p><img src="/./../imgs/image-20241103131625076.png" alt="image-20241103131625076"></p>
+<ul>
+<li>图形识别：</li>
+</ul>
+<p>​	如上图。</p>
+<h2 id="6-数学运算符"><a href="#6-数学运算符" class="headerlink" title="6.数学运算符"></a>6.数学运算符</h2><p>​	虽然整数的四则运算在汇编代码中都有对应的指令，但是，在Release版本中往往会对其进行优化。</p>
+<h3 id="1-整数的加减-1"><a href="#1-整数的加减-1" class="headerlink" title="1.整数的加减"></a>1.整数的加减</h3><h4 id="（1）lea指令"><a href="#（1）lea指令" class="headerlink" title="（1）lea指令"></a>（1）lea指令</h4><p>​	与在32位逆向技术中一样，略。</p>
+<h4 id="（2）常量折叠"><a href="#（2）常量折叠" class="headerlink" title="（2）常量折叠"></a>（2）常量折叠</h4><p>​	常量折叠优化是指当表达式出现两个以上常量进行计算的情况时，编译器可以在编译时就对其进行计算，并用计算结果替换表达式，这样就不用在程序运行期间进行计算，从而提高程序性能。</p>
+<p><img src="/./../imgs/image-20241103133445088.png" alt="image-20241103133445088"></p>
+<h3 id="2-整数的乘法-1"><a href="#2-整数的乘法-1" class="headerlink" title="2.整数的乘法"></a>2.整数的乘法</h3><p>​	编译器常使用lea比例因子寻址来优化乘法指令。</p>
+<p><img src="/./../imgs/image-20241103135158439.png" alt="image-20241103135158439"></p>
+<h3 id="3-整数的除法-1"><a href="#3-整数的除法-1" class="headerlink" title="3.整数的除法"></a>3.整数的除法</h3><p>​	除法指令的执行周期太长，因此许多编译器会尽可能用其他指令来代替除法指令，通常情况下，优化方法是转换成等价位移或乘法运算。</p>
+<p>​	但是，计算机的除法与数学中的除法有所不同，计算机中整数除法是取整的除法，因此在位移时需要进行修正。</p>
+<h4 id="（1）有符号除法，除数为2n"><a href="#（1）有符号除法，除数为2n" class="headerlink" title="（1）有符号除法，除数为2n"></a>（1）有符号除法，除数为2<sup>n</sup></h4><p>​	当除数为2<sup>n</sup>时，编译器一般会使用位移优化。数学优化公式为：若x&gt;&#x3D;0,x&#x2F;2<sup>n</sup>&#x3D;x&gt;&gt;n;如果x&lt;0,则x&#x2F;2<sup>n</sup>&#x3D;(x+(2<sup>n</sup>-1))&gt;&gt;n。</p>
+<h4 id="（2）有符号除法，除数为-2n"><a href="#（2）有符号除法，除数为-2n" class="headerlink" title="（2）有符号除法，除数为-2n"></a>（2）有符号除法，除数为-2<sup>n</sup></h4><p>​	当除数为-2<sup>n</sup>时，相比于（1）多了一个求补的过程。数学优化公式为：若x&gt;&#x3D;0,x&#x2F;2<sup>n</sup>&#x3D;-(x&gt;&gt;n);如果x&lt;0,则x&#x2F;2<sup>n</sup>&#x3D;-{(x+(2<sup>n</sup>-1))&gt;&gt;n}。</p>
+<h4 id="（3）-有符号除法，除数为正非2n"><a href="#（3）-有符号除法，除数为正非2n" class="headerlink" title="（3）*有符号除法，除数为正非2n"></a>（3）*有符号除法，除数为正非2<sup>n</sup></h4><h4 id="（4）-有符号除法，除数为负非2n"><a href="#（4）-有符号除法，除数为负非2n" class="headerlink" title="（4）*有符号除法，除数为负非2n"></a>（4）*有符号除法，除数为负非2<sup>n</sup></h4><h4 id="（5）无符号除法，除数为2n"><a href="#（5）无符号除法，除数为2n" class="headerlink" title="（5）无符号除法，除数为2n"></a>（5）无符号除法，除数为2<sup>n</sup></h4><p>​	直接shr右移即可。</p>
+<h4 id="（6）-无符号除法，除数为正非2n"><a href="#（6）-无符号除法，除数为正非2n" class="headerlink" title="（6）*无符号除法，除数为正非2n"></a>（6）*无符号除法，除数为正非2<sup>n</sup></h4><h4 id="（7）-无符号除法，除数为负非2n"><a href="#（7）-无符号除法，除数为负非2n" class="headerlink" title="（7）*无符号除法，除数为负非2n"></a>（7）*无符号除法，除数为负非2<sup>n</sup></h4><p>[打*号的部分着重看《加密与解密》p161~167]</p>
+<h3 id="4-整数得取模"><a href="#4-整数得取模" class="headerlink" title="4.整数得取模"></a>4.整数得取模</h3><h4 id="（1）除数为2n"><a href="#（1）除数为2n" class="headerlink" title="（1）除数为2n"></a>（1）除数为2<sup>n</sup></h4><p><img src="/./../imgs/image-20241103152218849.png" alt="image-20241103152218849"></p>
+<h4 id="（2）除数为非2n"><a href="#（2）除数为非2n" class="headerlink" title="（2）除数为非2n"></a>（2）除数为非2<sup>n</sup></h4><p>​	编译器一般采用”余数&#x3D;被除数-商*除数“的方式进行优化。</p>
+<hr>
+<h2 id="7-虚函数"><a href="#7-虚函数" class="headerlink" title="7.虚函数"></a>7.虚函数</h2> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/21/%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%E2%80%94%E2%80%94%E8%A7%A3%E5%AF%86%E7%AF%871/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/12/21/%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%E2%80%94%E2%80%94%E8%A7%A3%E5%AF%86%E7%AF%872/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            加密与解密——解密篇2
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/12/21/Linux/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Linux</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2024
+        <i class="ri-heart-fill heart_icon"></i> John Doe
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="zhouyue&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
