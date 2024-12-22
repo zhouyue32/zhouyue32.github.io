@@ -170,62 +170,6 @@
     
     
     <article
-  id="post-reverse：pythonre"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/22/reverse%EF%BC%9Apythonre/"
-    >reverse：pythonre</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/22/reverse%EF%BC%9Apythonre/" class="article-date">
-  <time datetime="2024-12-22T09:30:00.000Z" itemprop="datePublished">2024-12-22</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="reverse：pythonre"><a href="#reverse：pythonre" class="headerlink" title="reverse：pythonre"></a>reverse：pythonre</h1><p>​	打开附件，可以看到是.pyc文件，直接用pycdc解密即可，解密之后代码如下：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
-
-<p>显然，这是一个AES加解密，看Evidence中的是AES解密，我们可以猜测下文中的text就是密文，经过上述流程就可以解出flag，稍作修改：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line">    <span class="built_in">print</span>(aes)</span><br><span class="line">    <span class="built_in">print</span>(detext)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
-
-<p>输出的结果为：</p>
-<p><img src="/./../imgs/image-20241208114813005.png" alt="image-20241208114813005"></p>
-<p>得到flag</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
   id="post-reverse：EZ_DOC"
   class="article article-type-post"
   itemscope
@@ -262,6 +206,62 @@
 <p>得到flag：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;VBa_offical&#125;</span><br></pre></td></tr></table></figure>
 
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-reverse：pythonre"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/22/reverse%EF%BC%9Apythonre/"
+    >reverse：pythonre</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/22/reverse%EF%BC%9Apythonre/" class="article-date">
+  <time datetime="2024-12-22T09:30:00.000Z" itemprop="datePublished">2024-12-22</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="reverse：pythonre"><a href="#reverse：pythonre" class="headerlink" title="reverse：pythonre"></a>reverse：pythonre</h1><p>​	打开附件，可以看到是.pyc文件，直接用pycdc解密即可，解密之后代码如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
+
+<p>显然，这是一个AES加解密，看Evidence中的是AES解密，我们可以猜测下文中的text就是密文，经过上述流程就可以解出flag，稍作修改：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line">    <span class="built_in">print</span>(aes)</span><br><span class="line">    <span class="built_in">print</span>(detext)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
+
+<p>输出的结果为：</p>
+<p><img src="/./../imgs/image-20241208114813005.png" alt="image-20241208114813005"></p>
+<p>得到flag</p>
  
       <!-- reward -->
       
