@@ -170,64 +170,6 @@
     
     
     <article
-  id="post-[GDOUCTF 2023]Check_Your_Luck"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/23/%5BGDOUCTF%202023%5DCheck_Your_Luck/"
-    >[GDOUCTF 2023]Check_Your_Luck</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/23/%5BGDOUCTF%202023%5DCheck_Your_Luck/" class="article-date">
-  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="GDOUCTF-2023-Check-Your-Luck"><a href="#GDOUCTF-2023-Check-Your-Luck" class="headerlink" title="[GDOUCTF 2023]Check_Your_Luck"></a>[GDOUCTF 2023]Check_Your_Luck</h1><p>打开附件，有一个.cpp文件，打开即可看到加密逻辑：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flag_checker</span><span class="params">(<span class="type">int</span> v, <span class="type">int</span> w,<span class="type">int</span> x,<span class="type">int</span> y,<span class="type">int</span> z)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> v,w,x,y,z;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Input 5 random number and check your luck ;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num1: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; v;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num2: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; w;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num3: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; x;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num4: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; y;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num5: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; z;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	<span class="built_in">flag_checker</span>(v,w,x,y,z);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flag_checker</span><span class="params">(<span class="type">int</span> v,<span class="type">int</span> w, <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> z)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> ((v * <span class="number">23</span> + w * <span class="number">-32</span> + x * <span class="number">98</span> + y * <span class="number">55</span> + z * <span class="number">90</span> == <span class="number">333322</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">123</span> + w * <span class="number">-322</span> + x * <span class="number">68</span> + y * <span class="number">67</span> + z * <span class="number">32</span> == <span class="number">707724</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">266</span> + w * <span class="number">-34</span> + x * <span class="number">43</span> + y * <span class="number">8</span> + z * <span class="number">32</span> == <span class="number">1272529</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">343</span> + w * <span class="number">-352</span> + x * <span class="number">58</span> + y * <span class="number">65</span> + z * <span class="number">5</span> == <span class="number">1672457</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">231</span> + w * <span class="number">-321</span> + x * <span class="number">938</span> + y * <span class="number">555</span> + z * <span class="number">970</span> == <span class="number">3372367</span>))&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Congratulations, Here is your flag:\n&quot;</span>;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;flag&#123;&quot;</span> &lt;&lt; v &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; w &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; z &lt;&lt; <span class="string">&quot;&#125;&quot;</span> &lt;&lt; endl;</span><br><span class="line">		&#125;[GDOUCTF <span class="number">2023</span>]Check_Your_Luck</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;\nSeems your luck is not in favor right now!\nBetter luck next time!&quot;</span> &lt;&lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用z3求解器即可：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = Solver()</span><br><span class="line">(v,w,x,y,z) = Ints(<span class="string">&#x27;v w x y z&#x27;</span>)</span><br><span class="line"></span><br><span class="line">s.add(v * <span class="number">23</span> + w * -<span class="number">32</span> + x * <span class="number">98</span> + y * <span class="number">55</span> + z * <span class="number">90</span> == <span class="number">333322</span>)</span><br><span class="line">s.add(v * <span class="number">123</span> + w * -<span class="number">322</span> + x * <span class="number">68</span> + y * <span class="number">67</span> + z * <span class="number">32</span> == <span class="number">707724</span>)</span><br><span class="line">s.add(v * <span class="number">266</span> + w * -<span class="number">34</span> + x * <span class="number">43</span> + y * <span class="number">8</span> + z * <span class="number">32</span> == <span class="number">1272529</span>)</span><br><span class="line">s.add(v * <span class="number">343</span> + w * -<span class="number">352</span> + x * <span class="number">58</span> + y * <span class="number">65</span> + z * <span class="number">5</span> == <span class="number">1672457</span>)</span><br><span class="line">s.add(v * <span class="number">231</span> + w * -<span class="number">321</span> + x * <span class="number">938</span> + y * <span class="number">555</span> + z * <span class="number">970</span> == <span class="number">3372367</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> s.check() == sat:</span><br><span class="line">    model =s.model()</span><br><span class="line">    <span class="built_in">print</span>(model)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;NSSCTF&#123;&quot;</span>+<span class="string">f&quot;<span class="subst">&#123;model[v]&#125;</span>_<span class="subst">&#123;model[w]&#125;</span>_<span class="subst">&#123;model[x]&#125;</span>_<span class="subst">&#123;model[y]&#125;</span>_<span class="subst">&#123;model[z]&#125;</span>&quot;</span>+<span class="string">&quot;&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>得到flag为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;4544_123_677_1754_777&#125;</span><br></pre></td></tr></table></figure>
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
   id="post-[HDCTF 2023]fake_game"
   class="article article-type-post"
   itemscope
@@ -270,6 +212,64 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDCTF&#123;G0Od_pl2y3r_f0r_Pvz!!&#125;</span><br></pre></td></tr></table></figure>
 
 <p>对了</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-[GDOUCTF 2023]Check_Your_Luck"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/23/%5BGDOUCTF%202023%5DCheck_Your_Luck/"
+    >[GDOUCTF 2023]Check_Your_Luck</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/23/%5BGDOUCTF%202023%5DCheck_Your_Luck/" class="article-date">
+  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="GDOUCTF-2023-Check-Your-Luck"><a href="#GDOUCTF-2023-Check-Your-Luck" class="headerlink" title="[GDOUCTF 2023]Check_Your_Luck"></a>[GDOUCTF 2023]Check_Your_Luck</h1><p>打开附件，有一个.cpp文件，打开即可看到加密逻辑：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flag_checker</span><span class="params">(<span class="type">int</span> v, <span class="type">int</span> w,<span class="type">int</span> x,<span class="type">int</span> y,<span class="type">int</span> z)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> v,w,x,y,z;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Input 5 random number and check your luck ;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num1: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; v;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num2: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; w;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num3: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; x;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num4: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; y;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num5: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; z;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	<span class="built_in">flag_checker</span>(v,w,x,y,z);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flag_checker</span><span class="params">(<span class="type">int</span> v,<span class="type">int</span> w, <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> z)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> ((v * <span class="number">23</span> + w * <span class="number">-32</span> + x * <span class="number">98</span> + y * <span class="number">55</span> + z * <span class="number">90</span> == <span class="number">333322</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">123</span> + w * <span class="number">-322</span> + x * <span class="number">68</span> + y * <span class="number">67</span> + z * <span class="number">32</span> == <span class="number">707724</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">266</span> + w * <span class="number">-34</span> + x * <span class="number">43</span> + y * <span class="number">8</span> + z * <span class="number">32</span> == <span class="number">1272529</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">343</span> + w * <span class="number">-352</span> + x * <span class="number">58</span> + y * <span class="number">65</span> + z * <span class="number">5</span> == <span class="number">1672457</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">231</span> + w * <span class="number">-321</span> + x * <span class="number">938</span> + y * <span class="number">555</span> + z * <span class="number">970</span> == <span class="number">3372367</span>))&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Congratulations, Here is your flag:\n&quot;</span>;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;flag&#123;&quot;</span> &lt;&lt; v &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; w &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; z &lt;&lt; <span class="string">&quot;&#125;&quot;</span> &lt;&lt; endl;</span><br><span class="line">		&#125;[GDOUCTF <span class="number">2023</span>]Check_Your_Luck</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;\nSeems your luck is not in favor right now!\nBetter luck next time!&quot;</span> &lt;&lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用z3求解器即可：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = Solver()</span><br><span class="line">(v,w,x,y,z) = Ints(<span class="string">&#x27;v w x y z&#x27;</span>)</span><br><span class="line"></span><br><span class="line">s.add(v * <span class="number">23</span> + w * -<span class="number">32</span> + x * <span class="number">98</span> + y * <span class="number">55</span> + z * <span class="number">90</span> == <span class="number">333322</span>)</span><br><span class="line">s.add(v * <span class="number">123</span> + w * -<span class="number">322</span> + x * <span class="number">68</span> + y * <span class="number">67</span> + z * <span class="number">32</span> == <span class="number">707724</span>)</span><br><span class="line">s.add(v * <span class="number">266</span> + w * -<span class="number">34</span> + x * <span class="number">43</span> + y * <span class="number">8</span> + z * <span class="number">32</span> == <span class="number">1272529</span>)</span><br><span class="line">s.add(v * <span class="number">343</span> + w * -<span class="number">352</span> + x * <span class="number">58</span> + y * <span class="number">65</span> + z * <span class="number">5</span> == <span class="number">1672457</span>)</span><br><span class="line">s.add(v * <span class="number">231</span> + w * -<span class="number">321</span> + x * <span class="number">938</span> + y * <span class="number">555</span> + z * <span class="number">970</span> == <span class="number">3372367</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> s.check() == sat:</span><br><span class="line">    model =s.model()</span><br><span class="line">    <span class="built_in">print</span>(model)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;NSSCTF&#123;&quot;</span>+<span class="string">f&quot;<span class="subst">&#123;model[v]&#125;</span>_<span class="subst">&#123;model[w]&#125;</span>_<span class="subst">&#123;model[x]&#125;</span>_<span class="subst">&#123;model[y]&#125;</span>_<span class="subst">&#123;model[z]&#125;</span>&quot;</span>+<span class="string">&quot;&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>得到flag为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;4544_123_677_1754_777&#125;</span><br></pre></td></tr></table></figure>
+
  
       <!-- reward -->
       
