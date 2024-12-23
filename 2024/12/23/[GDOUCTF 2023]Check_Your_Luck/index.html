@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>reverse：pythonre |  zhouyue&#39;s blog</title>
+      <title>[GDOUCTF 2023]Check_Your_Luck |  zhouyue&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-reverse：pythonre"
+  id="post-[GDOUCTF 2023]Check_Your_Luck"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  reverse：pythonre
+  [GDOUCTF 2023]Check_Your_Luck
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/12/22/reverse%EF%BC%9Apythonre/" class="article-date">
-  <time datetime="2024-12-22T10:10:55.000Z" itemprop="datePublished">2024-12-22</time>
+      <a href="/2024/12/23/%5BGDOUCTF%202023%5DCheck_Your_Luck/" class="article-date">
+  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">297</span>
+            <span class="post-count">440</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">2 min</span>
         </span>
     </span>
 </div>
@@ -104,15 +104,17 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="reverse：pythonre"><a href="#reverse：pythonre" class="headerlink" title="reverse：pythonre"></a>reverse：pythonre</h1><p>​	打开附件，可以看到是.pyc文件，直接用pycdc解密即可，解密之后代码如下：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
+  <h1 id="GDOUCTF-2023-Check-Your-Luck"><a href="#GDOUCTF-2023-Check-Your-Luck" class="headerlink" title="[GDOUCTF 2023]Check_Your_Luck"></a>[GDOUCTF 2023]Check_Your_Luck</h1><p>打开附件，有一个.cpp文件，打开即可看到加密逻辑：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flag_checker</span><span class="params">(<span class="type">int</span> v, <span class="type">int</span> w,<span class="type">int</span> x,<span class="type">int</span> y,<span class="type">int</span> z)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> v,w,x,y,z;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Input 5 random number and check your luck ;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num1: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; v;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num2: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; w;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num3: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; x;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num4: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; y;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Num5: &quot;</span>;</span><br><span class="line">	cin &gt;&gt; z;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	<span class="built_in">flag_checker</span>(v,w,x,y,z);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flag_checker</span><span class="params">(<span class="type">int</span> v,<span class="type">int</span> w, <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> z)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> ((v * <span class="number">23</span> + w * <span class="number">-32</span> + x * <span class="number">98</span> + y * <span class="number">55</span> + z * <span class="number">90</span> == <span class="number">333322</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">123</span> + w * <span class="number">-322</span> + x * <span class="number">68</span> + y * <span class="number">67</span> + z * <span class="number">32</span> == <span class="number">707724</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">266</span> + w * <span class="number">-34</span> + x * <span class="number">43</span> + y * <span class="number">8</span> + z * <span class="number">32</span> == <span class="number">1272529</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">343</span> + w * <span class="number">-352</span> + x * <span class="number">58</span> + y * <span class="number">65</span> + z * <span class="number">5</span> == <span class="number">1672457</span>) &amp;&amp;</span><br><span class="line">		(v * <span class="number">231</span> + w * <span class="number">-321</span> + x * <span class="number">938</span> + y * <span class="number">555</span> + z * <span class="number">970</span> == <span class="number">3372367</span>))&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Congratulations, Here is your flag:\n&quot;</span>;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;flag&#123;&quot;</span> &lt;&lt; v &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; w &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot;_&quot;</span> &lt;&lt; z &lt;&lt; <span class="string">&quot;&#125;&quot;</span> &lt;&lt; endl;</span><br><span class="line">		&#125;[GDOUCTF <span class="number">2023</span>]Check_Your_Luck</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;\nSeems your luck is not in favor right now!\nBetter luck next time!&quot;</span> &lt;&lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>显然，这是一个AES加解密，看Evidence中的是AES解密，我们可以猜测下文中的text就是密文，经过上述流程就可以解出flag，稍作修改：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line">    <span class="built_in">print</span>(aes)</span><br><span class="line">    <span class="built_in">print</span>(detext)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
+<p>使用z3求解器即可：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = Solver()</span><br><span class="line">(v,w,x,y,z) = Ints(<span class="string">&#x27;v w x y z&#x27;</span>)</span><br><span class="line"></span><br><span class="line">s.add(v * <span class="number">23</span> + w * -<span class="number">32</span> + x * <span class="number">98</span> + y * <span class="number">55</span> + z * <span class="number">90</span> == <span class="number">333322</span>)</span><br><span class="line">s.add(v * <span class="number">123</span> + w * -<span class="number">322</span> + x * <span class="number">68</span> + y * <span class="number">67</span> + z * <span class="number">32</span> == <span class="number">707724</span>)</span><br><span class="line">s.add(v * <span class="number">266</span> + w * -<span class="number">34</span> + x * <span class="number">43</span> + y * <span class="number">8</span> + z * <span class="number">32</span> == <span class="number">1272529</span>)</span><br><span class="line">s.add(v * <span class="number">343</span> + w * -<span class="number">352</span> + x * <span class="number">58</span> + y * <span class="number">65</span> + z * <span class="number">5</span> == <span class="number">1672457</span>)</span><br><span class="line">s.add(v * <span class="number">231</span> + w * -<span class="number">321</span> + x * <span class="number">938</span> + y * <span class="number">555</span> + z * <span class="number">970</span> == <span class="number">3372367</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> s.check() == sat:</span><br><span class="line">    model =s.model()</span><br><span class="line">    <span class="built_in">print</span>(model)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;NSSCTF&#123;&quot;</span>+<span class="string">f&quot;<span class="subst">&#123;model[v]&#125;</span>_<span class="subst">&#123;model[w]&#125;</span>_<span class="subst">&#123;model[x]&#125;</span>_<span class="subst">&#123;model[y]&#125;</span>_<span class="subst">&#123;model[z]&#125;</span>&quot;</span>+<span class="string">&quot;&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>输出的结果为：</p>
-<p><img src="C:\Users\zhouyue\AppData\Roaming\Typora\typora-user-images\image-20241208114813005.png" alt="image-20241208114813005"></p>
-<p>得到flag</p>
+
+
+<p>得到flag为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;4544_123_677_1754_777&#125;</span><br></pre></td></tr></table></figure>
+
  
       <!-- reward -->
       
@@ -177,7 +179,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/22/reverse%EF%BC%9Apythonre/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/23/[GDOUCTF%202023]Check_Your_Luck/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -188,19 +190,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2024/12/23/%5BHNCTF%202022%20WEEK2%5D%E6%9D%A5%E8%A7%A3%E4%B8%AA%E6%96%B9%E7%A8%8B/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            [HNCTF 2022 WEEK2]来解个方程
-          
-        </div>
-      </a>
     
-    
-      <a href="/2024/12/22/reverse%EF%BC%9AEZ_DOC/" class="article-nav-link">
+      <a href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">reverse：EZ_DOC</div>
+        <div class="article-nav-title">[HDCTF 2023]fake_game</div>
       </a>
     
   </nav>

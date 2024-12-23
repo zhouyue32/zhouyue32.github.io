@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>reverse：pythonre |  zhouyue&#39;s blog</title>
+      <title>[HDCTF 2023]fake_game |  zhouyue&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-reverse：pythonre"
+  id="post-[HDCTF 2023]fake_game"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  reverse：pythonre
+  [HDCTF 2023]fake_game
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/12/22/reverse%EF%BC%9Apythonre/" class="article-date">
-  <time datetime="2024-12-22T10:10:55.000Z" itemprop="datePublished">2024-12-22</time>
+      <a href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/" class="article-date">
+  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">297</span>
+            <span class="post-count">447</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">2 min</span>
         </span>
     </span>
 </div>
@@ -104,15 +104,21 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="reverse：pythonre"><a href="#reverse：pythonre" class="headerlink" title="reverse：pythonre"></a>reverse：pythonre</h1><p>​	打开附件，可以看到是.pyc文件，直接用pycdc解密即可，解密之后代码如下：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
+  <h1 id="HDCTF-2023-fake-game"><a href="#HDCTF-2023-fake-game" class="headerlink" title="[HDCTF 2023]fake_game"></a>[HDCTF 2023]fake_game</h1><p>​	希望出题人的双亲也是fake的 :smile:,这题就是简单的python逆向，需要注意的是用pycdc会有部分无法编译，建议使用uncompyle6，提取关键代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ans = [<span class="number">0</span>] * <span class="number">55</span></span><br><span class="line">       flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>, </span><br><span class="line">        <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>, </span><br><span class="line">        <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>] </span><br><span class="line">   </span><br><span class="line">   		xorr[<span class="number">0</span>] = MainGame.money</span><br><span class="line">           xorr[<span class="number">1</span>] = MainGame.shaoguan</span><br><span class="line">           xorr[<span class="number">2</span>] = MainGame.score</span><br><span class="line">           xorr[<span class="number">3</span>] = MainGame.remnant_score</span><br><span class="line">           <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>:</span><br><span class="line">               <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>:</span><br><span class="line">                   <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>:</span><br><span class="line">                       <span class="keyword">if</span> (xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>:</span><br><span class="line">                           <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">                               ans[i] = flag[i] ^ xorr[i % <span class="number">4</span>]</span><br><span class="line">                           <span class="keyword">else</span>:</span><br><span class="line">                               <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                                   f.write(<span class="string">&quot;&quot;</span>.join([<span class="built_in">chr</span>(a) <span class="keyword">for</span> a <span class="keyword">in</span> ans]))</span><br></pre></td></tr></table></figure>
 
-<p>显然，这是一个AES加解密，看Evidence中的是AES解密，我们可以猜测下文中的text就是密文，经过上述流程就可以解出flag，稍作修改：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> b2a_hex, a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aestest</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cipher = AES.new(<span class="variable language_">self</span>.key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, text</span>):</span><br><span class="line">        padded_text = pad(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)</span><br><span class="line">        encrypted = <span class="variable language_">self</span>.cipher.encrypt(padded_text)</span><br><span class="line">        <span class="keyword">return</span> b2a_hex(encrypted)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, enc_text</span>):</span><br><span class="line">        encrypted = a2b_hex(enc_text)</span><br><span class="line">        decrypted = <span class="variable language_">self</span>.cipher.decrypt(encrypted)</span><br><span class="line">        <span class="keyword">return</span> unpad(decrypted, AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Evidence</span>(<span class="params">text, key</span>):</span><br><span class="line">    aes = aestest(key)</span><br><span class="line">    detext = aes.decrypt(text)</span><br><span class="line">    <span class="built_in">print</span>(aes)</span><br><span class="line">    <span class="built_in">print</span>(detext)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    text = <span class="string">b&#x27;d6e7e40e61c0d951c84dc8f0d03596a087ecc6b690b45a9b8d4c749deb465b51&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;Chong_mou_people&#x27;</span></span><br><span class="line">    Evidence(text, key)</span><br></pre></td></tr></table></figure>
+<p>写出解密代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line">flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>,</span><br><span class="line">         <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>,</span><br><span class="line">         <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>]</span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    xorr[i] = Int(<span class="string">f&quot;xorr[&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;]&quot;</span>)</span><br><span class="line">s = Solver()</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>)</span><br><span class="line">s.add((xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>)</span><br><span class="line">check = s.check()</span><br><span class="line"><span class="built_in">print</span>(s.model())</span><br><span class="line"></span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line">xorr[<span class="number">1</span>] = <span class="number">248</span></span><br><span class="line">xorr[<span class="number">0</span>] = <span class="number">178940</span></span><br><span class="line">xorr[<span class="number">2</span>] = <span class="number">56890</span></span><br><span class="line">xorr[<span class="number">3</span>] = <span class="number">2360</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">chr</span>(flag[i] ^ xorr[i % <span class="number">4</span>]),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>输出的结果为：</p>
-<p><img src="C:\Users\zhouyue\AppData\Roaming\Typora\typora-user-images\image-20241208114813005.png" alt="image-20241208114813005"></p>
-<p>得到flag</p>
+<p>这个是错误的，会得到flag如下：</p>
+<p>​			HDCUF{G1Od_ql2y2r_f1r_Pwz!!|</p>
+<p>这边仔细观察可以发现，每4个一组的最后一个字符有问题，初步判断是xorr[3]除了问题，可能此题的方程组解并不是严格解，加上一条排除严格解的代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.add(xorr[<span class="number">3</span>]!=<span class="number">2360</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行修改后的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDCTF&#123;G0Od_pl2y3r_f0r_Pvz!!&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对了</p>
  
       <!-- reward -->
       
@@ -177,7 +183,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/22/reverse%EF%BC%9Apythonre/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/23/[HDCTF%202023]fake_game/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -188,19 +194,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2024/12/23/%5BHNCTF%202022%20WEEK2%5D%E6%9D%A5%E8%A7%A3%E4%B8%AA%E6%96%B9%E7%A8%8B/" class="article-nav-link">
+      <a href="/2024/12/23/%5BGDOUCTF%202023%5DCheck_Your_Luck/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            [HNCTF 2022 WEEK2]来解个方程
+            [GDOUCTF 2023]Check_Your_Luck
           
         </div>
       </a>
     
     
-      <a href="/2024/12/22/reverse%EF%BC%9AEZ_DOC/" class="article-nav-link">
+      <a href="/2024/12/23/%5B%E7%BE%8A%E5%9F%8E%E6%9D%AF%202020%5Dlogin/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">reverse：EZ_DOC</div>
+        <div class="article-nav-title">[羊城杯 2020]login</div>
       </a>
     
   </nav>
