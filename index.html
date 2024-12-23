@@ -228,6 +228,68 @@
 
     
     <article
+  id="post-[HDCTF 2023]fake_game"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/"
+    >[HDCTF 2023]fake_game</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/" class="article-date">
+  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="HDCTF-2023-fake-game"><a href="#HDCTF-2023-fake-game" class="headerlink" title="[HDCTF 2023]fake_game"></a>[HDCTF 2023]fake_game</h1><p>​	希望出题人的双亲也是fake的 :smile:,这题就是简单的python逆向，需要注意的是用pycdc会有部分无法编译，建议使用uncompyle6，提取关键代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ans = [<span class="number">0</span>] * <span class="number">55</span></span><br><span class="line">       flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>, </span><br><span class="line">        <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>, </span><br><span class="line">        <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>] </span><br><span class="line">   </span><br><span class="line">   		xorr[<span class="number">0</span>] = MainGame.money</span><br><span class="line">           xorr[<span class="number">1</span>] = MainGame.shaoguan</span><br><span class="line">           xorr[<span class="number">2</span>] = MainGame.score</span><br><span class="line">           xorr[<span class="number">3</span>] = MainGame.remnant_score</span><br><span class="line">           <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>:</span><br><span class="line">               <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>:</span><br><span class="line">                   <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>:</span><br><span class="line">                       <span class="keyword">if</span> (xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>:</span><br><span class="line">                           <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">                               ans[i] = flag[i] ^ xorr[i % <span class="number">4</span>]</span><br><span class="line">                           <span class="keyword">else</span>:</span><br><span class="line">                               <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                                   f.write(<span class="string">&quot;&quot;</span>.join([<span class="built_in">chr</span>(a) <span class="keyword">for</span> a <span class="keyword">in</span> ans]))</span><br></pre></td></tr></table></figure>
+
+<p>写出解密代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line">flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>,</span><br><span class="line">         <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>,</span><br><span class="line">         <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>]</span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    xorr[i] = Int(<span class="string">f&quot;xorr[&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;]&quot;</span>)</span><br><span class="line">s = Solver()</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>)</span><br><span class="line">s.add((xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>)</span><br><span class="line">check = s.check()</span><br><span class="line"><span class="built_in">print</span>(s.model())</span><br><span class="line"></span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line">xorr[<span class="number">1</span>] = <span class="number">248</span></span><br><span class="line">xorr[<span class="number">0</span>] = <span class="number">178940</span></span><br><span class="line">xorr[<span class="number">2</span>] = <span class="number">56890</span></span><br><span class="line">xorr[<span class="number">3</span>] = <span class="number">2360</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">chr</span>(flag[i] ^ xorr[i % <span class="number">4</span>]),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这个是错误的，会得到flag如下：</p>
+<p>​			HDCUF{G1Od_ql2y2r_f1r_Pwz!!|</p>
+<p>这边仔细观察可以发现，每4个一组的最后一个字符有问题，初步判断是xorr[3]除了问题，可能此题的方程组解并不是严格解，加上一条排除严格解的代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.add(xorr[<span class="number">3</span>]!=<span class="number">2360</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行修改后的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDCTF&#123;G0Od_pl2y3r_f0r_Pvz!!&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对了</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-[羊城杯 2020]login"
   class="article article-type-post"
   itemscope
@@ -321,68 +383,6 @@
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">22</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;v<span class="subst">&#123;i+<span class="number">2</span>&#125;</span>=code[<span class="subst">&#123;i&#125;</span>]&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>将结果复制作为代码即可，还有像这样ida中繁杂且多的原代码尽量别进行修改，很麻烦</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-[HDCTF 2023]fake_game"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/"
-    >[HDCTF 2023]fake_game</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/" class="article-date">
-  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="HDCTF-2023-fake-game"><a href="#HDCTF-2023-fake-game" class="headerlink" title="[HDCTF 2023]fake_game"></a>[HDCTF 2023]fake_game</h1><p>​	希望出题人的双亲也是fake的 :smile:,这题就是简单的python逆向，需要注意的是用pycdc会有部分无法编译，建议使用uncompyle6，提取关键代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ans = [<span class="number">0</span>] * <span class="number">55</span></span><br><span class="line">       flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>, </span><br><span class="line">        <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>, </span><br><span class="line">        <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>] </span><br><span class="line">   </span><br><span class="line">   		xorr[<span class="number">0</span>] = MainGame.money</span><br><span class="line">           xorr[<span class="number">1</span>] = MainGame.shaoguan</span><br><span class="line">           xorr[<span class="number">2</span>] = MainGame.score</span><br><span class="line">           xorr[<span class="number">3</span>] = MainGame.remnant_score</span><br><span class="line">           <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>:</span><br><span class="line">               <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>:</span><br><span class="line">                   <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>:</span><br><span class="line">                       <span class="keyword">if</span> (xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>:</span><br><span class="line">                           <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">                               ans[i] = flag[i] ^ xorr[i % <span class="number">4</span>]</span><br><span class="line">                           <span class="keyword">else</span>:</span><br><span class="line">                               <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                                   f.write(<span class="string">&quot;&quot;</span>.join([<span class="built_in">chr</span>(a) <span class="keyword">for</span> a <span class="keyword">in</span> ans]))</span><br></pre></td></tr></table></figure>
-
-<p>写出解密代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line">flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>,</span><br><span class="line">         <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>,</span><br><span class="line">         <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>]</span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    xorr[i] = Int(<span class="string">f&quot;xorr[&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;]&quot;</span>)</span><br><span class="line">s = Solver()</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>)</span><br><span class="line">s.add((xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>)</span><br><span class="line">check = s.check()</span><br><span class="line"><span class="built_in">print</span>(s.model())</span><br><span class="line"></span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line">xorr[<span class="number">1</span>] = <span class="number">248</span></span><br><span class="line">xorr[<span class="number">0</span>] = <span class="number">178940</span></span><br><span class="line">xorr[<span class="number">2</span>] = <span class="number">56890</span></span><br><span class="line">xorr[<span class="number">3</span>] = <span class="number">2360</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">chr</span>(flag[i] ^ xorr[i % <span class="number">4</span>]),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>这个是错误的，会得到flag如下：</p>
-<p>​			HDCUF{G1Od_ql2y2r_f1r_Pwz!!|</p>
-<p>这边仔细观察可以发现，每4个一组的最后一个字符有问题，初步判断是xorr[3]除了问题，可能此题的方程组解并不是严格解，加上一条排除严格解的代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.add(xorr[<span class="number">3</span>]!=<span class="number">2360</span>)</span><br></pre></td></tr></table></figure>
-
-<p>运行修改后的代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDCTF&#123;G0Od_pl2y3r_f0r_Pvz!!&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对了</p>
  
       <!-- reward -->
       
@@ -537,7 +537,11 @@
     <div class="article-meta">
       <a href="/2024/12/21/%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%E2%80%94%E2%80%94%E8%A7%A3%E5%AF%86%E7%AF%872/" class="article-date">
   <time datetime="2024-12-21T10:11:19.000Z" itemprop="datePublished">2024-12-21</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">
@@ -765,7 +769,11 @@
     <div class="article-meta">
       <a href="/2024/12/21/%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%E2%80%94%E2%80%94%E8%A7%A3%E5%AF%86%E7%AF%871/" class="article-date">
   <time datetime="2024-12-21T10:09:14.000Z" itemprop="datePublished">2024-12-21</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">
@@ -1453,7 +1461,11 @@
     <div class="article-meta">
       <a href="/2024/12/21/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
   <time datetime="2024-12-21T10:06:47.000Z" itemprop="datePublished">2024-12-21</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">
