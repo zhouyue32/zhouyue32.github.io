@@ -170,6 +170,73 @@
     
     
     <article
+  id="post-[GFCTF 2021]wordy"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/25/%5BGFCTF%202021%5Dwordy/"
+    >[GFCTF 2021]wordy</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">2024-12-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
+<p><img src="/./../imgs/image-20241127215043351.png" alt="image-20241127215043351"></p>
+<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/./../imgs/image-20241127215345825.png" alt="image-20241127215345825"></p>
+<p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
+
+<p>换完如下：</p>
+<p><img src="/./../imgs/image-20241127215809584.png" alt="image-20241127215809584"></p>
+<p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>有：</p>
+<p><img src="/./../imgs/image-20241127220008628.png" alt="image-20241127220008628"></p>
+<p>提交flag发现正确</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-[HNCTF 2022 WEEK2]e@sy_flower"
   class="article article-type-post"
   itemscope
@@ -330,73 +397,6 @@
 <p>写出解密代码：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cipher = [<span class="number">0x7F</span>, <span class="number">0x7E</span>, <span class="number">0x51</span>, <span class="number">0xCE</span>, <span class="number">0xFB</span>, <span class="number">0x4E</span>, <span class="number">0x7A</span>, <span class="number">0x24</span>, <span class="number">0xE8</span>, <span class="number">0xDF</span>,</span><br><span class="line">  <span class="number">0x59</span>, <span class="number">0x71</span>, <span class="number">0x26</span>, <span class="number">0xCA</span>, <span class="number">0xE1</span>, <span class="number">0x6C</span>, <span class="number">0x86</span>, <span class="number">0x21</span>, <span class="number">0xCC</span>, <span class="number">0xF5</span>,</span><br><span class="line">  <span class="number">0x28</span>, <span class="number">0x71</span>, <span class="number">0x14</span>, <span class="number">0xD8</span>, <span class="number">0xEF</span>, <span class="number">0x6E</span>, <span class="number">0x77</span>, <span class="number">0x62</span>, <span class="number">0xFA</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cipher)):</span><br><span class="line">    a = i % <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i] ^ <span class="number">0x19</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i]-<span class="number">18</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i]+<span class="number">16</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>((cipher[i] &gt;&gt; <span class="number">1</span>) &amp; <span class="number">0xff</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">4</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i] ^ <span class="number">0x80</span>),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
 
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-[GFCTF 2021]wordy"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/25/%5BGFCTF%202021%5Dwordy/"
-    >[GFCTF 2021]wordy</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="article-date">
-  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">2024-12-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
-<p><img src="/...%5Cimgs%5Cimage-20241127215043351.png" alt="image-20241127215043351"></p>
-<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/...%5Cimgs%5Cimage-20241127215345825.png" alt="image-20241127215345825"></p>
-<p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
-
-<p>换完如下：</p>
-<p><img src="/...%5Cimgs%5Cimage-20241127215809584.png" alt="image-20241127215809584"></p>
-<p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>有：</p>
-<p><img src="/...%5Cimgs%5Cimage-20241127220008628.png" alt="image-20241127220008628"></p>
-<p>提交flag发现正确</p>
  
       <!-- reward -->
       
