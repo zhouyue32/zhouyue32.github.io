@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>reverse：EZ_DOC |  zhouyue&#39;s blog</title>
+      <title>Tag: 花指令 |  zhouyue&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -52,173 +52,197 @@
       
     <main class="content on">
       <section class="outer">
-  <article
-  id="post-reverse：EZ_DOC"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  reverse：EZ_DOC
-</h1>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/22/reverse%EF%BC%9AEZ_DOC/" class="article-date">
-  <time datetime="2024-12-22T09:30:00.000Z" itemprop="datePublished">2024-12-22</time>
-</a>   
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">181</span>
-        </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
-        </span>
-    </span>
-</div>
- 
-    </div>
-      
-    <div class="tocbot"></div>
-
-
-
-
   
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="reverse：EZ-DOC"><a href="#reverse：EZ-DOC" class="headerlink" title="reverse：EZ_DOC"></a>reverse：EZ_DOC</h1><p>​	打开附件，进010，发现不是一般的.doc文件，甚至可能不是.doc文件，查找发现base64的字样，还有很多base64加密特征的字符串，可以考虑将特殊字符提取出来base64解密看看有没有提示信息，由于我不会使用010，所以进ida分析二进制文件：</p>
-<p><img src="/./../imgs/image-20241222164913139.png" alt="image-20241222164913139"></p>
-<p>将字符串解密即可得到如下字符串：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">caesar_cipher_encrypt</span>(<span class="params">text, shift</span>):</span><br><span class="line"><span class="keyword">return</span> encrypted_text</span><br><span class="line">encrypted_text = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> text:</span><br><span class="line"><span class="keyword">if</span> char.isalpha():</span><br><span class="line">encrypted_char = <span class="built_in">chr</span>((<span class="built_in">ord</span>(char) - start + shift) % <span class="number">26</span> + start)</span><br><span class="line">encrypted_text += encrypted_char</span><br><span class="line">encrypted_text += char</span><br><span class="line">original_text = <span class="string">&quot;cixd&#123;SYx_lccfzxi&#125;&quot;</span></span><br><span class="line">encrypted = caesar_cipher_encrypt(original_text, shift_amount)</span><br><span class="line">rt = <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) <span class="keyword">if</span> char.islower() <span class="keyword">else</span> <span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>很显然这是凯撒加密，直接将oringinal_text右移4位即可。</p>
-<p>得到flag：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;VBa_offical&#125;</span><br></pre></td></tr></table></figure>
-
- 
-      <!-- reward -->
-      
-    </div>
+  <ul class="ads">
     
-
-    <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
         <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-          
+            <a target="_blank" rel="noopener" href="https://curl.qcloud.com/kvO7hb43">
+                <img src="https://pic.imgdb.cn/item/62174b452ab3f51d912a5ccc.jpg" width="300" alt="云服务器限时秒杀">
+            </a>
         </li>
-      </ul>
-    </div>
     
-    <footer class="article-footer">
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=8630075">
+                <img src="https://pic.imgdb.cn/item/62174b452ab3f51d912a5cd7.png" width="300" alt="vultr优惠vps">
+            </a>
+        </li>
+    
+</ul>
+  
+  
+  <article class="articles">
+    
+    
+    <h1 class="page-type-title">#&nbsp花指令</h1>
+    
+    
+  
+  
+  
+  
+  
+  
+  <div class="archives-wrap">
+    <div class="archive-year-wrap">
+      <a href="/archives/2024" class="archive-year">2024</a>
+    </div>
+    <div class="archives">
+      
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/" class="archive-article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">12/25</time>
+</a>
        
-<div class="share-btn">
-      <span class="share-sns share-outer">
-        <i class="ri-share-forward-line"></i>
-        分享
-      </span>
-      <div class="share-wrap">
-        <i class="arrow"></i>
-        <div class="share-icons">
-          
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="ri-weibo-fill"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="ri-wechat-fill"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="ri-qq-fill"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="ri-douban-line"></i>
-          </a>
-          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a> -->
-          
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="ri-facebook-circle-fill"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="ri-twitter-fill"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="ri-google-fill"></i>
-          </a>
-        </div>
-      </div>
-</div>
-
-<div class="wx-share-modal">
-    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/22/reverse%EF%BC%9AEZ_DOC/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div id="share-mask"></div>  
-    </footer>
-  </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2024/12/22/reverse%EF%BC%9Apythonre/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            reverse：pythonre
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2024/12/21/%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%E2%80%94%E2%80%94%E8%A7%A3%E5%AF%86%E7%AF%872/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">加密与解密——解密篇2</div>
-      </a>
-    
-  </nav>
-
-  
-   
-  
-   
-    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
-    <div id="twikoo" class="twikoo"></div>
-    <script>
-        twikoo.init({
-            envId: ""
-        })
-    </script>
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/"
+    >[HNCTF 2022 WEEK2]e@sy_flower</a> 
+</h2>
  
-</article>
 
+    </header>
+    
+    
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    
+  </div>
+</article>
+      
+  
+  
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/" class="archive-article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">12/25</time>
+</a>
+       
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/"
+    >[HZNUCTF 2023 final]虽然他送了我玫瑰花</a> 
+</h2>
+ 
+
+    </header>
+    
+    
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    
+  </div>
+</article>
+      
+  
+  
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="archive-article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">12/25</time>
+</a>
+       
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2024/12/25/%5BGFCTF%202021%5Dwordy/"
+    >[GFCTF 2021]wordy</a> 
+</h2>
+ 
+
+    </header>
+    
+    
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    
+  </div>
+</article>
+      
+  
+  
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump/" class="archive-article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">12/25</time>
+</a>
+       
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump/"
+    >[NSSRound#3 Team]jump_by_jump</a> 
+</h2>
+ 
+
+    </header>
+    
+    
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    
+  </div>
+</article>
+      
+  
+  
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/" class="archive-article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">12/25</time>
+</a>
+       
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/"
+    >[NSSRound#3 Team]jump_by_jump_revenge</a> 
+</h2>
+ 
+
+    </header>
+    
+    
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    
+  </div>
+</article>
+      
+  
+  
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2024/12/25/%5BSWPUCTF%202023%20%E7%A7%8B%E5%AD%A3%E6%96%B0%E7%94%9F%E8%B5%9B%5DJunk%20Code/" class="archive-article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">12/25</time>
+</a>
+       
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2024/12/25/%5BSWPUCTF%202023%20%E7%A7%8B%E5%AD%A3%E6%96%B0%E7%94%9F%E8%B5%9B%5DJunk%20Code/"
+    >[SWPUCTF 2023 秋季新生赛]Junk Code</a> 
+</h2>
+ 
+
+    </header>
+    
+    
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    
+  </div>
+</article>
+      
+      
+    </div>
+  </div>
+  
+  
+
+  
 </section>
       <footer class="footer">
   <div class="outer">
@@ -367,22 +391,6 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
- 
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  tocbot.init({
-    tocSelector: ".tocbot",
-    contentSelector: ".article-entry",
-    headingSelector: "h1, h2, h3, h4, h5, h6",
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: "main",
-    positionFixedSelector: ".tocbot",
-    positionFixedClass: "is-position-fixed",
-    fixedSidebarOffset: "auto",
-  });
-</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
