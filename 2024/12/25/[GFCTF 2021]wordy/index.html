@@ -109,18 +109,18 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
-<p><img src="/..%5Cimgs%5Cimage-20241127215043351.png" alt="image-20241127215043351"></p>
-<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/..%5Cimgs%5Cimage-20241127215345825.png" alt="image-20241127215345825"></p>
+<p><img src="/...%5Cimgs%5Cimage-20241127215043351.png" alt="image-20241127215043351"></p>
+<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/...%5Cimgs%5Cimage-20241127215345825.png" alt="image-20241127215345825"></p>
 <p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
 
 <p>换完如下：</p>
-<p><img src="/..%5Cimgs%5Cimage-20241127215809584.png" alt="image-20241127215809584"></p>
+<p><img src="/...%5Cimgs%5Cimage-20241127215809584.png" alt="image-20241127215809584"></p>
 <p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>有：</p>
-<p><img src="/..%5Cimgs%5Cimage-20241127220008628.png" alt="image-20241127220008628"></p>
+<p><img src="/...%5Cimgs%5Cimage-20241127220008628.png" alt="image-20241127220008628"></p>
 <p>提交flag发现正确</p>
  
       <!-- reward -->
@@ -209,9 +209,9 @@
       </a>
     
     
-      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump/" class="article-nav-link">
+      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">[NSSRound#3 Team]jump_by_jump</div>
+        <div class="article-nav-title">[NSSRound#3 Team]jump_by_jump_revenge</div>
       </a>
     
   </nav>
