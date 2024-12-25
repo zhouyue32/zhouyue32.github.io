@@ -170,67 +170,6 @@
     
     
     <article
-  id="post-[GFCTF 2021]wordy"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/25/%5BGFCTF%202021%5Dwordy/"
-    >[GFCTF 2021]wordy</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="article-date">
-  <time datetime="2024-12-25T07:29:25.000Z" itemprop="datePublished">2024-12-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
-<p><img src="/./../imgs/%5Cimage-20241127215043351.png" alt="image-20241127215043351"></p>
-<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/./../imgs/%5Cimage-20241127215345825.png" alt="image-20241127215345825"></p>
-<p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
-
-<p>换完如下：</p>
-<p><img src="/./../imgs/%5Cimage-20241127215809584.png" alt="image-20241127215809584"></p>
-<p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>有：</p>
-<p><img src="/./../imgs/%5Cimage-20241127220008628.png" alt="image-20241127220008628"></p>
-<p>提交flag发现正确</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
   id="post-[HNCTF 2022 WEEK2]e@sy_flower"
   class="article article-type-post"
   itemscope
@@ -253,7 +192,11 @@
     <div class="article-meta">
       <a href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/" class="article-date">
   <time datetime="2024-12-25T07:29:25.000Z" itemprop="datePublished">2024-12-25</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp/">题目wp</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">
@@ -344,6 +287,67 @@
 
     
     <article
+  id="post-[GFCTF 2021]wordy"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/25/%5BGFCTF%202021%5Dwordy/"
+    >[GFCTF 2021]wordy</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="article-date">
+  <time datetime="2024-12-25T07:29:25.000Z" itemprop="datePublished">2024-12-25</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
+<p><img src="/./../imgs/%5Cimage-20241127215043351.png" alt="image-20241127215043351"></p>
+<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/./../imgs/%5Cimage-20241127215345825.png" alt="image-20241127215345825"></p>
+<p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
+
+<p>换完如下：</p>
+<p><img src="/./../imgs/%5Cimage-20241127215809584.png" alt="image-20241127215809584"></p>
+<p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>有：</p>
+<p><img src="/./../imgs/%5Cimage-20241127220008628.png" alt="image-20241127220008628"></p>
+<p>提交flag发现正确</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-[MoeCTF 2022]chicken_soup"
   class="article article-type-post"
   itemscope
@@ -387,6 +391,67 @@
 
 <p>运行得到结果：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;p4tch_pr0gr4m_t0_d3c0mpi1e_it!&#125;</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-[NSSRound#3 Team]jump_by_jump_revenge"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/"
+    >[NSSRound#3 Team]jump_by_jump_revenge</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/" class="article-date">
+  <time datetime="2024-12-25T07:29:25.000Z" itemprop="datePublished">2024-12-25</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="NSSRound-3-Team-jump-by-jump-revenge"><a href="#NSSRound-3-Team-jump-by-jump-revenge" class="headerlink" title="[NSSRound#3 Team]jump_by_jump_revenge"></a>[NSSRound#3 Team]jump_by_jump_revenge</h1><p>​	打开附件，进ida，是花指令，没什么特别的，看看加密逻辑：</p>
+<p><img src="C:\Users\zhouyue\AppData\Roaming\Typora\typora-user-images\image-20241128182312187.png" alt="image-20241128182312187"></p>
+<p>分析如下：</p>
+<ol>
+<li>如果我们从最后一位向前推导，只要 i 大于 (i * i + 123) % 21 那么下标 (i * i + 123) % 21 对应的字符一定是已经经过变换的字符，我们可以直接从 “<del>4G</del>M:&#x3D;WV7iX,zlViGmu4?hJ0H-Q*” 中找到</li>
+<li>如果我们从最后一位向前推导，当 i 小于 (i * i + 123) % 21 时，那么下标 (i * i + 123) % 21 对应的字符一定是我们已经在推导过程中得到的，如果我们将已经推导出的字符存在字符串 flag 中，那么我们可以直接从 flag 中找到</li>
+<li>至于对 96 取模，我们可以以ASCII码值在合理范围内（33-125）为判断条件，通过少量的爆破得到正确的倍数</li>
+</ol>
+<p>写出解密代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cipher = <span class="string">&quot;~4G~M:=WV7iX,zlViGmu4?hJ0H-Q*&quot;</span></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cipher)-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        <span class="keyword">if</span> i &gt; (i * i + <span class="number">123</span>) % <span class="number">21</span>:</span><br><span class="line">            ascii_num = <span class="built_in">ord</span>(cipher[i]) - <span class="number">32</span> + j * <span class="number">96</span> - <span class="built_in">ord</span>(cipher[(i * i + <span class="number">123</span>) % <span class="number">21</span>])</span><br><span class="line">            <span class="keyword">if</span> <span class="number">32</span>&lt;= ascii_num &lt;=<span class="number">125</span>:</span><br><span class="line">                flag += <span class="built_in">chr</span>(ascii_num)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ascii_num = <span class="built_in">ord</span>(cipher[i]) - <span class="number">32</span> + j * <span class="number">96</span> - <span class="built_in">ord</span>(flag[<span class="built_in">len</span>(cipher)-<span class="number">1</span>-((i * i + <span class="number">123</span>) % <span class="number">21</span>)])</span><br><span class="line">            <span class="keyword">if</span> <span class="number">32</span> &lt;= ascii_num &lt;= <span class="number">125</span>:</span><br><span class="line">                flag += <span class="built_in">chr</span>(ascii_num)</span><br><span class="line"><span class="built_in">print</span>(flag[::-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;Jump_b9_jump!_r3V3n9e&#125;</span><br></pre></td></tr></table></figure>
 
  
       <!-- reward -->
@@ -516,7 +581,7 @@
 
     
     <article
-  id="post-[NSSRound#3 Team]jump_by_jump_revenge"
+  id="post-[HDCTF 2023]fake_game"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -527,8 +592,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/"
-    >[NSSRound#3 Team]jump_by_jump_revenge</a> 
+  <a class="article-title" href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/"
+    >[HDCTF 2023]fake_game</a> 
 </h2>
  
 
@@ -536,27 +601,28 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/" class="article-date">
-  <time datetime="2024-12-25T07:29:25.000Z" itemprop="datePublished">2024-12-25</time>
+      <a href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/" class="article-date">
+  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="NSSRound-3-Team-jump-by-jump-revenge"><a href="#NSSRound-3-Team-jump-by-jump-revenge" class="headerlink" title="[NSSRound#3 Team]jump_by_jump_revenge"></a>[NSSRound#3 Team]jump_by_jump_revenge</h1><p>​	打开附件，进ida，是花指令，没什么特别的，看看加密逻辑：</p>
-<p><img src="C:\Users\zhouyue\AppData\Roaming\Typora\typora-user-images\image-20241128182312187.png" alt="image-20241128182312187"></p>
-<p>分析如下：</p>
-<ol>
-<li>如果我们从最后一位向前推导，只要 i 大于 (i * i + 123) % 21 那么下标 (i * i + 123) % 21 对应的字符一定是已经经过变换的字符，我们可以直接从 “<del>4G</del>M:&#x3D;WV7iX,zlViGmu4?hJ0H-Q*” 中找到</li>
-<li>如果我们从最后一位向前推导，当 i 小于 (i * i + 123) % 21 时，那么下标 (i * i + 123) % 21 对应的字符一定是我们已经在推导过程中得到的，如果我们将已经推导出的字符存在字符串 flag 中，那么我们可以直接从 flag 中找到</li>
-<li>至于对 96 取模，我们可以以ASCII码值在合理范围内（33-125）为判断条件，通过少量的爆破得到正确的倍数</li>
-</ol>
+  <h1 id="HDCTF-2023-fake-game"><a href="#HDCTF-2023-fake-game" class="headerlink" title="[HDCTF 2023]fake_game"></a>[HDCTF 2023]fake_game</h1><p>​	希望出题人的双亲也是fake的 :smile:,这题就是简单的python逆向，需要注意的是用pycdc会有部分无法编译，建议使用uncompyle6，提取关键代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ans = [<span class="number">0</span>] * <span class="number">55</span></span><br><span class="line">       flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>, </span><br><span class="line">        <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>, </span><br><span class="line">        <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>] </span><br><span class="line">   </span><br><span class="line">   		xorr[<span class="number">0</span>] = MainGame.money</span><br><span class="line">           xorr[<span class="number">1</span>] = MainGame.shaoguan</span><br><span class="line">           xorr[<span class="number">2</span>] = MainGame.score</span><br><span class="line">           xorr[<span class="number">3</span>] = MainGame.remnant_score</span><br><span class="line">           <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>:</span><br><span class="line">               <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>:</span><br><span class="line">                   <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>:</span><br><span class="line">                       <span class="keyword">if</span> (xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>:</span><br><span class="line">                           <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">                               ans[i] = flag[i] ^ xorr[i % <span class="number">4</span>]</span><br><span class="line">                           <span class="keyword">else</span>:</span><br><span class="line">                               <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                                   f.write(<span class="string">&quot;&quot;</span>.join([<span class="built_in">chr</span>(a) <span class="keyword">for</span> a <span class="keyword">in</span> ans]))</span><br></pre></td></tr></table></figure>
+
 <p>写出解密代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cipher = <span class="string">&quot;~4G~M:=WV7iX,zlViGmu4?hJ0H-Q*&quot;</span></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cipher)-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        <span class="keyword">if</span> i &gt; (i * i + <span class="number">123</span>) % <span class="number">21</span>:</span><br><span class="line">            ascii_num = <span class="built_in">ord</span>(cipher[i]) - <span class="number">32</span> + j * <span class="number">96</span> - <span class="built_in">ord</span>(cipher[(i * i + <span class="number">123</span>) % <span class="number">21</span>])</span><br><span class="line">            <span class="keyword">if</span> <span class="number">32</span>&lt;= ascii_num &lt;=<span class="number">125</span>:</span><br><span class="line">                flag += <span class="built_in">chr</span>(ascii_num)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ascii_num = <span class="built_in">ord</span>(cipher[i]) - <span class="number">32</span> + j * <span class="number">96</span> - <span class="built_in">ord</span>(flag[<span class="built_in">len</span>(cipher)-<span class="number">1</span>-((i * i + <span class="number">123</span>) % <span class="number">21</span>)])</span><br><span class="line">            <span class="keyword">if</span> <span class="number">32</span> &lt;= ascii_num &lt;= <span class="number">125</span>:</span><br><span class="line">                flag += <span class="built_in">chr</span>(ascii_num)</span><br><span class="line"><span class="built_in">print</span>(flag[::-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line">flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>,</span><br><span class="line">         <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>,</span><br><span class="line">         <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>]</span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    xorr[i] = Int(<span class="string">f&quot;xorr[&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;]&quot;</span>)</span><br><span class="line">s = Solver()</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>)</span><br><span class="line">s.add((xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>)</span><br><span class="line">check = s.check()</span><br><span class="line"><span class="built_in">print</span>(s.model())</span><br><span class="line"></span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line">xorr[<span class="number">1</span>] = <span class="number">248</span></span><br><span class="line">xorr[<span class="number">0</span>] = <span class="number">178940</span></span><br><span class="line">xorr[<span class="number">2</span>] = <span class="number">56890</span></span><br><span class="line">xorr[<span class="number">3</span>] = <span class="number">2360</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">chr</span>(flag[i] ^ xorr[i % <span class="number">4</span>]),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>结果为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;Jump_b9_jump!_r3V3n9e&#125;</span><br></pre></td></tr></table></figure>
+<p>这个是错误的，会得到flag如下：</p>
+<p>​			HDCUF{G1Od_ql2y2r_f1r_Pwz!!|</p>
+<p>这边仔细观察可以发现，每4个一组的最后一个字符有问题，初步判断是xorr[3]除了问题，可能此题的方程组解并不是严格解，加上一条排除严格解的代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.add(xorr[<span class="number">3</span>]!=<span class="number">2360</span>)</span><br></pre></td></tr></table></figure>
 
+<p>运行修改后的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDCTF&#123;G0Od_pl2y3r_f0r_Pvz!!&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对了</p>
  
       <!-- reward -->
       
@@ -615,68 +681,6 @@
 <p>得到flag为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;4544_123_677_1754_777&#125;</span><br></pre></td></tr></table></figure>
 
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-[HDCTF 2023]fake_game"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/"
-    >[HDCTF 2023]fake_game</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/23/%5BHDCTF%202023%5Dfake_game/" class="article-date">
-  <time datetime="2024-12-23T03:57:34.000Z" itemprop="datePublished">2024-12-23</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="HDCTF-2023-fake-game"><a href="#HDCTF-2023-fake-game" class="headerlink" title="[HDCTF 2023]fake_game"></a>[HDCTF 2023]fake_game</h1><p>​	希望出题人的双亲也是fake的 :smile:,这题就是简单的python逆向，需要注意的是用pycdc会有部分无法编译，建议使用uncompyle6，提取关键代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ans = [<span class="number">0</span>] * <span class="number">55</span></span><br><span class="line">       flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>, </span><br><span class="line">        <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>, </span><br><span class="line">        <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>] </span><br><span class="line">   </span><br><span class="line">   		xorr[<span class="number">0</span>] = MainGame.money</span><br><span class="line">           xorr[<span class="number">1</span>] = MainGame.shaoguan</span><br><span class="line">           xorr[<span class="number">2</span>] = MainGame.score</span><br><span class="line">           xorr[<span class="number">3</span>] = MainGame.remnant_score</span><br><span class="line">           <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>:</span><br><span class="line">               <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>:</span><br><span class="line">                   <span class="keyword">if</span> xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>:</span><br><span class="line">                       <span class="keyword">if</span> (xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>:</span><br><span class="line">                           <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">                               ans[i] = flag[i] ^ xorr[i % <span class="number">4</span>]</span><br><span class="line">                           <span class="keyword">else</span>:</span><br><span class="line">                               <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                                   f.write(<span class="string">&quot;&quot;</span>.join([<span class="built_in">chr</span>(a) <span class="keyword">for</span> a <span class="keyword">in</span> ans]))</span><br></pre></td></tr></table></figure>
-
-<p>写出解密代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line">flag = [<span class="number">178868</span>, <span class="number">188</span>, <span class="number">56953</span>, <span class="number">2413</span>, <span class="number">178874</span>, <span class="number">131</span>, <span class="number">56957</span>, <span class="number">2313</span>, <span class="number">178867</span>, <span class="number">156</span>,</span><br><span class="line">         <span class="number">56933</span>, <span class="number">2377</span>, <span class="number">178832</span>, <span class="number">202</span>, <span class="number">56899</span>, <span class="number">2314</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56924</span>,</span><br><span class="line">         <span class="number">2313</span>, <span class="number">178830</span>, <span class="number">167</span>, <span class="number">56938</span>, <span class="number">2383</span>, <span class="number">178822</span>, <span class="number">217</span>, <span class="number">56859</span>, <span class="number">2372</span>]</span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    xorr[i] = Int(<span class="string">f&quot;xorr[&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;]&quot;</span>)</span><br><span class="line">s = Solver()</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">256</span> - xorr[<span class="number">1</span>] / <span class="number">2</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> == <span class="number">47118166</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">252</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">23</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">1987</span> == <span class="number">46309775</span>)</span><br><span class="line">s.add(xorr[<span class="number">0</span>] * <span class="number">6</span> - xorr[<span class="number">1</span>] * <span class="number">88</span> + xorr[<span class="number">2</span>] / <span class="number">2</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">11444</span> == <span class="number">1069997</span>)</span><br><span class="line">s.add((xorr[<span class="number">0</span>] - <span class="number">652</span>) * <span class="number">2</span> - xorr[<span class="number">1</span>] * <span class="number">366</span> + xorr[<span class="number">2</span>] * <span class="number">233</span> + xorr[<span class="number">3</span>] / <span class="number">2</span> - <span class="number">13333</span> == <span class="number">13509025</span>)</span><br><span class="line">check = s.check()</span><br><span class="line"><span class="built_in">print</span>(s.model())</span><br><span class="line"></span><br><span class="line">xorr = [<span class="number">0</span>]*<span class="number">4</span></span><br><span class="line">xorr[<span class="number">1</span>] = <span class="number">248</span></span><br><span class="line">xorr[<span class="number">0</span>] = <span class="number">178940</span></span><br><span class="line">xorr[<span class="number">2</span>] = <span class="number">56890</span></span><br><span class="line">xorr[<span class="number">3</span>] = <span class="number">2360</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">chr</span>(flag[i] ^ xorr[i % <span class="number">4</span>]),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>这个是错误的，会得到flag如下：</p>
-<p>​			HDCUF{G1Od_ql2y2r_f1r_Pwz!!|</p>
-<p>这边仔细观察可以发现，每4个一组的最后一个字符有问题，初步判断是xorr[3]除了问题，可能此题的方程组解并不是严格解，加上一条排除严格解的代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.add(xorr[<span class="number">3</span>]!=<span class="number">2360</span>)</span><br></pre></td></tr></table></figure>
-
-<p>运行修改后的代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDCTF&#123;G0Od_pl2y3r_f0r_Pvz!!&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对了</p>
  
       <!-- reward -->
       

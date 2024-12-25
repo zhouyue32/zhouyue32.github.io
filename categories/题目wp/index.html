@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>[GFCTF 2021]wordy |  zhouyue&#39;s blog</title>
+      <title>题目wp |  zhouyue&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -52,178 +52,74 @@
       
     <main class="content on">
       <section class="outer">
-  <article
-  id="post-[GFCTF 2021]wordy"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  [GFCTF 2021]wordy
-</h1>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="article-date">
-  <time datetime="2024-12-25T07:29:25.000Z" itemprop="datePublished">2024-12-25</time>
-</a>   
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">220</span>
-        </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
-        </span>
-    </span>
-</div>
- 
-    </div>
-      
-    <div class="tocbot"></div>
-
-
-
-
   
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
-<p><img src="/./../imgs/%5Cimage-20241127215043351.png" alt="image-20241127215043351"></p>
-<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/./../imgs/%5Cimage-20241127215345825.png" alt="image-20241127215345825"></p>
-<p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
-
-<p>换完如下：</p>
-<p><img src="/./../imgs/%5Cimage-20241127215809584.png" alt="image-20241127215809584"></p>
-<p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>有：</p>
-<p><img src="/./../imgs/%5Cimage-20241127220008628.png" alt="image-20241127220008628"></p>
-<p>提交flag发现正确</p>
- 
-      <!-- reward -->
-      
-    </div>
+  <ul class="ads">
     
-
-    <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
         <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-          
+            <a target="_blank" rel="noopener" href="https://curl.qcloud.com/kvO7hb43">
+                <img src="https://pic.imgdb.cn/item/62174b452ab3f51d912a5ccc.jpg" width="300" alt="云服务器限时秒杀">
+            </a>
         </li>
-      </ul>
-    </div>
     
-    <footer class="article-footer">
-       
-<div class="share-btn">
-      <span class="share-sns share-outer">
-        <i class="ri-share-forward-line"></i>
-        分享
-      </span>
-      <div class="share-wrap">
-        <i class="arrow"></i>
-        <div class="share-icons">
-          
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="ri-weibo-fill"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="ri-wechat-fill"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="ri-qq-fill"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="ri-douban-line"></i>
-          </a>
-          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a> -->
-          
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="ri-facebook-circle-fill"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="ri-twitter-fill"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="ri-google-fill"></i>
-          </a>
-        </div>
-      </div>
-</div>
-
-<div class="wx-share-modal">
-    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/25/[GFCTF%202021]wordy/" alt="微信分享二维码">
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=8630075">
+                <img src="https://pic.imgdb.cn/item/62174b452ab3f51d912a5cd7.png" width="300" alt="vultr优惠vps">
+            </a>
+        </li>
+    
+</ul>
+  
+  
+  <article class="articles">
+    
+    
+    <h1 class="page-type-title">题目wp</h1>
+    
+    
+  
+  
+  
+  
+  
+  
+  <div class="archives-wrap">
+    <div class="archive-year-wrap">
+      <a href="/archives/2024" class="archive-year">2024</a>
     </div>
-</div>
+    <div class="archives">
+      
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/" class="archive-article-date">
+  <time datetime="2024-12-25T07:29:25.000Z" itemprop="datePublished">12/25</time>
+</a>
+       
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/"
+    >[HNCTF 2022 WEEK2]e@sy_flower</a> 
+</h2>
+ 
 
-<div id="share-mask"></div>  
-    </footer>
+    </header>
+    
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp/">题目wp</a>
   </div>
 
-   
-  <nav class="article-nav">
-    
-      <a href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            [HZNUCTF 2023 final]虽然他送了我玫瑰花
-          
-        </div>
-      </a>
     
     
-      <a href="/2024/12/25/%5BMoeCTF%202022%5Dchicken_soup/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">[MoeCTF 2022]chicken_soup</div>
-      </a>
-    
-  </nav>
-
-  
-   
-  
-   
-    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
-    <div id="twikoo" class="twikoo"></div>
-    <script>
-        twikoo.init({
-            envId: ""
-        })
-    </script>
- 
+  </div>
 </article>
+      
+      
+    </div>
+  </div>
+  
+  
 
+  
 </section>
       <footer class="footer">
   <div class="outer">
@@ -372,22 +268,6 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
- 
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  tocbot.init({
-    tocSelector: ".tocbot",
-    contentSelector: ".article-entry",
-    headingSelector: "h1, h2, h3, h4, h5, h6",
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: "main",
-    positionFixedSelector: ".tocbot",
-    positionFixedClass: "is-position-fixed",
-    fixedSidebarOffset: "auto",
-  });
-</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
