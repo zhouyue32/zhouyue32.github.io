@@ -109,9 +109,9 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h1 id="SWPUCTF-2023-秋季新生赛-Junk-Code"><a href="#SWPUCTF-2023-秋季新生赛-Junk-Code" class="headerlink" title="[SWPUCTF 2023 秋季新生赛]Junk Code"></a>[SWPUCTF 2023 秋季新生赛]Junk Code</h1><p>​	打开附件，junkcode，从名字都能听出来是花指令，查壳64位无壳，进ida，果不其然是花指令的显著特征：</p>
-<p><img src="/...%5Cimgs%5Cimage-20241127154048548.png" alt="image-20241127154048548"></p>
+<p><img src="/./../imgs/image-20241127154048548.png" alt="image-20241127154048548"></p>
 <p>将jmp指令删除即可，最后反编译得到：</p>
-<p><img src="/...%5Cimgs%5Cimage-20241127154134688.png" alt="image-20241127154134688"></p>
+<p><img src="/./../imgs/image-20241127154134688.png" alt="image-20241127154134688"></p>
 <p>很简单的加密，写出解密代码：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cipher = <span class="built_in">list</span>(<span class="string">&quot;NRQ@PC&#125;Vdn4tHV4Yi9cd#\\&#125;jsXz3LMuaaY0&#125;nj]`4a5&amp;WoB4glB7~u&quot;</span>)</span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cipher)):</span><br><span class="line">    flag += <span class="built_in">chr</span>(<span class="built_in">ord</span>(cipher[i]) ^ (i % <span class="number">9</span>))</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
 

@@ -108,10 +108,10 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="NSSRound-3-Team-jump-by-jump"><a href="#NSSRound-3-Team-jump-by-jump" class="headerlink" title="[NSSRound#3 Team]jump_by_jump"></a>[NSSRound#3 Team]jump_by_jump</h1><p>​	打开附件，查壳32位无壳，进ida，找到主函数入口，发现有花指令导致无法被ida检测为函数：<img src="/...%5Cimgs%5Cimage-20241128162350102.png" alt="image-20241128162350102"></p>
-<p>很典型的互补跳转跳过call指令导致ida没有识别出来junkcode。确定了E8call指令是junkcode将其nop，再反编译即可：<img src="/...%5Cimgs%5Cimage-20241128163111704.png" alt="image-20241128163111704"></p>
+  <h1 id="NSSRound-3-Team-jump-by-jump"><a href="#NSSRound-3-Team-jump-by-jump" class="headerlink" title="[NSSRound#3 Team]jump_by_jump"></a>[NSSRound#3 Team]jump_by_jump</h1><p>​	打开附件，查壳32位无壳，进ida，找到主函数入口，发现有花指令导致无法被ida检测为函数：<img src="/./../imgs/image-20241128162350102.png" alt="image-20241128162350102"></p>
+<p>很典型的互补跳转跳过call指令导致ida没有识别出来junkcode。确定了E8call指令是junkcode将其nop，再反编译即可：<img src="/./../imgs/image-20241128163111704.png" alt="image-20241128163111704"></p>
 <p>注意：这里将E8nop掉之后后面的代码并不会被判断为指令，这是因为下文的汇编代码已经确定，ida无法判断从什么地方开始的汇编代码需要刷新，这里就需要自己判断main函数的范围并将其刷新。</p>
-<p>另外，养成没事先“shift+F12”的习惯，有惊喜<img src="/...%5Cimgs%5Cimage-20241128163211139.png" alt="image-20241128163211139"></p>
+<p>另外，养成没事先“shift+F12”的习惯，有惊喜<img src="/./../imgs/image-20241128163211139.png" alt="image-20241128163211139"></p>
  
       <!-- reward -->
       
@@ -189,19 +189,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/" class="article-nav-link">
+      <a href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            [HNCTF 2022 WEEK2]e@sy_flower
+            [HZNUCTF 2023 final]虽然他送了我玫瑰花
           
         </div>
       </a>
     
     
-      <a href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/" class="article-nav-link">
+      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump_revenge/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">[HZNUCTF 2023 final]虽然他送了我玫瑰花</div>
+        <div class="article-nav-title">[NSSRound#3 Team]jump_by_jump_revenge</div>
       </a>
     
   </nav>
