@@ -170,6 +170,148 @@
     
     
     <article
+  id="post-前端学习笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/21/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+    >前端学习笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/21/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2024-12-21T10:06:47.000Z" itemprop="datePublished">2024-12-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="前端学习笔记"><a href="#前端学习笔记" class="headerlink" title="前端学习笔记"></a>前端学习笔记</h1><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><h3 id="HTML标签"><a href="#HTML标签" class="headerlink" title="HTML标签"></a>HTML标签</h3><ul>
+<li><p>HTML(Hypertext Markup Language)，通过一系列的**标签(或者说元素)**来定义文本，图像，链接等。HTML标签是由尖括号包围的关键字。</p>
+</li>
+<li><p>标签通常成对出现，包括开始标签和结束标签，内容位于这两个标签之内，eg:</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是一个标题。<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>这是一个超链接。<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>除了双标签，也存在单标签，eg:</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>区别：单标签用于没有内容的元素，双标签用于有内容的元素</p>
+<h3 id="HTML文件结构"><a href="#HTML文件结构" class="headerlink" title="HTML文件结构"></a>HTML文件结构</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这里放置文档的元信息 -- &gt;</span></span><br><span class="line"><span class="comment">&lt;! DOCTYPE html&gt;</span></span><br><span class="line"><span class="comment">&lt;html&gt;</span></span><br><span class="line"><span class="comment">    &lt;head&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 这里放置文档的元信息 -- &gt;</span></span><br><span class="line"><span class="comment">        &lt;title&gt;文档标题&lt;/title&gt;</span></span><br><span class="line"><span class="comment">        &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 连接外部样式表或脚本文件等 -- &gt;</span></span><br><span class="line"><span class="comment">        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;</span></span><br><span class="line"><span class="comment">        &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="comment">    &lt;/head&gt;</span></span><br><span class="line"><span class="comment">    &lt;body&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 这里放置页面内容 -- &gt;</span></span><br><span class="line"><span class="comment">        &lt;h1&gt;这是一个标题&lt;/h1&gt;</span></span><br><span class="line"><span class="comment">        &lt;p&gt;这是一个段落。&lt;/p&gt;</span></span><br><span class="line"><span class="comment">        &lt;a href=&quot;https://www.example.com&quot;&gt;这是一个链接&lt;/a&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 其他内容 -- &gt;</span></span><br><span class="line"><span class="comment">    &lt;/body&gt;</span></span><br><span class="line"><span class="comment">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTML的常用标签"><a href="#HTML的常用标签" class="headerlink" title="HTML的常用标签"></a>HTML的常用标签</h3><p>详见test01.html</p>
+<h3 id="HTML属性"><a href="#HTML属性" class="headerlink" title="HTML属性"></a>HTML属性</h3><ul>
+<li>HTML的属性用于定义元素的行为和外观，以及其他元素的关系</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">start_label</span> <span class="attr">attribute_name</span>=<span class="string">&quot;attribute_value&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>每个HTML元素可以具有不同的属性</li>
+<li>属性名大小写不敏感，属性值大小写敏感</li>
+</ul>
+<h3 id="HTML区块"><a href="#HTML区块" class="headerlink" title="HTML区块"></a>HTML区块</h3><ul>
+<li><p>块元素</p>
+<p>块级元素通常用于组织和布局页面的主要结构内容。它们用于创建页面的主要部分，将内容分割为<strong>逻辑块</strong>。</p>
+<ul>
+<li>块级元素通常从新行开始，并占据整行的宽度，因此它们会在页面上呈现为一块独立的内容块</li>
+<li>可以包含其他块级元素和行内元素</li>
+</ul>
+</li>
+<li><p>行内元素</p>
+<ul>
+<li>无法包含块级元素，仅能包含行内元素</li>
+</ul>
+</li>
+</ul>
+<h4 id="标签"><a href="#标签" class="headerlink" title="&lt;div&gt;标签"></a><code>&lt;div&gt;</code>标签</h4><ul>
+<li><strong>块级元素</strong>：<code>&lt;div&gt;</code>是一个块级元素，意味着它会独占一行，前后有换行。</li>
+<li><strong>结构性</strong>：通常用于对页面内容进行分组，帮助组织和布局。可以包含其他块级和行内元素。</li>
+<li><strong>样式和脚本</strong>：通常与CSS和JavaScript一起使用，以便对特定部分的样式进行控制或添加交互功能。</li>
+<li><strong>常见用途</strong>：用于创建页面的布局结构，比如头部、侧边栏、内容区域和页脚等。</li>
+</ul>
+<h4 id="标签-1"><a href="#标签-1" class="headerlink" title="&lt;span&gt;标签"></a><code>&lt;span&gt;</code>标签</h4><ul>
+<li><strong>行内元素</strong>：<code>&lt;span&gt;</code>是一个行内元素，意味着它不会独占一行，通常用于对文本或其他行内元素进行样式化。</li>
+<li><strong>无语义</strong>：<code>&lt;span&gt;</code>本身没有语义，仅用于样式和布局，通常与CSS一起使用来改变文本的样式。</li>
+<li><strong>常见用途</strong>：用于包裹部分文本，应用特定的样式或脚本，比如改变颜色、字体或添加事件监听</li>
+</ul>
+<h3 id="HTML表单"><a href="#HTML表单" class="headerlink" title="HTML表单"></a>HTML表单</h3><ul>
+<li>HTML表单是用于收集用户输入数据的结构化元素。通过表单，用户可以输入信息并将其提交到服务器进行处理。HTML表单通常包含各种输入元素，例如文本框、单选按钮、复选框、下拉列表等</li>
+</ul>
+<p>关于表单的创建，有以下需要注意的点：</p>
+<ol>
+<li>所有表单需要在form标签下</li>
+<li>常用于表单的标签有：<ol>
+<li>label：用于描述表单控件的标签</li>
+<li>input：各种类型的输入控件</li>
+</ol>
+</li>
+</ol>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="CSS的三种导入方式"><a href="#CSS的三种导入方式" class="headerlink" title="CSS的三种导入方式"></a>CSS的三种导入方式</h3><p>内联样式&gt;内部样式表&gt;外部样式表</p>
+<p>详见test02.html</p>
+<h3 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h3><p>选择器是CSS中的关键部分，它允许针对特定元素或一组元素定义样式</p>
+<p>ID&gt;类&gt;标签名</p>
+<h3 id="CSS网页布局"><a href="#CSS网页布局" class="headerlink" title="CSS网页布局"></a>CSS网页布局</h3><p>略</p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>轻量级的解释型脚本语言，常用于网页交互和客户端脚本开发</p>
+<h3 id="JS的导入"><a href="#JS的导入" class="headerlink" title="JS的导入"></a>JS的导入</h3><p>同CSS，只不过在<code>&lt;script&gt;&lt;/script&gt;</code>标签中写罢了</p>
+<h3 id="JS的变量和数据类型"><a href="#JS的变量和数据类型" class="headerlink" title="JS的变量和数据类型"></a>JS的变量和数据类型</h3><p><strong>在JavaScript中，<code>const</code>用于声明常量，<code>var</code> 和 <code>let</code> 都是用来声明变量的方法，但它们有一些重要的区别：</strong></p>
+<h3 id="1-作用域"><a href="#1-作用域" class="headerlink" title="1. 作用域"></a>1. 作用域</h3><ul>
+<li>**<code>var</code>**：具有函数作用域（function scope）。这意味着在一个函数内声明的 <code>var</code> 变量在整个函数中都是可见的。</li>
+<li>**<code>let</code>**：具有块级作用域（block scope）。这意味着在一个块（例如花括号 <code>&#123;&#125;</code>）内声明的 <code>let</code> 变量只在这个块内部可见。</li>
+</ul>
+<h3 id="2-变量提升"><a href="#2-变量提升" class="headerlink" title="2. 变量提升"></a>2. 变量提升</h3><ul>
+<li>**<code>var</code>**：变量声明会被提升（hoisting）到函数或全局作用域的顶部，但赋值不会提升。因此，可以在声明之前使用，但值为 <code>undefined</code>。</li>
+<li>**<code>let</code>**：变量声明不会被提升，或者说会被提升但不会初始化。在声明之前使用 <code>let</code> 变量会导致 ReferenceError 错误。</li>
+</ul>
+<h3 id="3-重复声明"><a href="#3-重复声明" class="headerlink" title="3. 重复声明"></a>3. 重复声明</h3><ul>
+<li>**<code>var</code>**：可以在同一作用域内多次声明同一个变量。</li>
+<li>**<code>let</code>**：在同一作用域内不能重复声明同一个变量。</li>
+</ul>
+<p>现在的代码中尽量使用let而不是var，但是也不是什么要紧的事，由于前端三大件语法的简单，AI已经可以很好地写很漂亮的代码，不需要自己写，仅作了解即可</p>
+<h2 id="JS的数据类型与变量"><a href="#JS的数据类型与变量" class="headerlink" title="JS的数据类型与变量"></a>JS的数据类型与变量</h2><p>略，无需在意</p>
+<h2 id="JS的控制语句"><a href="#JS的控制语句" class="headerlink" title="JS的控制语句"></a>JS的控制语句</h2><p>和C语言完全一致</p>
+<h2 id="JS的函数"><a href="#JS的函数" class="headerlink" title="JS的函数"></a>JS的函数</h2><p>与C几乎相同，唯一的区别事使用function定义而不需要根据函数返回值的类型更改函数头信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">function_name</span>(<span class="params">param1,param2,……</span>)&#123;</span><br><span class="line">    function_body</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-Python2"
   class="article article-type-post"
   itemscope
@@ -192,7 +334,11 @@
     <div class="article-meta">
       <a href="/2024/12/21/Python2/" class="article-date">
   <time datetime="2024-12-21T10:04:23.000Z" itemprop="datePublished">2024-12-21</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">
@@ -435,7 +581,11 @@
     <div class="article-meta">
       <a href="/2024/12/21/Python1/" class="article-date">
   <time datetime="2024-12-21T09:54:31.000Z" itemprop="datePublished">2024-12-21</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">

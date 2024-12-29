@@ -170,6 +170,77 @@
     
     
     <article
+  id="post-[HNCTF 2022 WEEK4]flower plus"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/29/%5BHNCTF%202022%20WEEK4%5Dflower%20plus/"
+    >[HNCTF 2022 WEEK4]flower plus</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/29/%5BHNCTF%202022%20WEEK4%5Dflower%20plus/" class="article-date">
+  <time datetime="2024-12-29T08:35:24.000Z" itemprop="datePublished">2024-12-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="HNCTF-2022-WEEK4-flower-plus"><a href="#HNCTF-2022-WEEK4-flower-plus" class="headerlink" title="[HNCTF 2022 WEEK4]flower plus"></a>[HNCTF 2022 WEEK4]flower plus</h1><p>​	打开附件，查壳32位无壳，进ida发现无法反编译，结合名字猜也能猜出来是花指令，找到如下两种花指令：</p>
+<ol>
+<li>永真跳转</li>
+</ol>
+<p><img src="/./../imgs/image-20241229154248416.png" alt="image-20241229154248416"></p>
+<ol start="2">
+<li>call指令跳过junk code</li>
+</ol>
+<p><img src="/./../imgs/image-20241229151058166.png" alt="image-20241229151058166"></p>
+<p>一开始手动去花，但是反编译之后发现其它子函数也有花指令，工作量太大，结合题目的提示，我们可以尝试使用IDAPython来自动去花：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">saddr=<span class="number">0x401000</span></span><br><span class="line">eaddr=<span class="number">0x435000</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(saddr,eaddr):</span><br><span class="line">    <span class="keyword">if</span> get_wide_dword(i)==<span class="number">0x01740275</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">hex</span>(i)+<span class="string">&#x27;,&#x27;</span>+<span class="built_in">hex</span>(get_wide_dword(i)))</span><br><span class="line">        patch_byte(i-<span class="number">5</span>,<span class="number">0x90</span>)</span><br><span class="line">        patch_dword(i-<span class="number">4</span>,<span class="number">0x90909090</span>)</span><br><span class="line">        patch_dword(i,<span class="number">0x90909090</span>)</span><br><span class="line">        patch_word(i+<span class="number">4</span>,<span class="number">0x9090</span>)</span><br><span class="line">    <span class="keyword">if</span> get_qword(i)==<span class="number">0x8336E800000001E8</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">hex</span>(i)+<span class="string">&#x27;,&#x27;</span>+<span class="built_in">hex</span>(i+<span class="number">4</span>)+<span class="string">&#x27;,&#x27;</span>+<span class="built_in">hex</span>(get_wide_dword(i)))</span><br><span class="line">            patch_qword(i,<span class="number">0x9090909090909090</span>)</span><br><span class="line">            patch_dword(i+<span class="number">8</span>,<span class="number">0x90909090</span>)</span><br><span class="line">            patch_byte(i+<span class="number">12</span>,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行之后，反编译，分析过程不再赘述，是RC4(XOR(flag))的加密形式，其中RC4还做了小改动，可以直接写C++程序将其复制过去进行修改得到解密代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">uint8_t</span> aHelloCtfers[] = <span class="string">&quot;Hello_Ctfers!!!&quot;</span>;</span><br><span class="line">    <span class="type">uint32_t</span> key_len = <span class="built_in">sizeof</span>(aHelloCtfers);</span><br><span class="line">    <span class="type">uint32_t</span> data[] = &#123; <span class="number">77</span>, <span class="number">4294967270</span>, <span class="number">73</span>, <span class="number">4294967189</span>, <span class="number">3</span>, <span class="number">45</span>, <span class="number">43</span>, <span class="number">4294967226</span>, <span class="number">4294967274</span>, <span class="number">109</span>, <span class="number">4294967295</span>, <span class="number">89</span>, <span class="number">112</span>, <span class="number">0</span>, <span class="number">27</span>, <span class="number">4294967209</span>, <span class="number">44</span>, <span class="number">4294967216</span>, <span class="number">50</span>, <span class="number">4294967192</span>, <span class="number">111</span>, <span class="number">4294967180</span>, <span class="number">86</span>, <span class="number">4294967202</span>, <span class="number">76</span>, <span class="number">121</span>, <span class="number">127</span> &#125;;</span><br><span class="line">    <span class="type">uint32_t</span> data_len = <span class="number">27</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = data_len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        data[i] = data[i] ^ data[(i + <span class="number">1</span>) % data_len];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">uint32_t</span> result; <span class="comment">// eax</span></span><br><span class="line">    <span class="type">uint8_t</span> v4[<span class="number">320</span>]; <span class="comment">// [esp+Ch] [ebp-25Ch]</span></span><br><span class="line">    <span class="type">uint32_t</span> v5; <span class="comment">// [esp+14Ch] [ebp-11Ch]</span></span><br><span class="line">    <span class="type">uint32_t</span> k; <span class="comment">// [esp+150h] [ebp-118h]</span></span><br><span class="line">    <span class="type">uint32_t</span> j; <span class="comment">// [esp+154h] [ebp-114h]</span></span><br><span class="line">    <span class="type">uint32_t</span> i; <span class="comment">// [esp+158h] [ebp-110h]</span></span><br><span class="line">    <span class="type">uint32_t</span> v9; <span class="comment">// [esp+15Ch] [ebp-10Ch]</span></span><br><span class="line">    <span class="type">uint32_t</span> m; <span class="comment">// [esp+160h] [ebp-108h]</span></span><br><span class="line">    <span class="type">uint8_t</span> v11[<span class="number">256</span>]; <span class="comment">// [esp+164h] [ebp-104h] BYREF</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">256</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        v11[i] = i;</span><br><span class="line">        v4[i] = aHelloCtfers[i % key_len];</span><br><span class="line">    &#125;</span><br><span class="line">    v9 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; <span class="number">256</span>; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">        v9 = (v4[j] + v9 + v11[j]) % <span class="number">256</span>;</span><br><span class="line">        <span class="built_in">swap</span>(v11[j], v11[v9]);</span><br><span class="line">    &#125;</span><br><span class="line">    m = <span class="number">0</span>;</span><br><span class="line">    v9 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; data_len; ++k)</span><br><span class="line">    &#123;</span><br><span class="line">        m = (m + <span class="number">3</span>) % <span class="number">256</span>;</span><br><span class="line">        v9 = (v9 + v11[m] + <span class="number">1</span>) % <span class="number">256</span>;</span><br><span class="line">        <span class="built_in">swap</span>(v11[m], v11[v9]);</span><br><span class="line">        v5 = (v11[v9] + v11[m]) % <span class="number">256</span>;</span><br><span class="line">        v4[k + <span class="number">256</span>] = v11[v5];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (m = <span class="number">0</span>; ; ++m)</span><br><span class="line">    &#123;</span><br><span class="line">        result = m;</span><br><span class="line">        <span class="keyword">if</span> (m &gt;= data_len)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        data[m] ^= v4[m + <span class="number">256</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">27</span>; i++)</span><br><span class="line">        cout &lt;&lt; (<span class="type">char</span>)data[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;Hn_CtF_w111_end_Lol&#125;</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDAPython/" rel="tag">IDAPython</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-[HNCTF 2022 WEEK2]e@sy_flower"
   class="article article-type-post"
   itemscope
@@ -207,138 +278,6 @@
 
 <p>运行得到结果为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;Just_junk_Bytess&#125;</span><br></pre></td></tr></table></figure>
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-[GFCTF 2021]wordy"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/25/%5BGFCTF%202021%5Dwordy/"
-    >[GFCTF 2021]wordy</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="article-date">
-  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">2024-12-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
-<p><img src="/./../imgs/image-20241127215043351.png" alt="image-20241127215043351"></p>
-<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/./../imgs/image-20241127215345825.png" alt="image-20241127215345825"></p>
-<p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
-
-<p>换完如下：</p>
-<p><img src="/./../imgs/image-20241127215809584.png" alt="image-20241127215809584"></p>
-<p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>有：</p>
-<p><img src="/./../imgs/image-20241127220008628.png" alt="image-20241127220008628"></p>
-<p>提交flag发现正确</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-[HZNUCTF 2023 final]虽然他送了我玫瑰花"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/"
-    >[HZNUCTF 2023 final]虽然他送了我玫瑰花</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/" class="article-date">
-  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">2024-12-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="HZNUCTF-2023-final-虽然他送了我玫瑰花"><a href="#HZNUCTF-2023-final-虽然他送了我玫瑰花" class="headerlink" title="[HZNUCTF 2023 final]虽然他送了我玫瑰花"></a>[HZNUCTF 2023 final]虽然他送了我玫瑰花</h1><p>​	很有收获的一道题。</p>
-<p>​	打开附件，查壳发现一个并不是PE文件而是ZIP归档的文件，将其拖到WinRAR</p>
-<p>中解压缩出一个可执行PE文件，查壳发现32位无壳，进ida，发现是很典型的永真导致的花指令，NOP掉反编译如下：</p>
-<p><img src="/./../imgs/image-20241203200100321.png" alt="image-20241203200100321"></p>
-<p>函数就不分析了，很简单的加密逻辑，唯二需要注意的两点是：</p>
-<ul>
-<li>位运算的优先级~&gt;&amp;&gt;^</li>
-<li>xmmword定义的字符串并没有29个字单元，凡是这种隐藏起来的一律先用动调试一试，动调过程中需要查询的不是xmmword，而是v9，因为v9才是最直接的密文。</li>
-</ul>
-<p>写出解密代码：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cipher = [<span class="number">0x7F</span>, <span class="number">0x7E</span>, <span class="number">0x51</span>, <span class="number">0xCE</span>, <span class="number">0xFB</span>, <span class="number">0x4E</span>, <span class="number">0x7A</span>, <span class="number">0x24</span>, <span class="number">0xE8</span>, <span class="number">0xDF</span>,</span><br><span class="line">  <span class="number">0x59</span>, <span class="number">0x71</span>, <span class="number">0x26</span>, <span class="number">0xCA</span>, <span class="number">0xE1</span>, <span class="number">0x6C</span>, <span class="number">0x86</span>, <span class="number">0x21</span>, <span class="number">0xCC</span>, <span class="number">0xF5</span>,</span><br><span class="line">  <span class="number">0x28</span>, <span class="number">0x71</span>, <span class="number">0x14</span>, <span class="number">0xD8</span>, <span class="number">0xEF</span>, <span class="number">0x6E</span>, <span class="number">0x77</span>, <span class="number">0x62</span>, <span class="number">0xFA</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cipher)):</span><br><span class="line">    a = i % <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i] ^ <span class="number">0x19</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i]-<span class="number">18</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i]+<span class="number">16</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>((cipher[i] &gt;&gt; <span class="number">1</span>) &amp; <span class="number">0xff</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">4</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i] ^ <span class="number">0x80</span>),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
 
  
       <!-- reward -->
@@ -407,7 +346,139 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AD%BE%E5%88%B0%E9%A2%98/" rel="tag">签到题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-[HZNUCTF 2023 final]虽然他送了我玫瑰花"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/"
+    >[HZNUCTF 2023 final]虽然他送了我玫瑰花</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/25/%5BHZNUCTF%202023%20final%5D%E8%99%BD%E7%84%B6%E4%BB%96%E9%80%81%E4%BA%86%E6%88%91%E7%8E%AB%E7%91%B0%E8%8A%B1/" class="article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">2024-12-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="HZNUCTF-2023-final-虽然他送了我玫瑰花"><a href="#HZNUCTF-2023-final-虽然他送了我玫瑰花" class="headerlink" title="[HZNUCTF 2023 final]虽然他送了我玫瑰花"></a>[HZNUCTF 2023 final]虽然他送了我玫瑰花</h1><p>​	很有收获的一道题。</p>
+<p>​	打开附件，查壳发现一个并不是PE文件而是ZIP归档的文件，将其拖到WinRAR</p>
+<p>中解压缩出一个可执行PE文件，查壳发现32位无壳，进ida，发现是很典型的永真导致的花指令，NOP掉反编译如下：</p>
+<p><img src="/./../imgs/image-20241203200100321.png" alt="image-20241203200100321"></p>
+<p>函数就不分析了，很简单的加密逻辑，唯二需要注意的两点是：</p>
+<ul>
+<li>位运算的优先级~&gt;&amp;&gt;^</li>
+<li>xmmword定义的字符串并没有29个字单元，凡是这种隐藏起来的一律先用动调试一试，动调过程中需要查询的不是xmmword，而是v9，因为v9才是最直接的密文。</li>
+</ul>
+<p>写出解密代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cipher = [<span class="number">0x7F</span>, <span class="number">0x7E</span>, <span class="number">0x51</span>, <span class="number">0xCE</span>, <span class="number">0xFB</span>, <span class="number">0x4E</span>, <span class="number">0x7A</span>, <span class="number">0x24</span>, <span class="number">0xE8</span>, <span class="number">0xDF</span>,</span><br><span class="line">  <span class="number">0x59</span>, <span class="number">0x71</span>, <span class="number">0x26</span>, <span class="number">0xCA</span>, <span class="number">0xE1</span>, <span class="number">0x6C</span>, <span class="number">0x86</span>, <span class="number">0x21</span>, <span class="number">0xCC</span>, <span class="number">0xF5</span>,</span><br><span class="line">  <span class="number">0x28</span>, <span class="number">0x71</span>, <span class="number">0x14</span>, <span class="number">0xD8</span>, <span class="number">0xEF</span>, <span class="number">0x6E</span>, <span class="number">0x77</span>, <span class="number">0x62</span>, <span class="number">0xFA</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cipher)):</span><br><span class="line">    a = i % <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i] ^ <span class="number">0x19</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i]-<span class="number">18</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i]+<span class="number">16</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>((cipher[i] &gt;&gt; <span class="number">1</span>) &amp; <span class="number">0xff</span>),end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">4</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(cipher[i] ^ <span class="number">0x80</span>),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95/" rel="tag">动态调试</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-[GFCTF 2021]wordy"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/25/%5BGFCTF%202021%5Dwordy/"
+    >[GFCTF 2021]wordy</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/25/%5BGFCTF%202021%5Dwordy/" class="article-date">
+  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">2024-12-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="GFCTF-2021-wordy"><a href="#GFCTF-2021-wordy" class="headerlink" title="[GFCTF 2021]wordy"></a>[GFCTF 2021]wordy</h1><p>​	打开附件，进ida，发现有显著的花指令特征，</p>
+<p><img src="/./../imgs/image-20241127215043351.png" alt="image-20241127215043351"></p>
+<p>将其改为nop，反编译，不对，再看下面一大串，这么多的数据不可能只是定义一串不知所谓的字符，可以猜测是否是代码未被ida识别，尝试”C“指令换为代码，错误，仔细看，发现<img src="/./../imgs/image-20241127215345825.png" alt="image-20241127215345825"></p>
+<p>大量存在花指令，怪不得无法编译，使用idapython编写脚本将它们换掉：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xEB</span>:</span><br><span class="line">        <span class="keyword">if</span> get_wide_byte(i+<span class="number">1</span>)==<span class="number">0XFF</span>:</span><br><span class="line">            patch_byte(i,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
+
+<p>换完如下：</p>
+<p><img src="/./../imgs/image-20241127215809584.png" alt="image-20241127215809584"></p>
+<p>先别急着反编译，观察发现下面的结构大同小异，全是putchar函数，可以猜测是输出一些提示信息，不妨写脚本将提示信息提取出来：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">start=<span class="number">0x1135</span></span><br><span class="line">end=<span class="number">0x3100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start,end):</span><br><span class="line">    <span class="keyword">if</span> get_wide_byte(i)==<span class="number">0xC0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">chr</span>(idaapi.get_byte(i+<span class="number">2</span>)),end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>有：</p>
+<p><img src="/./../imgs/image-20241127220008628.png" alt="image-20241127220008628"></p>
+<p>提交flag发现正确</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDAPython/" rel="tag">IDAPython</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
 
     </footer>
   </div>
@@ -474,7 +545,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/" rel="tag">数学分析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%86%E7%A0%B4/" rel="tag">爆破</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
 
     </footer>
   </div>
@@ -1069,7 +1140,11 @@
     <div class="article-meta">
       <a href="/2024/12/21/Linux/" class="article-date">
   <time datetime="2024-12-21T10:07:28.000Z" itemprop="datePublished">2024-12-21</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">
@@ -1453,148 +1528,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start|stop|status|enable|disable</span><br></pre></td></tr></table></figure>
 
 <p>同时system也可以管理一些第三方软件，只要软件有注册服务的功能</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-前端学习笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/21/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-    >前端学习笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/21/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2024-12-21T10:06:47.000Z" itemprop="datePublished">2024-12-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="前端学习笔记"><a href="#前端学习笔记" class="headerlink" title="前端学习笔记"></a>前端学习笔记</h1><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><h3 id="HTML标签"><a href="#HTML标签" class="headerlink" title="HTML标签"></a>HTML标签</h3><ul>
-<li><p>HTML(Hypertext Markup Language)，通过一系列的**标签(或者说元素)**来定义文本，图像，链接等。HTML标签是由尖括号包围的关键字。</p>
-</li>
-<li><p>标签通常成对出现，包括开始标签和结束标签，内容位于这两个标签之内，eg:</p>
-</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是一个标题。<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>这是一个超链接。<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>除了双标签，也存在单标签，eg:</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>区别：单标签用于没有内容的元素，双标签用于有内容的元素</p>
-<h3 id="HTML文件结构"><a href="#HTML文件结构" class="headerlink" title="HTML文件结构"></a>HTML文件结构</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这里放置文档的元信息 -- &gt;</span></span><br><span class="line"><span class="comment">&lt;! DOCTYPE html&gt;</span></span><br><span class="line"><span class="comment">&lt;html&gt;</span></span><br><span class="line"><span class="comment">    &lt;head&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 这里放置文档的元信息 -- &gt;</span></span><br><span class="line"><span class="comment">        &lt;title&gt;文档标题&lt;/title&gt;</span></span><br><span class="line"><span class="comment">        &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 连接外部样式表或脚本文件等 -- &gt;</span></span><br><span class="line"><span class="comment">        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;</span></span><br><span class="line"><span class="comment">        &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="comment">    &lt;/head&gt;</span></span><br><span class="line"><span class="comment">    &lt;body&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 这里放置页面内容 -- &gt;</span></span><br><span class="line"><span class="comment">        &lt;h1&gt;这是一个标题&lt;/h1&gt;</span></span><br><span class="line"><span class="comment">        &lt;p&gt;这是一个段落。&lt;/p&gt;</span></span><br><span class="line"><span class="comment">        &lt;a href=&quot;https://www.example.com&quot;&gt;这是一个链接&lt;/a&gt;</span></span><br><span class="line"><span class="comment">        &lt;!-- 其他内容 -- &gt;</span></span><br><span class="line"><span class="comment">    &lt;/body&gt;</span></span><br><span class="line"><span class="comment">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="HTML的常用标签"><a href="#HTML的常用标签" class="headerlink" title="HTML的常用标签"></a>HTML的常用标签</h3><p>详见test01.html</p>
-<h3 id="HTML属性"><a href="#HTML属性" class="headerlink" title="HTML属性"></a>HTML属性</h3><ul>
-<li>HTML的属性用于定义元素的行为和外观，以及其他元素的关系</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">start_label</span> <span class="attr">attribute_name</span>=<span class="string">&quot;attribute_value&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>每个HTML元素可以具有不同的属性</li>
-<li>属性名大小写不敏感，属性值大小写敏感</li>
-</ul>
-<h3 id="HTML区块"><a href="#HTML区块" class="headerlink" title="HTML区块"></a>HTML区块</h3><ul>
-<li><p>块元素</p>
-<p>块级元素通常用于组织和布局页面的主要结构内容。它们用于创建页面的主要部分，将内容分割为<strong>逻辑块</strong>。</p>
-<ul>
-<li>块级元素通常从新行开始，并占据整行的宽度，因此它们会在页面上呈现为一块独立的内容块</li>
-<li>可以包含其他块级元素和行内元素</li>
-</ul>
-</li>
-<li><p>行内元素</p>
-<ul>
-<li>无法包含块级元素，仅能包含行内元素</li>
-</ul>
-</li>
-</ul>
-<h4 id="标签"><a href="#标签" class="headerlink" title="&lt;div&gt;标签"></a><code>&lt;div&gt;</code>标签</h4><ul>
-<li><strong>块级元素</strong>：<code>&lt;div&gt;</code>是一个块级元素，意味着它会独占一行，前后有换行。</li>
-<li><strong>结构性</strong>：通常用于对页面内容进行分组，帮助组织和布局。可以包含其他块级和行内元素。</li>
-<li><strong>样式和脚本</strong>：通常与CSS和JavaScript一起使用，以便对特定部分的样式进行控制或添加交互功能。</li>
-<li><strong>常见用途</strong>：用于创建页面的布局结构，比如头部、侧边栏、内容区域和页脚等。</li>
-</ul>
-<h4 id="标签-1"><a href="#标签-1" class="headerlink" title="&lt;span&gt;标签"></a><code>&lt;span&gt;</code>标签</h4><ul>
-<li><strong>行内元素</strong>：<code>&lt;span&gt;</code>是一个行内元素，意味着它不会独占一行，通常用于对文本或其他行内元素进行样式化。</li>
-<li><strong>无语义</strong>：<code>&lt;span&gt;</code>本身没有语义，仅用于样式和布局，通常与CSS一起使用来改变文本的样式。</li>
-<li><strong>常见用途</strong>：用于包裹部分文本，应用特定的样式或脚本，比如改变颜色、字体或添加事件监听</li>
-</ul>
-<h3 id="HTML表单"><a href="#HTML表单" class="headerlink" title="HTML表单"></a>HTML表单</h3><ul>
-<li>HTML表单是用于收集用户输入数据的结构化元素。通过表单，用户可以输入信息并将其提交到服务器进行处理。HTML表单通常包含各种输入元素，例如文本框、单选按钮、复选框、下拉列表等</li>
-</ul>
-<p>关于表单的创建，有以下需要注意的点：</p>
-<ol>
-<li>所有表单需要在form标签下</li>
-<li>常用于表单的标签有：<ol>
-<li>label：用于描述表单控件的标签</li>
-<li>input：各种类型的输入控件</li>
-</ol>
-</li>
-</ol>
-<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="CSS的三种导入方式"><a href="#CSS的三种导入方式" class="headerlink" title="CSS的三种导入方式"></a>CSS的三种导入方式</h3><p>内联样式&gt;内部样式表&gt;外部样式表</p>
-<p>详见test02.html</p>
-<h3 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h3><p>选择器是CSS中的关键部分，它允许针对特定元素或一组元素定义样式</p>
-<p>ID&gt;类&gt;标签名</p>
-<h3 id="CSS网页布局"><a href="#CSS网页布局" class="headerlink" title="CSS网页布局"></a>CSS网页布局</h3><p>略</p>
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>轻量级的解释型脚本语言，常用于网页交互和客户端脚本开发</p>
-<h3 id="JS的导入"><a href="#JS的导入" class="headerlink" title="JS的导入"></a>JS的导入</h3><p>同CSS，只不过在<code>&lt;script&gt;&lt;/script&gt;</code>标签中写罢了</p>
-<h3 id="JS的变量和数据类型"><a href="#JS的变量和数据类型" class="headerlink" title="JS的变量和数据类型"></a>JS的变量和数据类型</h3><p><strong>在JavaScript中，<code>const</code>用于声明常量，<code>var</code> 和 <code>let</code> 都是用来声明变量的方法，但它们有一些重要的区别：</strong></p>
-<h3 id="1-作用域"><a href="#1-作用域" class="headerlink" title="1. 作用域"></a>1. 作用域</h3><ul>
-<li>**<code>var</code>**：具有函数作用域（function scope）。这意味着在一个函数内声明的 <code>var</code> 变量在整个函数中都是可见的。</li>
-<li>**<code>let</code>**：具有块级作用域（block scope）。这意味着在一个块（例如花括号 <code>&#123;&#125;</code>）内声明的 <code>let</code> 变量只在这个块内部可见。</li>
-</ul>
-<h3 id="2-变量提升"><a href="#2-变量提升" class="headerlink" title="2. 变量提升"></a>2. 变量提升</h3><ul>
-<li>**<code>var</code>**：变量声明会被提升（hoisting）到函数或全局作用域的顶部，但赋值不会提升。因此，可以在声明之前使用，但值为 <code>undefined</code>。</li>
-<li>**<code>let</code>**：变量声明不会被提升，或者说会被提升但不会初始化。在声明之前使用 <code>let</code> 变量会导致 ReferenceError 错误。</li>
-</ul>
-<h3 id="3-重复声明"><a href="#3-重复声明" class="headerlink" title="3. 重复声明"></a>3. 重复声明</h3><ul>
-<li>**<code>var</code>**：可以在同一作用域内多次声明同一个变量。</li>
-<li>**<code>let</code>**：在同一作用域内不能重复声明同一个变量。</li>
-</ul>
-<p>现在的代码中尽量使用let而不是var，但是也不是什么要紧的事，由于前端三大件语法的简单，AI已经可以很好地写很漂亮的代码，不需要自己写，仅作了解即可</p>
-<h2 id="JS的数据类型与变量"><a href="#JS的数据类型与变量" class="headerlink" title="JS的数据类型与变量"></a>JS的数据类型与变量</h2><p>略，无需在意</p>
-<h2 id="JS的控制语句"><a href="#JS的控制语句" class="headerlink" title="JS的控制语句"></a>JS的控制语句</h2><p>和C语言完全一致</p>
-<h2 id="JS的函数"><a href="#JS的函数" class="headerlink" title="JS的函数"></a>JS的函数</h2><p>与C几乎相同，唯一的区别事使用function定义而不需要根据函数返回值的类型更改函数头信息：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">function_name</span>(<span class="params">param1,param2,……</span>)&#123;</span><br><span class="line">    function_body</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
  
       <!-- reward -->
       

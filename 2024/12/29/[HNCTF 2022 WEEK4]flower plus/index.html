@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>[HNCTF 2022 WEEK2]e@sy_flower |  zhouyue&#39;s blog</title>
+      <title>[HNCTF 2022 WEEK4]flower plus |  zhouyue&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-[HNCTF 2022 WEEK2]e@sy_flower"
+  id="post-[HNCTF 2022 WEEK4]flower plus"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  [HNCTF 2022 WEEK2]e@sy_flower
+  [HNCTF 2022 WEEK4]flower plus
 </h1>
  
 
@@ -72,8 +72,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/" class="article-date">
-  <time datetime="2024-12-25T08:05:45.000Z" itemprop="datePublished">2024-12-25</time>
+      <a href="/2024/12/29/%5BHNCTF%202022%20WEEK4%5Dflower%20plus/" class="article-date">
+  <time datetime="2024-12-29T08:35:24.000Z" itemprop="datePublished">2024-12-29</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
@@ -84,7 +84,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">109</span>
+            <span class="post-count">480</span>
         </span>
     </span>
 
@@ -93,7 +93,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">2 min</span>
         </span>
     </span>
 </div>
@@ -108,12 +108,23 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="HNCTF-2022-WEEK2-e-sy-flower"><a href="#HNCTF-2022-WEEK2-e-sy-flower" class="headerlink" title="[HNCTF 2022 WEEK2]e@sy_flower"></a>[HNCTF 2022 WEEK2]e@sy_flower</h1><p>​	打开附件，查壳32位无壳，直接进ida，发现很明显的花指令特征，修改为nop，F5反编译，<img src="/./../imgs/image-20241127185828456.png" alt="image-20241127185828456"></p>
-<p>很简单的加密逻辑，写出解密代码如下：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cipher = <span class="string">&quot;c~scvdzKCEoDEZ[^roDICUMC&quot;</span></span><br><span class="line">cipher1 = <span class="built_in">list</span>(cipher)</span><br><span class="line">cipher2 = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cipher1)):</span><br><span class="line">    cipher2 += <span class="built_in">chr</span>(<span class="built_in">ord</span>(cipher1[i]) ^ <span class="number">0x30</span>)</span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(cipher2),<span class="number">2</span>):</span><br><span class="line">    flag += cipher2[j+<span class="number">1</span>]</span><br><span class="line">    flag += cipher2[j]</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+  <h1 id="HNCTF-2022-WEEK4-flower-plus"><a href="#HNCTF-2022-WEEK4-flower-plus" class="headerlink" title="[HNCTF 2022 WEEK4]flower plus"></a>[HNCTF 2022 WEEK4]flower plus</h1><p>​	打开附件，查壳32位无壳，进ida发现无法反编译，结合名字猜也能猜出来是花指令，找到如下两种花指令：</p>
+<ol>
+<li>永真跳转</li>
+</ol>
+<p><img src="/./../imgs/image-20241229154248416.png" alt="image-20241229154248416"></p>
+<ol start="2">
+<li>call指令跳过junk code</li>
+</ol>
+<p><img src="/./../imgs/image-20241229151058166.png" alt="image-20241229151058166"></p>
+<p>一开始手动去花，但是反编译之后发现其它子函数也有花指令，工作量太大，结合题目的提示，我们可以尝试使用IDAPython来自动去花：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">saddr=<span class="number">0x401000</span></span><br><span class="line">eaddr=<span class="number">0x435000</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(saddr,eaddr):</span><br><span class="line">    <span class="keyword">if</span> get_wide_dword(i)==<span class="number">0x01740275</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">hex</span>(i)+<span class="string">&#x27;,&#x27;</span>+<span class="built_in">hex</span>(get_wide_dword(i)))</span><br><span class="line">        patch_byte(i-<span class="number">5</span>,<span class="number">0x90</span>)</span><br><span class="line">        patch_dword(i-<span class="number">4</span>,<span class="number">0x90909090</span>)</span><br><span class="line">        patch_dword(i,<span class="number">0x90909090</span>)</span><br><span class="line">        patch_word(i+<span class="number">4</span>,<span class="number">0x9090</span>)</span><br><span class="line">    <span class="keyword">if</span> get_qword(i)==<span class="number">0x8336E800000001E8</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">hex</span>(i)+<span class="string">&#x27;,&#x27;</span>+<span class="built_in">hex</span>(i+<span class="number">4</span>)+<span class="string">&#x27;,&#x27;</span>+<span class="built_in">hex</span>(get_wide_dword(i)))</span><br><span class="line">            patch_qword(i,<span class="number">0x9090909090909090</span>)</span><br><span class="line">            patch_dword(i+<span class="number">8</span>,<span class="number">0x90909090</span>)</span><br><span class="line">            patch_byte(i+<span class="number">12</span>,<span class="number">0x90</span>)</span><br></pre></td></tr></table></figure>
 
-<p>运行得到结果为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;Just_junk_Bytess&#125;</span><br></pre></td></tr></table></figure>
+<p>运行之后，反编译，分析过程不再赘述，是RC4(XOR(flag))的加密形式，其中RC4还做了小改动，可以直接写C++程序将其复制过去进行修改得到解密代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">uint8_t</span> aHelloCtfers[] = <span class="string">&quot;Hello_Ctfers!!!&quot;</span>;</span><br><span class="line">    <span class="type">uint32_t</span> key_len = <span class="built_in">sizeof</span>(aHelloCtfers);</span><br><span class="line">    <span class="type">uint32_t</span> data[] = &#123; <span class="number">77</span>, <span class="number">4294967270</span>, <span class="number">73</span>, <span class="number">4294967189</span>, <span class="number">3</span>, <span class="number">45</span>, <span class="number">43</span>, <span class="number">4294967226</span>, <span class="number">4294967274</span>, <span class="number">109</span>, <span class="number">4294967295</span>, <span class="number">89</span>, <span class="number">112</span>, <span class="number">0</span>, <span class="number">27</span>, <span class="number">4294967209</span>, <span class="number">44</span>, <span class="number">4294967216</span>, <span class="number">50</span>, <span class="number">4294967192</span>, <span class="number">111</span>, <span class="number">4294967180</span>, <span class="number">86</span>, <span class="number">4294967202</span>, <span class="number">76</span>, <span class="number">121</span>, <span class="number">127</span> &#125;;</span><br><span class="line">    <span class="type">uint32_t</span> data_len = <span class="number">27</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = data_len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        data[i] = data[i] ^ data[(i + <span class="number">1</span>) % data_len];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">uint32_t</span> result; <span class="comment">// eax</span></span><br><span class="line">    <span class="type">uint8_t</span> v4[<span class="number">320</span>]; <span class="comment">// [esp+Ch] [ebp-25Ch]</span></span><br><span class="line">    <span class="type">uint32_t</span> v5; <span class="comment">// [esp+14Ch] [ebp-11Ch]</span></span><br><span class="line">    <span class="type">uint32_t</span> k; <span class="comment">// [esp+150h] [ebp-118h]</span></span><br><span class="line">    <span class="type">uint32_t</span> j; <span class="comment">// [esp+154h] [ebp-114h]</span></span><br><span class="line">    <span class="type">uint32_t</span> i; <span class="comment">// [esp+158h] [ebp-110h]</span></span><br><span class="line">    <span class="type">uint32_t</span> v9; <span class="comment">// [esp+15Ch] [ebp-10Ch]</span></span><br><span class="line">    <span class="type">uint32_t</span> m; <span class="comment">// [esp+160h] [ebp-108h]</span></span><br><span class="line">    <span class="type">uint8_t</span> v11[<span class="number">256</span>]; <span class="comment">// [esp+164h] [ebp-104h] BYREF</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">256</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        v11[i] = i;</span><br><span class="line">        v4[i] = aHelloCtfers[i % key_len];</span><br><span class="line">    &#125;</span><br><span class="line">    v9 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; <span class="number">256</span>; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">        v9 = (v4[j] + v9 + v11[j]) % <span class="number">256</span>;</span><br><span class="line">        <span class="built_in">swap</span>(v11[j], v11[v9]);</span><br><span class="line">    &#125;</span><br><span class="line">    m = <span class="number">0</span>;</span><br><span class="line">    v9 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; data_len; ++k)</span><br><span class="line">    &#123;</span><br><span class="line">        m = (m + <span class="number">3</span>) % <span class="number">256</span>;</span><br><span class="line">        v9 = (v9 + v11[m] + <span class="number">1</span>) % <span class="number">256</span>;</span><br><span class="line">        <span class="built_in">swap</span>(v11[m], v11[v9]);</span><br><span class="line">        v5 = (v11[v9] + v11[m]) % <span class="number">256</span>;</span><br><span class="line">        v4[k + <span class="number">256</span>] = v11[v5];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (m = <span class="number">0</span>; ; ++m)</span><br><span class="line">    &#123;</span><br><span class="line">        result = m;</span><br><span class="line">        <span class="keyword">if</span> (m &gt;= data_len)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        data[m] ^= v4[m + <span class="number">256</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">27</span>; i++)</span><br><span class="line">        cout &lt;&lt; (<span class="type">char</span>)data[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;Hn_CtF_w111_end_Lol&#125;</span><br></pre></td></tr></table></figure>
 
  
       <!-- reward -->
@@ -179,12 +190,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/25/[HNCTF%202022%20WEEK2]e@sy_flower/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/29/[HNCTF%202022%20WEEK4]flower%20plus/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDAPython/" rel="tag">IDAPython</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8A%B1%E6%8C%87%E4%BB%A4/" rel="tag">花指令</a></li></ul>
 
     </footer>
   </div>
@@ -192,19 +203,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2024/12/29/%5BHNCTF%202022%20WEEK4%5Dflower%20plus/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            [HNCTF 2022 WEEK4]flower plus
-          
-        </div>
-      </a>
     
-    
-      <a href="/2024/12/25/%5BNSSRound#3%20Team%5Djump_by_jump/" class="article-nav-link">
+      <a href="/2024/12/25/%5BHNCTF%202022%20WEEK2%5De@sy_flower/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">[NSSRound#3 Team]jump_by_jump</div>
+        <div class="article-nav-title">[HNCTF 2022 WEEK2]e@sy_flower</div>
       </a>
     
   </nav>
