@@ -170,6 +170,70 @@
     
     
     <article
+  id="post-[NSSCTF 2022 Spring Recruit]easy C"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/12/30/%5BNSSCTF%202022%20Spring%20Recruit%5Deasy%20C/"
+    >[NSSCTF 2022 Spring Recruit]easy C</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/30/%5BNSSCTF%202022%20Spring%20Recruit%5Deasy%20C/" class="article-date">
+  <time datetime="2024-12-30T12:34:01.000Z" itemprop="datePublished">2024-12-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="NSSCTF-2022-Spring-Recruit-easy-C"><a href="#NSSCTF-2022-Spring-Recruit-easy-C" class="headerlink" title="[NSSCTF 2022 Spring Recruit]easy C"></a>[NSSCTF 2022 Spring Recruit]easy C</h1><p>​	打开文件，发现这是一个C语言源码，直接打开，发现是很简单的加密逻辑，且可逆：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> a[]=<span class="string">&quot;wwwwwww&quot;</span>;</span><br><span class="line">    <span class="type">char</span> b[]=<span class="string">&quot;d`vxbQd&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//try to find out the flag</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;please input flag:&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot; %s&quot;</span>,&amp;a);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">strlen</span>(a)!=<span class="number">7</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;NoNoNo\n&quot;</span>);</span><br><span class="line">        system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">7</span>;i++)&#123;</span><br><span class="line">        a[i]++;</span><br><span class="line">        a[i]=a[i]^<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(a,b))&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;good!\n&quot;</span>);</span><br><span class="line">        system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;NoNoNo\n&quot;</span>);</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//flag 璁板緱鍖呬笂 NSSCTF&#123;&#125; 鍐嶆彁浜?!!</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>根据加密代码写出解密脚本如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> b[]=<span class="string">&quot;d`vxbQd&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">7</span>;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		b[i]^=<span class="number">2</span>;</span><br><span class="line">		b[i]--;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, b);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由提示信息知道flag头，总结如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;easy_Re&#125;</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E9%80%86%E5%90%91/" rel="tag">C语言逆向</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-[SWPUCTF 2021 新生赛]re2"
   class="article article-type-post"
   itemscope
@@ -209,67 +273,6 @@
 <p>得到结果：</p>
 <p><img src="/./../imgs/image-20241117155912392.png" alt="image-20241117155912392"></p>
 <p>发现这的确不像正常的flag，事实上这也的确不是正确的flag，上网查询发现是题目出的有问题，但根据出题方的名字NSS和密码的加密方式caeser，也能猜出最后的flag。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E9%80%86%E5%90%91/" rel="tag">C语言逆向</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-[SWPUCTF 2021 新生赛]re1"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/12/30/%5BSWPUCTF%202021%20%E6%96%B0%E7%94%9F%E8%B5%9B%5Dre1/"
-    >[SWPUCTF 2021 新生赛]re1</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/30/%5BSWPUCTF%202021%20%E6%96%B0%E7%94%9F%E8%B5%9B%5Dre1/" class="article-date">
-  <time datetime="2024-12-30T12:34:01.000Z" itemprop="datePublished">2024-12-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="SWPUCTF-2021-新生赛-re1"><a href="#SWPUCTF-2021-新生赛-re1" class="headerlink" title="[SWPUCTF 2021 新生赛]re1"></a>[SWPUCTF 2021 新生赛]re1</h1><p>​	打开文件夹，发现是可执行文件，查壳发现，无壳，64位GCC打包文件，放入ida，F5反编译发现加密逻辑如下：</p>
-<p><img src="/./../imgs/image-20241116204312455.png" alt="image-20241116204312455"></p>
-<p>根据加密逻辑写出解密代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  	<span class="type">char</span> Str1[<span class="number">100</span>] = <span class="string">&quot;34sy_r3v3rs3&quot;</span>;</span><br><span class="line">	    	</span><br><span class="line">  	<span class="keyword">for</span> ( <span class="type">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">665</span>; ++i )</span><br><span class="line">  	&#123;</span><br><span class="line">    	<span class="keyword">if</span> ( Str1[i] == <span class="number">52</span> )</span><br><span class="line">      	Str1[i] = <span class="number">97</span>;</span><br><span class="line">      	<span class="keyword">if</span> ( Str1[i] == <span class="number">51</span> )</span><br><span class="line">      	Str1[i] = <span class="number">101</span>;</span><br><span class="line">  	&#125;	</span><br><span class="line">  	</span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, Str1);</span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p>加上flag头：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;easy_reverse&#125;</span><br></pre></td></tr></table></figure>
-
  
       <!-- reward -->
       
