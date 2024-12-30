@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>[HNCTF 2022 WEEK3]Double |  zhouyue&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-[HNCTF 2022 WEEK3]Double"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  [HNCTF 2022 WEEK3]Double
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/12/30/%5BHNCTF%202022%20WEEK3%5DDouble/" class="article-date">
+  <time datetime="2024-12-30T12:34:01.000Z" itemprop="datePublished">2024-12-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">371</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">2 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="HNCTF-2022-WEEK3-Double"><a href="#HNCTF-2022-WEEK3-Double" class="headerlink" title="[HNCTF 2022 WEEK3]Double"></a>[HNCTF 2022 WEEK3]Double</h1><p>​	打开附件，查壳64位ELF文件，进ida，反编译如下：</p>
+<p><img src="/./../imgs/image-20241209154928379.png" alt="image-20241209154928379"></p>
+<p>简单分析，child模式输入flag，在parent模式下检验flag是否正确。</p>
+<p>parent模式下有：arr[xor(flag)] &#x3D; enc</p>
+<p>写出解密代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">ci = [<span class="number">8108</span>, <span class="number">20369</span>, <span class="number">14230</span>, <span class="number">46468</span>, <span class="number">3608</span>, <span class="number">49634</span>, <span class="number">29552</span>, <span class="number">8108</span>, <span class="number">43136</span>, <span class="number">47345</span>, <span class="number">9019</span>, <span class="number">29552</span>, <span class="number">10168</span>, <span class="number">20369</span>, <span class="number">60168</span>,</span><br><span class="line"><span class="number">35756</span>, <span class="number">22784</span>, <span class="number">12417</span>, <span class="number">19994</span>, <span class="number">22941</span>, <span class="number">23523</span>, <span class="number">23625</span>, <span class="number">62779</span>, <span class="number">65498</span>, <span class="number">47727</span>, <span class="number">15965</span>, <span class="number">10168</span>, <span class="number">23377</span>, <span class="number">35376</span>,</span><br><span class="line"><span class="number">10768</span>, <span class="number">30</span>,<span class="number">0</span>]</span><br><span class="line">arr = [<span class="number">15374</span>, <span class="number">50828</span>, <span class="number">20199</span>, <span class="number">31702</span>, <span class="number">49944</span>, <span class="number">53123</span>, <span class="number">60189</span>, <span class="number">12367</span>, <span class="number">65280</span>, <span class="number">11322</span>, <span class="number">26221</span>, <span class="number">26520</span>, <span class="number">53269</span>, <span class="number">7766</span>, <span class="number">22058</span>,</span><br><span class="line"><span class="number">35457</span>, <span class="number">23701</span>, <span class="number">30880</span>, <span class="number">24813</span>, <span class="number">4372</span>, <span class="number">44507</span>, <span class="number">29484</span>, <span class="number">20880</span>, <span class="number">4405</span>, <span class="number">58195</span>, <span class="number">59849</span>, <span class="number">2735</span>, <span class="number">10264</span>, <span class="number">9782</span>, <span class="number">39718</span>,</span><br><span class="line"><span class="number">15625</span>, <span class="number">6335</span>, <span class="number">10852</span>, <span class="number">20285</span>, <span class="number">44639</span>, <span class="number">19994</span>, <span class="number">18794</span>, <span class="number">56196</span>, <span class="number">9411</span>, <span class="number">65498</span>, <span class="number">14219</span>, <span class="number">8030</span>, <span class="number">53361</span>, <span class="number">35953</span>, <span class="number">1582</span>,</span><br><span class="line"><span class="number">55001</span>, <span class="number">36724</span>, <span class="number">59478</span>, <span class="number">59973</span>, <span class="number">48836</span>, <span class="number">1158</span>, <span class="number">61760</span>, <span class="number">29338</span>, <span class="number">32765</span>, <span class="number">45037</span>, <span class="number">24376</span>, <span class="number">1788</span>, <span class="number">19389</span>, <span class="number">13090</span>, <span class="number">25822</span>,</span><br><span class="line"><span class="number">17807</span>, <span class="number">35376</span>, <span class="number">29972</span>, <span class="number">35756</span>, <span class="number">46468</span>, <span class="number">47345</span>, <span class="number">29372</span>, <span class="number">49634</span>, <span class="number">45232</span>, <span class="number">23625</span>, <span class="number">43967</span>, <span class="number">21403</span>, <span class="number">56272</span>, <span class="number">3500</span>, <span class="number">60168</span>,</span><br><span class="line"><span class="number">23523</span>, <span class="number">15154</span>, <span class="number">54581</span>, <span class="number">8108</span>, <span class="number">64355</span>, <span class="number">3608</span>, <span class="number">14230</span>, <span class="number">20369</span>, <span class="number">26180</span>, <span class="number">38824</span>, <span class="number">3590</span>, <span class="number">64409</span>, <span class="number">43136</span>, <span class="number">51586</span>, <span class="number">34971</span>,</span><br><span class="line"><span class="number">20361</span>, <span class="number">16356</span>, <span class="number">61054</span>, <span class="number">3047</span>, <span class="number">35533</span>, <span class="number">12808</span>, <span class="number">10768</span>, <span class="number">25394</span>, <span class="number">10966</span>, <span class="number">976</span>, <span class="number">62779</span>, <span class="number">22784</span>, <span class="number">366</span>, <span class="number">63784</span>, <span class="number">23377</span>,</span><br><span class="line"><span class="number">10168</span>, <span class="number">48879</span>, <span class="number">9019</span>, <span class="number">382</span>, <span class="number">25584</span>, <span class="number">49189</span>, <span class="number">58653</span>, <span class="number">15684</span>, <span class="number">28470</span>, <span class="number">5881</span>, <span class="number">12417</span>, <span class="number">28767</span>, <span class="number">46966</span>, <span class="number">22941</span>, <span class="number">20188</span>,</span><br><span class="line"><span class="number">25943</span>, <span class="number">48662</span>, <span class="number">36622</span>, <span class="number">47727</span>, <span class="number">15965</span>, <span class="number">29552</span>, <span class="number">5958</span>, <span class="number">27660</span>, <span class="number">28971</span>, <span class="number">23739</span>, <span class="number">25433</span>, <span class="number">36015</span>, <span class="number">20183</span>, <span class="number">44744</span>, <span class="number">64423</span>,</span><br><span class="line"><span class="number">29885</span>, <span class="number">58289</span>, <span class="number">23863</span>, <span class="number">19790</span>, <span class="number">33028</span>, <span class="number">46096</span>, <span class="number">34390</span>, <span class="number">8566</span>, <span class="number">9147</span>, <span class="number">9310</span>, <span class="number">43310</span>, <span class="number">44314</span>, <span class="number">58672</span>, <span class="number">55164</span>, <span class="number">57411</span>,</span><br><span class="line"><span class="number">37142</span>, <span class="number">60892</span>, <span class="number">43794</span>, <span class="number">3431</span>, <span class="number">30341</span>, <span class="number">15545</span>, <span class="number">49102</span>, <span class="number">23083</span>, <span class="number">14841</span>, <span class="number">37003</span>, <span class="number">65086</span>, <span class="number">48408</span>, <span class="number">56148</span>, <span class="number">3243</span>, <span class="number">15446</span>,</span><br><span class="line"><span class="number">65139</span>, <span class="number">55668</span>, <span class="number">3848</span>, <span class="number">23432</span>, <span class="number">41202</span>, <span class="number">15752</span>, <span class="number">40420</span>, <span class="number">2357</span>, <span class="number">21172</span>, <span class="number">41792</span>, <span class="number">60040</span>, <span class="number">48754</span>, <span class="number">28110</span>, <span class="number">27179</span>, <span class="number">12614</span>,</span><br><span class="line"><span class="number">856</span>, <span class="number">3919</span>, <span class="number">64096</span>, <span class="number">9707</span>, <span class="number">56007</span>, <span class="number">1898</span>, <span class="number">15719</span>, <span class="number">17392</span>, <span class="number">40860</span>, <span class="number">23398</span>, <span class="number">29027</span>, <span class="number">36667</span>, <span class="number">32443</span>, <span class="number">1489</span>, <span class="number">25284</span>,</span><br><span class="line"><span class="number">40853</span>, <span class="number">7686</span>, <span class="number">23896</span>, <span class="number">59780</span>, <span class="number">30131</span>, <span class="number">3423</span>, <span class="number">61016</span>, <span class="number">9104</span>, <span class="number">64401</span>, <span class="number">10410</span>, <span class="number">34781</span>, <span class="number">62954</span>, <span class="number">17468</span>, <span class="number">26434</span>, <span class="number">6553</span>,</span><br><span class="line"><span class="number">35049</span>, <span class="number">64782</span>, <span class="number">51389</span>, <span class="number">22008</span>, <span class="number">47881</span>, <span class="number">27664</span>, <span class="number">32872</span>, <span class="number">52692</span>, <span class="number">10662</span>, <span class="number">56735</span>, <span class="number">52931</span>, <span class="number">25111</span>, <span class="number">48680</span>, <span class="number">15994</span>,</span><br><span class="line"><span class="number">59166</span>, <span class="number">50547</span>, <span class="number">1067</span>, <span class="number">56838</span>, <span class="number">51508</span>, <span class="number">13777</span>, <span class="number">61257</span>, <span class="number">25507</span>, <span class="number">61583</span>, <span class="number">9953</span>, <span class="number">58910</span>, <span class="number">10000</span>, <span class="number">46771</span>, <span class="number">4320</span>, <span class="number">48438</span>,</span><br><span class="line"><span class="number">18844</span>, <span class="number">33862</span>, <span class="number">46612</span>, <span class="number">59681</span>, <span class="number">56109</span>, <span class="number">19128</span>, <span class="number">19595</span>, <span class="number">53672</span>, <span class="number">27291</span>, <span class="number">55319</span>, <span class="number">62281</span>, <span class="number">52882</span>, <span class="number">32653</span>, <span class="number">19558</span>,</span><br><span class="line"> <span class="number">53056</span>, <span class="number">37225</span>, <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">29</span>):</span><br><span class="line">    index = arr.index(ci[i])</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">chr</span>(index ^ i),end=<span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>得到flag：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;I_Have_D0ub1e_Pr0cess!&#125;</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/30/[HNCTF%202022%20WEEK3]Double/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E9%80%86%E5%90%91/" rel="tag">C语言逆向</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/12/30/%5BHGAME%202023%20week1%5Dencode/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            [HGAME 2023 week1]encode
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/12/30/%5BHNCTF%202022%20Week1%5D%E8%B6%85%E7%BA%A7%E7%AD%BE%E5%88%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">[HNCTF 2022 Week1]超级签到</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2024
+        <i class="ri-heart-fill heart_icon"></i> John Doe
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="zhouyue&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
