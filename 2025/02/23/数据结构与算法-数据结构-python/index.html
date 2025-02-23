@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>数据结构与算法-数据结构-python |  zhouyue&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-数据结构与算法-数据结构-python"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  数据结构与算法-数据结构-python
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2025/02/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-python/" class="article-date">
+  <time datetime="2025-02-23T04:49:11.000Z" itemprop="datePublished">2025-02-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">8 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="数据结构与算法——数据结构-python"><a href="#数据结构与算法——数据结构-python" class="headerlink" title="数据结构与算法——数据结构(python)"></a>数据结构与算法——数据结构(python)</h1><ul>
+<li><p>数据结构是指相互间存在一种或多种关系的数据元素的集合和该集合元素之间的关系组成</p>
+</li>
+<li><p>简单来说，数据结构就是数据以什么方式存储于计算机中</p>
+</li>
+<li><p>列表，集合，字典及元组都是一种数据结构</p>
+</li>
+<li><p>数据结构的分类：</p>
+<ul>
+<li>线性结构：结构中元素存在一对一的相互关系</li>
+<li>树结构：一对多</li>
+<li>图结构：多对多</li>
+</ul>
+</li>
+</ul>
+<h2 id="线性结构"><a href="#线性结构" class="headerlink" title="线性结构"></a>线性结构</h2><h3 id="1-列表"><a href="#1-列表" class="headerlink" title="1.列表"></a>1.列表</h3><ul>
+<li><strong>列表与数组的区别</strong></li>
+</ul>
+<p>​	数组元素类型固定，且声明后长度固定(因为数组是申请的是连续内存地址)</p>
+<p>​	列表元素类型不固定，长度可变(列表申请的是离散的内存地址)</p>
+<ul>
+<li><strong>列表的python内置方法</strong></li>
+</ul>
+<p>​	append O(1)</p>
+<p>​	insert、remove  O(n)</p>
+<h3 id="2-栈"><a href="#2-栈" class="headerlink" title="2.栈"></a>2.栈</h3><p><strong>栈的特点</strong>：后进先出LIFO</p>
+<p><strong>栈的基本操作</strong>：</p>
+<ul>
+<li>压栈 push</li>
+<li>出栈 pop</li>
+<li>取栈顶 gettop</li>
+</ul>
+<p><strong>栈的python实现</strong>：</p>
+<ul>
+<li>push li.append</li>
+<li>pop li.pop</li>
+<li>gettop li[-1]</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">stack</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.stack = []</span><br><span class="line">   	<span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self, element</span>):</span><br><span class="line">        <span class="variable language_">self</span>.stack.append(element)</span><br><span class="line">   	<span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.stack.pop()</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_top</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(<span class="variable language_">self</span>.stack) &gt; <span class="number">0</span>:</span><br><span class="line">        	<span class="keyword">return</span> <span class="variable language_">self</span>.stack[-<span class="number">1</span>]</span><br><span class="line">    	<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">   	<span class="keyword">def</span> <span class="title function_">is_empty</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(<span class="variable language_">self</span>.stack) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>栈的应用——括号匹配问题</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">brace_match</span>(<span class="params"><span class="built_in">str</span></span>):</span><br><span class="line">   	stack = Stack()</span><br><span class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> <span class="built_in">str</span>:</span><br><span class="line">        <span class="keyword">if</span> ch <span class="keyword">in</span> &#123;<span class="string">&#x27;(&#x27;</span>,<span class="string">&#x27;[&#x27;</span>,<span class="string">&#x27;&#123;&#x27;</span>&#125;:</span><br><span class="line">            stack.push(ch)</span><br><span class="line">        <span class="keyword">elif</span> ch == <span class="string">&#x27;)&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span> stack.get_top == <span class="string">&#x27;(&#x27;</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;不匹配&quot;</span></span><br><span class="line">     	<span class="keyword">elif</span>  ch == <span class="string">&#x27;]&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span> stack.get_eop == <span class="string">&#x27;[&#x27;</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;不匹配&quot;</span></span><br><span class="line">       	<span class="keyword">elif</span> ch == <span class="string">&#x27;&#125;&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span> stack.get_eop == <span class="string">&#x27;&#123;&#x27;</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">           	<span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;不匹配&quot;</span></span><br><span class="line">   	<span class="keyword">if</span> stack.get_top == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;匹配&quot;</span></span><br><span class="line"><span class="comment">#或者我们可以使用字典简化工作：</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">brace_match</span>(<span class="params"><span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">match</span> = &#123;<span class="string">&#x27;)&#x27;</span>:<span class="string">&#x27;(&#x27;</span>, <span class="string">&#x27;]&#x27;</span>:<span class="string">&#x27;[&#x27;</span>, <span class="string">&#x27;&#125;&#x27;</span>:<span class="string">&#x27;&#123;&#x27;</span>&#125;</span><br><span class="line">   	<span class="keyword">for</span> ch <span class="keyword">in</span> <span class="built_in">str</span>:</span><br><span class="line">        <span class="keyword">if</span> ch <span class="keyword">in</span> &#123;<span class="string">&#x27;(&#x27;</span>,<span class="string">&#x27;[&#x27;</span>,<span class="string">&#x27;&#123;&#x27;</span>&#125;:</span><br><span class="line">            stack.push(ch)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> stack.is_empty():</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">elif</span> stack.get_top() == <span class="keyword">match</span>[ch]:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">  	<span class="keyword">if</span> stack.is_empty():</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-队列"><a href="#3-队列" class="headerlink" title="3.队列"></a>3.队列</h3><p><strong>队列的性质</strong>：先进先出 FIFO</p>
+<p><strong>队列的python实现</strong>：</p>
+<ul>
+<li><p>线性队列：</p>
+<ul>
+<li>入队简单，但是出队时pop方法时间复杂度太高</li>
+<li>如果使用下标界定队列而不pop，会导致多次进行队列操作后列表过长，吃内存</li>
+</ul>
+</li>
+<li><p>环形队列：</p>
+<ul>
+<li><p>尽管仍然是用列表实现的，环形队列规定了队列的长度，类似C的数组操作，先申请一块确定的空间</p>
+</li>
+<li><p>这样一来就可以用下标的增减来表示队列的出入</p>
+</li>
+</ul>
+</li>
+<li><p>环形队列的实现：</p>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Queue</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, size</span>): <span class="comment">#传入的size表示队列的长度</span></span><br><span class="line">        <span class="variable language_">self</span>.queue = [<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(size+<span class="number">1</span>)]</span><br><span class="line">        <span class="variable language_">self</span>.rear = <span class="number">0</span> <span class="comment">#队尾指针，永远指向最后一个数</span></span><br><span class="line">        <span class="variable language_">self</span>.front = <span class="number">0</span> <span class="comment">#队首指针，永远指向队首前一个的地址</span></span><br><span class="line">        <span class="variable language_">self</span>.size = size+<span class="number">1</span>	<span class="comment">#self.size表示申请的空间长度</span></span><br><span class="line">   	<span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self,element</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.is_filled():</span><br><span class="line">	        <span class="variable language_">self</span>.rear = (<span class="variable language_">self</span>.rear+<span class="number">1</span>) % <span class="variable language_">self</span>.size</span><br><span class="line">    	    <span class="variable language_">self</span>.queue[<span class="variable language_">self</span>.rear] = element</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> IndexError(<span class="string">&quot;Queue is filled!&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>,is_empty():</span><br><span class="line">        	<span class="variable language_">self</span>.front = (<span class="variable language_">self</span>.front+<span class="number">1</span>) % <span class="variable language_">self</span>.size</span><br><span class="line">        	<span class="keyword">return</span> <span class="variable language_">self</span>.queue[<span class="variable language_">self</span>.front]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> IndexError(<span class="string">&quot;Queue is empty!&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">is_empty</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.front == <span class="variable language_">self</span>.rear</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">is_filled</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> (<span class="variable language_">self</span>.rear+<span class="number">1</span>) % <span class="variable language_">self</span>.size == <span class="variable language_">self</span>.front</span><br></pre></td></tr></table></figure>
+
+<p><strong>队列的python内置模块</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="comment">#单向队列</span></span><br><span class="line">q = deque()</span><br><span class="line">q.append(element)	<span class="comment">#队尾进队</span></span><br><span class="line">q.popleft() <span class="comment">#队首出列</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#双向队列</span></span><br><span class="line">q.qppendleft(element)	<span class="comment">#队首进队</span></span><br><span class="line">q,pop()	<span class="comment">#队尾出列</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#deque(param1,param2)</span></span><br><span class="line"><span class="comment">#param1传入列表，作为初始的队列</span></span><br><span class="line"><span class="comment">#param2传入队列最大长度，如果列表长度大于param2，则出队知道满足即可</span></span><br><span class="line"><span class="comment">#由此我们可以完成比如Linux的tail命令</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-栈与队列的应用——迷宫问题"><a href="#4-栈与队列的应用——迷宫问题" class="headerlink" title="4.栈与队列的应用——迷宫问题"></a>4.栈与队列的应用——迷宫问题</h3><p><strong>栈——深度优先搜索</strong></p>
+<ul>
+<li>回溯法：从一个节点中任意找下一个能走的点，当找不到能走的点时，退回上一个节点，直到有一个节点能找到下一个且不重复的方向</li>
+<li>可以使用栈结构储存路径</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">maze_patch</span>(<span class="params">maze,start,end</span>):</span><br><span class="line">    rows,cols = <span class="built_in">len</span>(maze), <span class="built_in">len</span>(maze[<span class="number">0</span>])</span><br><span class="line">    dirs = [(-<span class="number">1</span>,<span class="number">0</span>),(<span class="number">0</span>,<span class="number">1</span>),(<span class="number">1</span>,<span class="number">0</span>),(<span class="number">0</span>,-<span class="number">1</span>)]</span><br><span class="line">    stack = [start]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> stack:</span><br><span class="line">        Node = stack[-<span class="number">1</span>] <span class="comment">#取到当前位置节点</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> Node == end:</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        </span><br><span class="line">        maze[Node[<span class="number">0</span>]][Node[<span class="number">1</span>]] = <span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> x,y <span class="keyword">in</span> dirs:</span><br><span class="line">            Node[<span class="number">0</span>] += x	<span class="comment">#这里开始的Node是NextNode</span></span><br><span class="line">            Node[<span class="number">1</span>] += y</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span>&lt;=Node[<span class="number">0</span>]&lt;=rows <span class="keyword">and</span> <span class="number">0</span>&lt;=Node[<span class="number">1</span>]&lt;=cols <span class="keyword">and</span> maze[Node[<span class="number">0</span>]][Node[<span class="number">1</span>]]==<span class="number">0</span>:</span><br><span class="line">                stack.append(Node)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stack.pop()  <span class="comment">#这里pop出去的是原来的Node</span></span><br><span class="line">   	<span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>队列——广度优先搜索</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bfs_maze_path</span>(<span class="params">maze, start, end</span>):</span><br><span class="line">    rows, cols = <span class="built_in">len</span>(maze), <span class="built_in">len</span>(maze[<span class="number">0</span>])</span><br><span class="line">    directions = [(-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>)]  <span class="comment"># 上、下、左、右</span></span><br><span class="line">    queue = deque([start])  <span class="comment"># BFS 使用队列</span></span><br><span class="line">    parent = &#123;start: <span class="literal">None</span>&#125;  <span class="comment"># 记录路径</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> queue:</span><br><span class="line">        x, y = queue.popleft()  <span class="comment"># 取队首元素</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (x, y) == end:  <span class="comment"># 找到出口</span></span><br><span class="line">            path = []</span><br><span class="line">            <span class="keyword">while</span> parent[(x, y)] <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:  <span class="comment"># 回溯路径</span></span><br><span class="line">                path.append((x, y))</span><br><span class="line">                (x, y) = parent[(x, y)]</span><br><span class="line">            <span class="keyword">return</span> path[::-<span class="number">1</span>]  <span class="comment"># 逆序返回路径</span></span><br><span class="line"></span><br><span class="line">        maze[x][y] = <span class="number">2</span>  <span class="comment"># 标记已访问</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> dx, dy <span class="keyword">in</span> directions:</span><br><span class="line">            nx, ny = x + dx, y + dy</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span> &lt;= nx &lt; rows <span class="keyword">and</span> <span class="number">0</span> &lt;= ny &lt; cols <span class="keyword">and</span> maze[nx][ny] == <span class="number">0</span>:</span><br><span class="line">                queue.append((nx, ny))</span><br><span class="line">                parent[(nx, ny)] = (x, y)  <span class="comment"># 记录父节点</span></span><br><span class="line">                maze[nx][ny] = <span class="number">2</span>  <span class="comment"># 避免重复入队     </span></span><br><span class="line">				<span class="comment">#注意这里并没有break，会找到该节点所有可能的地方，并且将该节点出队，也就是说按照出队的节点算会依次查看可能的节点的可能节点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span>  <span class="comment"># 无解</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-链表"><a href="#5-链表" class="headerlink" title="5.链表"></a>5.链表</h3><p><strong>链表操作(以单链表为例)</strong></p>
+<ol>
+<li>定义节点</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ListNode</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,val</span>):</span><br><span class="line">        <span class="variable language_">self</span>.val = val</span><br><span class="line">        <span class="variable language_">self</span>.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"><span class="comment">#节点的定义与C语言很相似，只不过省去了申请内存空间的操作</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>定义链表</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LinkedList</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.head = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>插入节点</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#头插法</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">insert_at_head</span>(<span class="params">self,val</span>):</span><br><span class="line">    new_node = ListNode(val)</span><br><span class="line">   	new_node.<span class="built_in">next</span> = <span class="variable language_">self</span>.head</span><br><span class="line">    <span class="variable language_">self</span>.head = new_node</span><br><span class="line"><span class="comment">#尾插法</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">insert_at_tail</span>(<span class="params">self,val</span>):</span><br><span class="line">    new_node = ListNode(val)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.head:	<span class="comment">#if self.head == None</span></span><br><span class="line">        <span class="variable language_">self</span>.head = new_node</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    temp = <span class="variable language_">self</span>.head</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> temp.<span class="built_in">next</span>:</span><br><span class="line">        temp = temp.<span class="built_in">next</span></span><br><span class="line">  	temp.<span class="built_in">next</span> = new_node</span><br><span class="line"><span class="comment">#这里头插法与尾插法不同的原因是，头插法可以保持head节点永远是头节点，但是尾插法类似头插法写的话会导致head节点永远是尾节点，在链表中我们需要head节点来进行链表的锚定</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#特定位置的插入</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">insert_at_position</span>(<span class="params">self,val,pos</span>): <span class="comment">#链表仍然是从0开始数</span></span><br><span class="line">    new_node = ListNode(val)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.head:</span><br><span class="line">        <span class="variable language_">self</span>.head = new_node</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    </span><br><span class="line">    temp = <span class="variable language_">self</span>.head</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(pos-<span class="number">1</span>):	</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> temp:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        temp = temp.<span class="built_in">next</span></span><br><span class="line">   	new_node.<span class="built_in">next</span> = temp.<span class="built_in">next</span></span><br><span class="line">    temp.<span class="built_in">next</span> = new_node</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>删除节点</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#删除头节点</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_head</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.head:</span><br><span class="line">    	<span class="variable language_">self</span>.head = <span class="variable language_">self</span>.head.<span class="built_in">next</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"><span class="comment">#删除尾节点</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_tail</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.head:</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    </span><br><span class="line">    temp = <span class="variable language_">self</span>.head</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> temp.<span class="built_in">next</span>:</span><br><span class="line">        temp = temp.<span class="built_in">next</span></span><br><span class="line">   	temp = <span class="literal">None</span></span><br><span class="line"><span class="comment">#删除指定值的节点</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_by_value</span>(<span class="params">self,val</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.head:</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">   	<span class="keyword">if</span> <span class="variable language_">self</span>.head.val == val:</span><br><span class="line">        <span class="variable language_">self</span>.head = <span class="variable language_">self</span>.head.<span class="built_in">next</span></span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    </span><br><span class="line">    cur = <span class="variable language_">self</span>.head</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> temp.<span class="built_in">next</span>:</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>.val == val:</span><br><span class="line">            cur.<span class="built_in">next</span> = cur.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">return</span> </span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>查找节点</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#按值查找</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">search_by_value</span>(<span class="params">self,val</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.head:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.head.val == val:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;position&quot;</span>:<span class="number">0</span>,<span class="string">&quot;value&quot;</span>:val&#125;</span><br><span class="line">    </span><br><span class="line">    cnt = <span class="number">0</span></span><br><span class="line">    temp = <span class="variable language_">self</span>.head.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> temp:</span><br><span class="line">        cnt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> temp.<span class="built_in">next</span>.val == val:</span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="string">&quot;position&quot;</span>:cnt,<span class="string">&quot;value&quot;</span>:val&#125;</span><br><span class="line">  		temp = temp.<span class="built_in">next</span></span><br><span class="line">  	<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"><span class="comment">#按位置查找</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">search_by_position</span>(<span class="params">self,pos</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.head:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    temp = <span class="variable language_">self</span>.head</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(pos):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> temp:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        temp = temp.<span class="built_in">next</span></span><br><span class="line">  	<span class="keyword">return</span> &#123;<span class="string">&quot;position&quot;</span>:pos,<span class="string">&quot;value&quot;</span>:temp.val&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2025/02/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-python/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2024/12/30/%5BFSCTF%202023%5DXor/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">[FSCTF 2023]Xor</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2025
+        <i class="ri-heart-fill heart_icon"></i> John Doe
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="zhouyue&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
