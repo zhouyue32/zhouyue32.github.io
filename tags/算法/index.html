@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>[SWPUCTF 2021 新生赛]re2 |  zhouyue&#39;s blog</title>
+      <title>Tag: 算法 |  zhouyue&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -52,178 +52,72 @@
       
     <main class="content on">
       <section class="outer">
-  <article
-  id="post-[SWPUCTF 2021 新生赛]re2"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  [SWPUCTF 2021 新生赛]re2
-</h1>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/12/30/%5BSWPUCTF%202021%20%E6%96%B0%E7%94%9F%E8%B5%9B%5Dre2/" class="article-date">
-  <time datetime="2024-12-30T12:34:01.000Z" itemprop="datePublished">2024-12-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%A2%98%E7%9B%AEwp-%E9%80%86%E5%90%91/">题目wp-逆向</a>
-  </div>
   
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">193</span>
-        </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
-        </span>
-    </span>
-</div>
- 
-    </div>
-      
-    <div class="tocbot"></div>
-
-
-
-
-  
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="SWPUCTF-2021-新生赛-re2"><a href="#SWPUCTF-2021-新生赛-re2" class="headerlink" title="[SWPUCTF 2021 新生赛]re2"></a>[SWPUCTF 2021 新生赛]re2</h1><p>​	打开文件发现有一个可执行文件，查壳发现无壳，64位，放入ida中，F5反编译如下：</p>
-<p><img src="/./../imgs/image-20241117155812366.png" alt="image-20241117155812366"></p>
-<p>很容易可以写出解密脚本如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> Str[<span class="number">100</span>] = <span class="string">&quot;ylqq]aycqyp&#123;&quot;</span>;</span><br><span class="line">	<span class="keyword">for</span> ( <span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(Str); ++i )</span><br><span class="line">  	&#123;</span><br><span class="line">	    <span class="keyword">if</span> ( (Str[i]<span class="number">-24</span> &lt;= <span class="number">98</span> &amp;&amp; Str[i]<span class="number">-24</span> &gt; <span class="number">96</span>) || (Str[i]<span class="number">-24</span> &lt;= <span class="number">66</span> &amp;&amp; Str[i]<span class="number">-24</span> &gt; <span class="number">64</span>) )</span><br><span class="line">	      Str[i] -= <span class="number">24</span>;</span><br><span class="line">	    <span class="keyword">else</span> </span><br><span class="line">	      Str[i] += <span class="number">2</span>;</span><br><span class="line">  	&#125;	</span><br><span class="line">  	</span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, Str);</span><br><span class="line">	  </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p>得到结果：</p>
-<p><img src="/./../imgs/image-20241117155912392.png" alt="image-20241117155912392"></p>
-<p>发现这的确不像正常的flag，事实上这也的确不是正确的flag，上网查询发现是题目出的有问题，但根据出题方的名字NSS和密码的加密方式caeser，也能猜出最后的flag。</p>
- 
-      <!-- reward -->
-      
-    </div>
+  <ul class="ads">
     
-
-    <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
         <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-          
+            <a target="_blank" rel="noopener" href="https://curl.qcloud.com/kvO7hb43">
+                <img src="https://pic.imgdb.cn/item/62174b452ab3f51d912a5ccc.jpg" width="300" alt="云服务器限时秒杀">
+            </a>
         </li>
-      </ul>
-    </div>
     
-    <footer class="article-footer">
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=8630075">
+                <img src="https://pic.imgdb.cn/item/62174b452ab3f51d912a5cd7.png" width="300" alt="vultr优惠vps">
+            </a>
+        </li>
+    
+</ul>
+  
+  
+  <article class="articles">
+    
+    
+    <h1 class="page-type-title">#&nbsp算法</h1>
+    
+    
+  
+  
+  
+  
+  
+  
+  <div class="archives-wrap">
+    <div class="archive-year-wrap">
+      <a href="/archives/2025" class="archive-year">2025</a>
+    </div>
+    <div class="archives">
+      
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2025/02/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%AE%97%E6%B3%95-Python/" class="archive-article-date">
+  <time datetime="2025-02-23T04:53:23.000Z" itemprop="datePublished">02/23</time>
+</a>
        
-<div class="share-btn">
-      <span class="share-sns share-outer">
-        <i class="ri-share-forward-line"></i>
-        分享
-      </span>
-      <div class="share-wrap">
-        <i class="arrow"></i>
-        <div class="share-icons">
-          
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="ri-weibo-fill"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="ri-wechat-fill"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="ri-qq-fill"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="ri-douban-line"></i>
-          </a>
-          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a> -->
-          
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="ri-facebook-circle-fill"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="ri-twitter-fill"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="ri-google-fill"></i>
-          </a>
-        </div>
-      </div>
-</div>
-
-<div class="wx-share-modal">
-    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/30/[SWPUCTF%202021%20%E6%96%B0%E7%94%9F%E8%B5%9B]re2/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E9%80%86%E5%90%91/" rel="tag">C语言逆向</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2024/12/30/%5BNSSCTF%202022%20Spring%20Recruit%5Deasy%20C/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            [NSSCTF 2022 Spring Recruit]easy C
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2024/12/30/%5BSWPUCTF%202021%20%E6%96%B0%E7%94%9F%E8%B5%9B%5Dre1/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">[SWPUCTF 2021 新生赛]re1</div>
-      </a>
-    
-  </nav>
-
-  
-   
-  
-   
-    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
-    <div id="twikoo" class="twikoo"></div>
-    <script>
-        twikoo.init({
-            envId: ""
-        })
-    </script>
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2025/02/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%AE%97%E6%B3%95-Python/"
+    >数据结构与算法-算法-Python</a> 
+</h2>
  
-</article>
 
+    </header>
+    
+    
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    
+  </div>
+</article>
+      
+      
+    </div>
+  </div>
+  
+  
+
+  
 </section>
       <footer class="footer">
   <div class="outer">
@@ -372,22 +266,6 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
- 
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  tocbot.init({
-    tocSelector: ".tocbot",
-    contentSelector: ".article-entry",
-    headingSelector: "h1, h2, h3, h4, h5, h6",
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: "main",
-    positionFixedSelector: ".tocbot",
-    positionFixedClass: "is-position-fixed",
-    fixedSidebarOffset: "auto",
-  });
-</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
